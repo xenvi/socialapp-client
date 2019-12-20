@@ -4,6 +4,12 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   background-color: rgb(245, 245, 245);
+  /*background: linear-gradient(
+    to bottom right,
+    rgb(58, 126, 228),
+    rgb(194, 48, 48)
+  );
+  height: 100;*/
 }
 
 .container {

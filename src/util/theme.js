@@ -7,9 +7,9 @@ export default {
       contrastText: "#fff"
     },
     secondary: {
-      light: "#4b9fea",
-      main: "#1e88e5",
-      dark: "#155fa0",
+      light: "#FF7575",
+      main: "#FF3F3F",
+      dark: "#E51E1E",
       contrastText: "#fff"
     }
   },
@@ -42,6 +42,15 @@ export default {
     },
     progress: {
       position: "absolute"
+    },
+    invisibleSeparator: {
+      border: "none",
+      margin: 4
+    },
+    visibleSeparator: {
+      width: "100%",
+      borderBottom: "1px solid rgba(0,0,0,0.1)",
+      marginBottom: 20
     },
     paper: {
       padding: 20

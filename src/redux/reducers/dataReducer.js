@@ -1,9 +1,12 @@
 import {
   SET_POSTS,
+  SET_POST,
   LIKE_POST,
   UNLIKE_POST,
   LOADING_DATA,
-  DELETE_POST
+  DELETE_POST,
+  CREATE_POST,
+  SUBMIT_COMMENT
 } from "../types";
 
 const initialState = {
@@ -25,6 +28,11 @@ export default function(state = initialState, action) {
         posts: action.payload,
         loading: false
       };
+    case SET_POST:
+      return {
+        ...state,
+        post: action.payload
+      };
     case LIKE_POST:
     case UNLIKE_POST:
       let index = state.posts.findIndex(
@@ -44,6 +52,19 @@ export default function(state = initialState, action) {
       state.posts.splice(index2, 1);
       return {
         ...state
+      };
+    case CREATE_POST:
+      return {
+        ...state,
+        posts: [action.payload, ...state.posts]
+      };
+    case SUBMIT_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: [action.payload, ...state.post.comments]
+        }
       };
     default:
       return state;

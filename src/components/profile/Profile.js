@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-import EditDetails from './EditDetails';
+import EditDetails from "./EditDetails";
+import ProfileSkeleton from "../../util/ProfileSkeleton";
 
 // MUI imports
 import Button from "@material-ui/core/Button";
@@ -15,7 +16,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 // redux imports
 import { connect } from "react-redux";
-import { logoutUser, uploadImage } from "../redux/actions/userActions";
+import { logoutUser, uploadImage } from "../../redux/actions/userActions";
 
 // icons
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -109,7 +110,7 @@ export class Profile extends Component {
             </div>
             <Tooltip title="Logout" placement="top">
               <IconButton onClick={this.handleLogout}>
-                <KeyboardReturn color="primary"/>
+                <KeyboardReturn color="primary" />
               </IconButton>
             </Tooltip>
             <EditDetails />
@@ -141,7 +142,7 @@ export class Profile extends Component {
         </Paper>
       )
     ) : (
-      <p>Loading...</p>
+      <ProfileSkeleton />
     );
 
     return profileMarkup;

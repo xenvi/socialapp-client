@@ -4,7 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // redux imports
 import { connect } from "react-redux";
-import { editUserDetails } from "../redux/actions/userActions";
+import { editUserDetails } from "../../redux/actions/userActions";
 
 // mui imports
 import Button from "@material-ui/core/Button";

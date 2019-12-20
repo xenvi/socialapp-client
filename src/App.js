@@ -12,7 +12,7 @@ import { SET_AUTHENTICATED } from "./redux/types";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
 
 //Components
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import AuthRoute from "./util/AuthRoute";
 import themeFile from "./util/theme";
 
@@ -20,6 +20,7 @@ import themeFile from "./util/theme";
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
+import user from "./pages/user";
 
 import axios from "axios";
 
@@ -53,6 +54,12 @@ class App extends Component {
                 <Route exact path="/" component={home} />
                 <AuthRoute exact path="/login" component={login} />
                 <AuthRoute exact path="/signup" component={signup} />
+                <Route exact path="/users/:handle" component={user} />
+                <Route
+                  exact
+                  path="/users/:handle/post/:postId"
+                  component={user}
+                />
               </Switch>
             </div>
           </Router>
