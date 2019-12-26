@@ -7,3 +7,5 @@ CLIENT SIDE APPLICATIONS USED:
 -dayJS
 -jwtDecode
 
+Socialapp Functions (backend) Repo:
+https://github.com/xenvi/socialapp-functions
