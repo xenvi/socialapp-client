@@ -1,39 +1,69 @@
 export default {
   palette: {
     primary: {
-      light: "#9de6f2",
-      main: "#20cae6",
-      dark: "#0794ab",
+      light: "#80d8ff",
+      main: "#40c4ff",
+      dark: "#00b0ff",
       contrastText: "#fff"
     },
     secondary: {
-      light: "#FF7575",
-      main: "#FF3F3F",
-      dark: "#E51E1E",
+      light: "#ff8a80",
+      main: "#f44336",
+      dark: "#e53935",
       contrastText: "#fff"
+    },
+    tertiary: {
+      light: "#FF7575",
+      main: "#fff",
+      dark: "#FF3F3F",
+      contrastText: "#20cae6"
     }
   },
   spread: {
     typography: {
       useNextVariants: true
     },
-    form: {
+    card: {
+      backgroundColor: "#fff",
+      minWidth: "400px",
+      minHeight: "460px"
+    },
+    formWrapper: {
       textAlign: "center"
     },
+    form: {
+      padding: "0 25px 0 25px"
+    },
     image: {
-      margin: "20px auto 20px auto",
+      margin: "20px auto 10px auto",
       width: "50px",
       height: "50px"
     },
     pageTitle: {
-      margin: "10px auto 10px auto"
+      fontWeight: "bold",
+      color: "rgb(0,0,0,0.7)",
+      margin: "10px auto 5px auto"
+    },
+    subTitle: {
+      color: "rgb(0,0,0,0.5)",
+      fontWeight: "bold",
+      padding: "10px 0 0 0"
     },
     textField: {
       margin: "10px auto 10px auto"
     },
+    link: {
+      color: "#00b0ff",
+      fontWeight: "bold"
+    },
+    or: {
+      color: "rgb(0,0,0,0.5)",
+      margin: "10px 0 10px 0",
+      backgroundColor: "#fff"
+    },
     button: {
-      marginTop: 20,
-      position: "relative"
+      borderRadius: 20,
+      padding: "5px 25px"
     },
     customError: {
       color: "red",
@@ -53,6 +83,8 @@ export default {
       marginBottom: 20
     },
     paper: {
+      position: "fixed",
+      width: 330,
       padding: 20
     },
     profile: {

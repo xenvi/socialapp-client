@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 
 import Post from "../components/post/Post";
 import Profile from "../components/profile/Profile";
 import PostSkeleton from "../util/PostSkeleton";
+import Navbar from "../components/layout/Navbar";
 
 import { connect } from "react-redux";
 import { getPosts } from "../redux/actions/dataActions";
@@ -21,14 +22,17 @@ class home extends Component {
       <PostSkeleton />
     );
     return (
-      <Grid container spacing={3}>
-        <Grid item sm={8} xs={12}>
-          {recentPostsMarkup}
+      <Fragment>
+        <Navbar />
+        <Grid container spacing={3}>
+          <Grid item sm={4} xs={12}>
+            <Profile />
+          </Grid>
+          <Grid item sm={8} xs={12}>
+            {recentPostsMarkup}
+          </Grid>
         </Grid>
-        <Grid item sm={4} xs={12}>
-          <Profile />
-        </Grid>
-      </Grid>
+      </Fragment>
     );
   }
 }

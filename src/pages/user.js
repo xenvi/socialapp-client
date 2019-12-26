@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Post from "../components/post/Post";
@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import StaticProfile from "../components/profile/StaticProfile";
 import PostSkeleton from "../util/PostSkeleton";
 import ProfileSkeleton from "../util/ProfileSkeleton";
+import Navbar from "../components/layout/Navbar";
 
 import { connect } from "react-redux";
 import { getUserData } from "../redux/actions/dataActions";
@@ -51,18 +52,21 @@ class user extends Component {
     );
 
     return (
-      <Grid container spacing={3}>
-        <Grid item sm={8} xs={12}>
-          {postsMarkup}
+      <Fragment>
+        <Navbar />
+        <Grid container spacing={3}>
+          <Grid item sm={8} xs={12}>
+            {postsMarkup}
+          </Grid>
+          <Grid item sm={4} xs={12}>
+            {this.state.profile === null ? (
+              <ProfileSkeleton />
+            ) : (
+              <StaticProfile profile={this.state.profile} />
+            )}
+          </Grid>
         </Grid>
-        <Grid item sm={4} xs={12}>
-          {this.state.profile === null ? (
-            <ProfileSkeleton />
-          ) : (
-            <StaticProfile profile={this.state.profile} />
-          )}
-        </Grid>
-      </Grid>
+      </Fragment>
     );
   }
 }

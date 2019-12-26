@@ -41,8 +41,9 @@ export class Profile extends Component {
     const fileInput = document.getElementById("imageInput");
     fileInput.click();
   };
-  handleLogout = () => {
+  handleLogout = history => {
     this.props.logoutUser();
+    history.push("/");
   };
   render() {
     const {

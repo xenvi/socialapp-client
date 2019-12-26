@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import AppIcon from "../images/icon.ico";
 import { Link } from "react-router-dom";
+import Navbar from "../components/layout/Navbar";
 
 // MUI imports
 import Grid from "@material-ui/core/Grid";
@@ -10,6 +11,9 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+
 // Redux imports
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
@@ -53,63 +57,87 @@ class login extends Component {
     const { errors } = this.state;
 
     return (
-      <Grid container className={classes.form}>
-        <Grid item sm />
-        <Grid item sm>
-          <img src={AppIcon} alt="icon" className={classes.image} />
-          <Typography variant="h2" className={classes.pageTitle}>
-            Login
-          </Typography>
-          <form noValidate onSubmit={this.handleSubmit}>
-            <TextField
-              id="email"
-              name="email"
-              type="email"
-              label="Email"
-              className={classes.textField}
-              helperText={errors.email}
-              error={errors.email ? true : false}
-              value={this.state.email}
-              onChange={this.handleChange}
-              fullWidth
-            />
-            <TextField
-              id="password"
-              name="password"
-              type="password"
-              label="Password"
-              className={classes.textField}
-              helperText={errors.password}
-              error={errors.password ? true : false}
-              value={this.state.password}
-              onChange={this.handleChange}
-              fullWidth
-            />
-            {errors.general && (
-              <Typography variant="body2" className={classes.customError}>
-                {errors.general}
-              </Typography>
-            )}
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              disabled={loading}
-            >
-              Login
-              {loading && (
-                <CircularProgress size={30} className={classes.progress} />
-              )}
-            </Button>
-            <br />
-            <small>
-              dont have an account ? sign up <Link to="/signup">here</Link>
-            </small>
-          </form>
+      <Fragment>
+        <Navbar />
+        <Grid container className={classes.formWrapper}>
+          <Grid item sm />
+          <Grid item sm>
+            <Card className={classes.card}>
+              <CardContent>
+                <img src={AppIcon} alt="icon" className={classes.image} />
+                <Typography variant="h3" className={classes.pageTitle}>
+                  LOGIN
+                </Typography>
+                <br />
+                <form
+                  noValidate
+                  onSubmit={this.handleSubmit}
+                  className={classes.form}
+                >
+                  <TextField
+                    id="email"
+                    name="email"
+                    type="email"
+                    label="Email"
+                    variant="outlined"
+                    margin="dense"
+                    className={classes.textField}
+                    helperText={errors.email}
+                    error={errors.email ? true : false}
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    fullWidth
+                  />
+                  <TextField
+                    id="password"
+                    name="password"
+                    type="password"
+                    label="Password"
+                    variant="outlined"
+                    margin="dense"
+                    className={classes.textField}
+                    helperText={errors.password}
+                    error={errors.password ? true : false}
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    fullWidth
+                  />
+                  {errors.general && (
+                    <Typography variant="body2" className={classes.customError}>
+                      {errors.general}
+                    </Typography>
+                  )}
+                  <br />
+                  <br />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={loading}
+                    className={classes.button}
+                  >
+                    Login
+                    {loading && (
+                      <CircularProgress
+                        size={30}
+                        className={classes.progress}
+                      />
+                    )}
+                  </Button>
+                  <br />
+                  <div className={classes.or}>OR</div>
+                  <small>
+                    <Link to="/signup" className={classes.link}>
+                      SIGN UP HERE
+                    </Link>
+                  </small>
+                </form>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item sm />
         </Grid>
-        <Grid item sm />
-      </Grid>
+      </Fragment>
     );
   }
 }
