@@ -11,14 +11,16 @@ import Typography from "@material-ui/core/Typography";
 const styles = theme => ({
   ...theme.spread,
   commentImage: {
-    maxWidth: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     objectFit: "cover",
     borderRadius: "50%",
-    marginLeft: 5
+    marginRight: 5,
+    marginBottom: 10
   },
   commentData: {
-    marginLeft: 5
+    marginLeft: 5,
+    paddingBottom: 10
   }
 });
 
@@ -33,7 +35,7 @@ class Comments extends Component {
             <Fragment key={createdAt}>
               <Grid item sm={10}>
                 <Grid container>
-                  <Grid item sm={3}>
+                  <Grid item sm={3} className={classes.rightAlign}>
                     <img
                       src={userImage}
                       alt="comment"
@@ -43,7 +45,7 @@ class Comments extends Component {
                   <Grid item sm={8}>
                     <div className={classes.commentData}>
                       <Typography
-                        variant="h5"
+                        variant="h6"
                         component={Link}
                         to={`/users/${userHandle}`}
                         color="primary"
@@ -53,15 +55,12 @@ class Comments extends Component {
                       <Typography variant="body2" color="textSecondary">
                         {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
                       </Typography>
-                      <hr className={classes.invisibleSeparator} />
+
                       <Typography variant="body1">{body}</Typography>
                     </div>
                   </Grid>
                 </Grid>
               </Grid>
-              {index !== comments.length - 1 && (
-                <hr className={classes.visibleSeparator} />
-              )}
             </Fragment>
           );
         })}
@@ -69,6 +68,9 @@ class Comments extends Component {
     );
   }
 }
+//               {index !== comments.length - 1 && (
+//<hr className={classes.visibleSeparator} />
+//  )}
 
 Comments.propTypes = {
   comments: PropTypes.array.isRequired

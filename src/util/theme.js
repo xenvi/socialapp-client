@@ -25,14 +25,16 @@ export default {
     },
     card: {
       backgroundColor: "#fff",
-      minWidth: "400px",
+      minWidth: "290px",
       minHeight: "460px"
     },
     formWrapper: {
-      textAlign: "center"
+      textAlign: "center",
+      width: "100%",
+      padding: "0 10px"
     },
     form: {
-      padding: "0 25px 0 25px"
+      padding: "0 15px 0 15px"
     },
     image: {
       margin: "20px auto 10px auto",
@@ -40,9 +42,9 @@ export default {
       height: "50px"
     },
     pageTitle: {
-      fontWeight: "bold",
       color: "rgb(0,0,0,0.7)",
-      margin: "10px auto 5px auto"
+      margin: "10px auto 5px auto",
+      fontWeight: "bold"
     },
     subTitle: {
       color: "rgb(0,0,0,0.5)",
@@ -79,13 +81,11 @@ export default {
     },
     visibleSeparator: {
       width: "100%",
-      borderBottom: "1px solid rgba(0,0,0,0.1)",
       marginBottom: 20
     },
     paper: {
-      position: "fixed",
-      width: 330,
-      padding: 20
+      padding: 20,
+      margin: "0 0 20px 0"
     },
     profile: {
       "& .image-wrapper": {
@@ -98,10 +98,9 @@ export default {
         }
       },
       "& .profile-image": {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         objectFit: "cover",
-        maxWidth: "100%",
         borderRadius: "50%"
       },
       "& .profile-details": {
@@ -128,6 +127,26 @@ export default {
       "& a": {
         margin: "20px 10px"
       }
+    },
+    icon: {
+      paddingRight: 4
+    },
+    wrap: {
+      display: "flex",
+      verticalAlign: "middle",
+      marginTop: 5
+    },
+    rightSpace: {
+      paddingRight: 20
+    },
+    thickSeparator: {
+      padding: 2,
+      width: "100%",
+      border: "none",
+      backgroundColor: "rgba(0,0,0,0.05)"
+    },
+    rightAlign: {
+      textAlign: "right"
     }
   }
 };

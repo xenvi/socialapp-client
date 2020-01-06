@@ -58,82 +58,74 @@ class login extends Component {
 
     return (
       <Fragment>
-        <Navbar />
         <Grid container className={classes.formWrapper}>
           <Grid item sm />
           <Grid item sm>
-            <Card className={classes.card}>
-              <CardContent>
-                <img src={AppIcon} alt="icon" className={classes.image} />
-                <Typography variant="h3" className={classes.pageTitle}>
-                  LOGIN
+            <img src={AppIcon} alt="icon" className={classes.image} />
+            <Typography variant="h3" className={classes.pageTitle}>
+              Log In
+            </Typography>
+            <br />
+            <form
+              noValidate
+              onSubmit={this.handleSubmit}
+              className={classes.form}
+            >
+              <TextField
+                id="email"
+                name="email"
+                type="email"
+                label="Email"
+                variant="outlined"
+                margin="dense"
+                className={classes.textField}
+                helperText={errors.email}
+                error={errors.email ? true : false}
+                value={this.state.email}
+                onChange={this.handleChange}
+                fullWidth
+              />
+              <TextField
+                id="password"
+                name="password"
+                type="password"
+                label="Password"
+                variant="outlined"
+                margin="dense"
+                className={classes.textField}
+                helperText={errors.password}
+                error={errors.password ? true : false}
+                value={this.state.password}
+                onChange={this.handleChange}
+                fullWidth
+              />
+              {errors.general && (
+                <Typography variant="body2" className={classes.customError}>
+                  {errors.general}
                 </Typography>
-                <br />
-                <form
-                  noValidate
-                  onSubmit={this.handleSubmit}
-                  className={classes.form}
-                >
-                  <TextField
-                    id="email"
-                    name="email"
-                    type="email"
-                    label="Email"
-                    variant="outlined"
-                    margin="dense"
-                    className={classes.textField}
-                    helperText={errors.email}
-                    error={errors.email ? true : false}
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                    fullWidth
-                  />
-                  <TextField
-                    id="password"
-                    name="password"
-                    type="password"
-                    label="Password"
-                    variant="outlined"
-                    margin="dense"
-                    className={classes.textField}
-                    helperText={errors.password}
-                    error={errors.password ? true : false}
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                    fullWidth
-                  />
-                  {errors.general && (
-                    <Typography variant="body2" className={classes.customError}>
-                      {errors.general}
-                    </Typography>
-                  )}
-                  <br />
-                  <br />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={loading}
-                    className={classes.button}
-                  >
-                    Login
-                    {loading && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
-                  <br />
-                  <div className={classes.or}>OR</div>
-                  <small>
-                    <Link to="/signup" className={classes.link}>
-                      SIGN UP HERE
-                    </Link>
-                  </small>
-                </form>
-              </CardContent>
-            </Card>
+              )}
+              <br />
+              <br />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                className={classes.button}
+              >
+                Log In
+                {loading && (
+                  <CircularProgress size={30} className={classes.progress} />
+                )}
+              </Button>
+              <br />
+              <div className={classes.or}>OR</div>
+              <small>
+                <Link to="/signup" className={classes.link}>
+                  SIGN UP HERE
+                </Link>
+              </small>
+            </form>
           </Grid>
           <Grid item sm />
         </Grid>

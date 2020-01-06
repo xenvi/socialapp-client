@@ -18,7 +18,7 @@ import Typography from "@material-ui/core/Typography";
 //icons
 import CloseIcon from "@material-ui/icons/Close";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
-import ChatIcon from "@material-ui/icons/Chat";
+import ChatIcon from "@material-ui/icons/CommentOutlined";
 
 //redux
 import { connect } from "react-redux";
@@ -27,8 +27,9 @@ import { getPost } from "../../redux/actions/dataActions";
 const styles = theme => ({
   ...theme.spread,
   profileImage: {
-    maxWidth: 200,
-    height: 200,
+    width: 130,
+    height: 130,
+    marginRight: 10,
     borderRadius: "50%",
     objectFit: "cover"
   },
@@ -37,17 +38,21 @@ const styles = theme => ({
   },
   closeButton: {
     position: "absolute",
-    left: "90%",
-    top: "3%"
+    right: 5,
+    top: 5
   },
   expandButton: {
     position: "absolute",
-    left: "90%"
+    right: 5,
+    bottom: 5
   },
   spinnerDiv: {
     textAlign: "center",
     marginTop: 50,
     marginBottom: 50
+  },
+  centerItem: {
+    textAlign: "center"
   }
 });
 
@@ -98,11 +103,11 @@ class PostDialog extends Component {
         <CircularProgress size={200} thickness={2} />
       </div>
     ) : (
-      <Grid container spacing={3}>
-        <Grid item sm={5}>
+      <Grid container spacing={0}>
+        <Grid item sm={4} className={classes.centerItem}>
           <img src={userImage} alt="Profile" className={classes.profileImage} />
         </Grid>
-        <Grid item sm={7}>
+        <Grid item sm={7} xs>
           <Typography
             component={Link}
             color="primary"
@@ -111,20 +116,19 @@ class PostDialog extends Component {
           >
             @{userHandle}
           </Typography>
-          <hr className={classes.invisibleSeparator} />
-          <Typography variannt="body2" color="textSecondary">
+          <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
           </Typography>
           <hr className={classes.invisibleSeparator} />
           <Typography variant="body1">{body}</Typography>
-          <LikeButton postId={postId} />
-          <span>{likeCount} likes</span>
-          <MyButton tip="comments">
-            <ChatIcon color="primary" />
-          </MyButton>
-          <span>{commentCount} comments</span>
+          <div className={classes.wrap}>
+            <LikeButton postId={postId} />
+            <span className={classes.rightSpace}>{likeCount}</span>
+            <ChatIcon color="primary" className={classes.icon} />
+            <span>{commentCount}</span>
+          </div>
         </Grid>
-        <hr className={classes.visibleSeparator} />
+        <hr className={classes.thickSeparator} />
         <CommentForm postId={postId} />
         <Comments comments={comments} />
       </Grid>
@@ -144,6 +148,9 @@ class PostDialog extends Component {
           fullWidth
           maxWidth="sm"
         >
+          <DialogContent className={classes.dialogContent}>
+            {dialogMarkup}
+          </DialogContent>
           <MyButton
             tip="Close"
             onClick={this.handleClose}
@@ -151,9 +158,6 @@ class PostDialog extends Component {
           >
             <CloseIcon />
           </MyButton>
-          <DialogContent className={classes.dialogContent}>
-            {dialogMarkup}
-          </DialogContent>
         </Dialog>
       </Fragment>
     );

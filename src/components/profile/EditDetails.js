@@ -13,16 +13,14 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
 
 // icons
-import EditIcon from "@material-ui/icons/Edit";
 
 const styles = theme => ({
   ...theme.spread,
-  button: {
-    float: "right"
+  detailsTitle: {
+    textAlign: "center",
+    fontWeight: "bold"
   }
 });
 
@@ -74,18 +72,23 @@ class EditDetails extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        <Tooltip title="Edit details" placement="top">
-          <IconButton onClick={this.handleOpen} className={classes.button}>
-            <EditIcon color="primary" />
-          </IconButton>
-        </Tooltip>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={this.handleOpen}
+          className={classes.button}
+        >
+          Edit Profile
+        </Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           fullWidth
           maxWidth="sm"
         >
-          <DialogTitle>Edit your details</DialogTitle>
+          <DialogTitle className={classes.detailsTitle}>
+            EDIT PROFILE
+          </DialogTitle>
           <DialogContent>
             <form>
               <TextField
@@ -94,30 +97,36 @@ class EditDetails extends Component {
                 label="Bio"
                 multiline
                 rows="3"
-                placeholder="A short bio about yourself"
+                placeholder="..."
                 className={classes.textField}
                 value={this.state.bio}
                 onChange={this.handleChange}
+                variant="outlined"
+                margin="dense"
                 fullWidth
               />
               <TextField
                 name="website"
                 type="text"
                 label="Website"
-                placeholder="Your personal/professional website"
+                placeholder="..."
                 className={classes.textField}
                 value={this.state.website}
                 onChange={this.handleChange}
+                variant="outlined"
+                margin="dense"
                 fullWidth
               />
               <TextField
                 name="location"
                 type="text"
                 label="Location"
-                placeholder="Where you live"
+                placeholder="..."
                 className={classes.textField}
                 value={this.state.location}
                 onChange={this.handleChange}
+                variant="outlined"
+                margin="dense"
                 fullWidth
               />
             </form>

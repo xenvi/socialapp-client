@@ -12,16 +12,19 @@ import withStyles from "@material-ui/core/styles/withStyles";
 const styles = theme => ({
   card: {
     display: "flex",
-    marginBottom: 20
+    margin: 0,
+    maxWidth: 500
   },
   cardContent: {
-    width: "100%",
+    width: "75%",
     flexDirection: "column",
-    padding: 25
+    padding: "15px 15px 0px 15px"
   },
   cover: {
-    minWidth: 200,
-    objectFit: "cover"
+    borderRadius: "50%",
+    width: 80,
+    height: 80,
+    margin: "15px 0 auto 15px"
   },
   handle: {
     width: 60,

@@ -7,12 +7,12 @@ import EditDetails from "./EditDetails";
 import ProfileSkeleton from "../../util/ProfileSkeleton";
 
 // MUI imports
-import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
 
 // redux imports
 import { connect } from "react-redux";
@@ -26,7 +26,20 @@ import EditIcon from "@material-ui/icons/Edit";
 import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 const styles = theme => ({
-  ...theme.spread
+  ...theme.spread,
+  centerButton: {
+    textAlign: "center"
+  },
+  buttonsLink: {
+    textAlign: "center",
+    "& a": {
+      borderRadius: 20,
+      margin: "7px 7px 9px 7px",
+      padding: "5px 20px",
+      fontWeight: "bold",
+      fontSize: 15
+    }
+  }
 });
 
 export class Profile extends Component {
@@ -114,31 +127,32 @@ export class Profile extends Component {
                 <KeyboardReturn color="primary" />
               </IconButton>
             </Tooltip>
-            <EditDetails />
+            <div className={classes.centerButton}>
+              <EditDetails />
+            </div>
           </div>
         </Paper>
       ) : (
         <Paper className={classes.paper}>
-          <Typography variant="body2" align="center">
-            No profile found, please login again.
-          </Typography>
-          <div className={classes.buttons}>
-            <Button
-              variant="contained"
-              color="primary"
-              component={Link}
-              to="/login"
-            >
-              Login
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={Link}
-              to="/signup"
-            >
-              Signup
-            </Button>
+          <div className={classes.profile}>
+            <div className={classes.buttonsLink}>
+              <Button
+                variant="contained"
+                color="primary"
+                component={Link}
+                to="/login"
+              >
+                Login
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                component={Link}
+                to="/signup"
+              >
+                Signup
+              </Button>
+            </div>
           </div>
         </Paper>
       )

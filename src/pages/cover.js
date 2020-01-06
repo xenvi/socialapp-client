@@ -15,10 +15,11 @@ import ChatIcon from "@material-ui/icons/Chat";
 const styles = theme => ({
   ...theme.spread,
   coverContainer: {
+    position: "absolute",
     margin: 0,
     padding: 0,
-    height: "100vh",
-    marginTop: -90
+    height: "100%",
+    marginTop: -70
   },
   leftCover: {
     backgroundColor: "#fff",
@@ -44,16 +45,18 @@ const styles = theme => ({
     }
   },
   wrapperLeft: {
-    width: 330,
-    height: 300,
+    width: 300,
+    minHeight: 310,
     fontSize: "20pt",
-    textAlign: "left"
+    textAlign: "left",
+    padding: 15
   },
   wrapperRight: {
-    width: 415,
-    height: 180,
-    fontSize: "18pt",
-    textAlign: "left"
+    width: 390,
+    minHeight: 175,
+    fontSize: "17pt",
+    textAlign: "left",
+    padding: 15
   },
   item: {
     margin: "20px 0"
@@ -63,16 +66,17 @@ const styles = theme => ({
     bottom: 0,
     backgroundColor: "#fff",
     borderTop: "1px solid rgb(0,0,0,0.1)",
-    height: 50,
+    height: 40,
     width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: 13,
+    fontSize: 11,
     color: "rgb(0,0,0,0.3)",
+    padding: "5px 0px",
     fontWeight: "bold",
     "& span": {
-      margin: "0 15px"
+      margin: "0 7px"
     }
   },
   color: {
@@ -85,7 +89,7 @@ class cover extends Component {
     const { classes } = this.props;
     return (
       <Grid container spacing={0} className={classes.coverContainer}>
-        <Grid item xs={6} className={classes.leftCover}>
+        <Grid item sm={6} xs={12} className={classes.leftCover}>
           <div className={classes.wrapperLeft}>
             <Typography variant="h3" className={classes.pageTitle}>
               The next big conversation begins with{" "}
@@ -114,7 +118,7 @@ class cover extends Component {
             </div>
           </div>
         </Grid>
-        <Grid item xs={6} className={classes.rightCover}>
+        <Grid item sm={6} xs={12} className={classes.rightCover}>
           <div className={classes.wrapperRight}>
             <div className={classes.item}>
               <PublicIcon /> <span>Stay connected to the world</span>

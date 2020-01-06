@@ -4,37 +4,41 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import PropTypes from "prop-types";
-import MyButton from "../../util/MyButton";
 import DeletePost from "./DeletePost";
 import PostDialog from "./PostDialog";
 import LikeButton from "./LikeButton";
 
 // Mui imports
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
+import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 
 // redux imports
 import { connect } from "react-redux";
 
 // icons
-import ChatIcon from "@material-ui/icons/Chat";
+import ChatIcon from "@material-ui/icons/CommentOutlined";
 
-const styles = {
+const styles = theme => ({
+  ...theme.spread,
   card: {
     position: "relative",
     display: "flex",
-    marginBottom: 20
+    paddingBottom: 15,
+    background: "#fff",
+    boxShadow: "0 5px 5px rgba(0,0,0,0.2)",
+    marginTop: 1
   },
   image: {
-    minWidth: 200
+    borderRadius: "50%",
+    width: 60,
+    height: 60,
+    margin: "15px 0 auto 15px",
+    objectFit: "cover"
   },
   content: {
-    padding: 25,
-    objectFit: "cover"
+    padding: "15px 15px 0px 15px"
   }
-};
+});
 
 class Post extends Component {
   render() {
@@ -63,39 +67,54 @@ class Post extends Component {
       ) : null;
 
     return (
-      <Card className={classes.card}>
-        <CardMedia
-          image={userImage}
-          title="Profile image"
-          className={classes.image}
-        />
-        <CardContent className={classes.content}>
-          <Typography
-            variant="h5"
-            component={Link}
-            to={`/users/${userHandle}`}
-            color="primary"
-          >
-            {userHandle}
-          </Typography>
-          {deleteButton}
-          <Typography variant="body2" color="textSecondary">
-            {dayjs(createdAt).fromNow()}
-          </Typography>
-          <Typography variant="body1">{body}</Typography>
-          <LikeButton postId={postId} />
-          <span>{likeCount} likes</span>
-          <MyButton tip="comments">
-            <ChatIcon color="primary" />
-          </MyButton>
-          <span>{commentCount} comments</span>
-          <PostDialog
-            postId={postId}
-            userHandle={userHandle}
-            openDialog={this.props.openDialog}
-          />
-        </CardContent>
-      </Card>
+      <div className={classes.card}>
+        <Grid container>
+          <Grid item>
+            <img src={userImage} className={classes.image} alt="profile" />
+          </Grid>
+
+          <Grid item sm xs container>
+            <Grid
+              item
+              xs
+              container
+              direction="column"
+              spacing={1}
+              className={classes.content}
+            >
+              <Grid item xs>
+                <Typography
+                  variant="h5"
+                  component={Link}
+                  to={`/users/${userHandle}`}
+                  color="primary"
+                >
+                  {userHandle}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {dayjs(createdAt).fromNow()}
+                </Typography>
+                <Typography variant="body1">{body}</Typography>
+
+                <div className={classes.wrap}>
+                  <LikeButton postId={postId} />
+                  <span className={classes.rightSpace}>{likeCount}</span>
+                  <ChatIcon color="primary" className={classes.icon} />
+                  <span>{commentCount}</span>
+                </div>
+              </Grid>
+            </Grid>
+            <Grid item>
+              {deleteButton}
+              <PostDialog
+                postId={postId}
+                userHandle={userHandle}
+                openDialog={this.props.openDialog}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
     );
   }
 }

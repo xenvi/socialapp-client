@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import MyButton from "../../util/MyButton";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 //icons
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -9,6 +9,10 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 
 import { connect } from "react-redux";
 import { likePost, unlikePost } from "../../redux/actions/dataActions";
+
+const styles = theme => ({
+  ...theme.spread
+});
 
 class LikeButton extends Component {
   likedPost = () => {
@@ -27,25 +31,29 @@ class LikeButton extends Component {
     this.props.unlikePost(this.props.postId);
   };
   render() {
+    const { classes } = this.props;
     const { authenticated } = this.props.user;
     const likeButton = !authenticated ? (
       // if not authenticated, link to login
       <Link to="/login">
-        <MyButton tip="Like">
-          <FavoriteBorder color="primary" />
-        </MyButton>
+        <FavoriteBorder color="primary" className={classes.icon} />
       </Link>
     ) : // if authenticated and...
     this.likedPost() ? (
       // post is already liked: unlike
-      <MyButton tip="Unlike" onClick={this.unlikePost}>
-        <FavoriteIcon color="primary" />
-      </MyButton>
+      <FavoriteIcon
+        color="primary"
+        onClick={this.unlikePost}
+        className={classes.icon}
+      />
     ) : (
       // post isn't already liked: like
-      <MyButton tip="Like" onClick={this.likePost}>
-        <FavoriteBorder color="primary" />
-      </MyButton>
+
+      <FavoriteBorder
+        color="primary"
+        onClick={this.likePost}
+        className={classes.icon}
+      />
     );
     return likeButton;
   }
@@ -67,4 +75,7 @@ const mapActionsToProps = {
   unlikePost
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(LikeButton);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(LikeButton));

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import MyButton from "../../util/MyButton";
 import CreatePost from "../post/CreatePost";
 import Notifications from "./Notifications";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 // MaterialUI imports
 import AppBar from "@material-ui/core/AppBar";
@@ -14,23 +15,48 @@ import Button from "@material-ui/core/Button";
 // icons
 import HomeIcon from "@material-ui/icons/Home";
 
+const styles = theme => ({
+  image: {
+    width: 25,
+    height: 25,
+    borderRadius: "50%"
+  },
+  navBar: {
+    boxShadow: "0 0px 5px rgba(0,0,0,0.2)",
+    position: "static"
+  }
+});
+
 export class Navbar extends Component {
   render() {
-    const { authenticated } = this.props;
+    const {
+      classes,
+      authenticated,
+      user: {
+        credentials: { imageUrl, handle }
+      }
+    } = this.props;
+
     return (
-      <AppBar color="primary">
+      <AppBar color="tertiary" className={classes.navBar}>
         <Toolbar className="nav-container">
           {authenticated ? (
             <Fragment>
-              <CreatePost />
-
               <Link to="/home">
                 <MyButton tip="Home">
                   <HomeIcon />
                 </MyButton>
               </Link>
 
+              <CreatePost />
+
               <Notifications />
+
+              <Link to={`/users/${handle}`}>
+                <MyButton tip="Profile">
+                  <img src={imageUrl} alt="profile" className={classes.image} />
+                </MyButton>
+              </Link>
             </Fragment>
           ) : (
             <Fragment>
@@ -52,11 +78,13 @@ export class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  authenticated: PropTypes.bool.isRequired
+  authenticated: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  authenticated: state.user.authenticated
+  authenticated: state.user.authenticated,
+  user: state.user
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(withStyles(styles)(Navbar));

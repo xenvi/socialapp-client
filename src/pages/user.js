@@ -7,9 +7,14 @@ import StaticProfile from "../components/profile/StaticProfile";
 import PostSkeleton from "../util/PostSkeleton";
 import ProfileSkeleton from "../util/ProfileSkeleton";
 import Navbar from "../components/layout/Navbar";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 import { connect } from "react-redux";
 import { getUserData } from "../redux/actions/dataActions";
+
+const styles = theme => ({
+  ...theme.spread
+});
 
 class user extends Component {
   state = {
@@ -54,16 +59,16 @@ class user extends Component {
     return (
       <Fragment>
         <Navbar />
-        <Grid container spacing={3}>
-          <Grid item sm={8} xs={12}>
-            {postsMarkup}
-          </Grid>
+        <Grid container spacing={0}>
           <Grid item sm={4} xs={12}>
             {this.state.profile === null ? (
               <ProfileSkeleton />
             ) : (
               <StaticProfile profile={this.state.profile} />
             )}
+          </Grid>
+          <Grid item sm={8} xs={12}>
+            {postsMarkup}
           </Grid>
         </Grid>
       </Fragment>
@@ -80,4 +85,6 @@ const mapStateToProps = state => ({
   data: state.data
 });
 
-export default connect(mapStateToProps, { getUserData })(user);
+export default connect(mapStateToProps, { getUserData })(
+  withStyles(styles)(user)
+);

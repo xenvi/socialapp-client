@@ -101,6 +101,14 @@ class Notifications extends Component {
         </Tooltip>
         <Menu
           anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center"
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center"
+          }}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
           onEntered={this.onMenuOpened}
