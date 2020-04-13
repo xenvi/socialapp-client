@@ -13,15 +13,20 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
 
 // icons
 
-const styles = theme => ({
+const styles = (theme) => ({
   ...theme.spread,
   detailsTitle: {
     textAlign: "center",
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
+});
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 class EditDetails extends Component {
@@ -29,14 +34,14 @@ class EditDetails extends Component {
     bio: "",
     website: "",
     location: "",
-    open: false
+    open: false,
   };
 
-  mapUserDetailsToState = credentials => {
+  mapUserDetailsToState = (credentials) => {
     this.setState({
       bio: credentials.bio ? credentials.bio : "",
       website: credentials.website ? credentials.website : "",
-      location: credentials.location ? credentials.location : ""
+      location: credentials.location ? credentials.location : "",
     });
   };
 
@@ -53,16 +58,16 @@ class EditDetails extends Component {
     this.mapUserDetailsToState(credentials);
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
   handleSubmit = () => {
     const userDetails = {
       bio: this.state.bio,
       website: this.state.website,
-      location: this.state.location
+      location: this.state.location,
     };
     this.props.editUserDetails(userDetails);
     this.handleClose();
@@ -75,19 +80,20 @@ class EditDetails extends Component {
         <Button
           variant="outlined"
           color="primary"
+          className={classes.subtleButton}
           onClick={this.handleOpen}
-          className={classes.button}
         >
           Edit Profile
         </Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
+          TransitionComponent={Transition}
           fullWidth
           maxWidth="sm"
         >
           <DialogTitle className={classes.detailsTitle}>
-            EDIT PROFILE
+            Edit Profile
           </DialogTitle>
           <DialogContent>
             <form>
@@ -147,11 +153,11 @@ class EditDetails extends Component {
 
 EditDetails.propTypes = {
   editUserDetails: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  credentials: state.user.credentials
+const mapStateToProps = (state) => ({
+  credentials: state.user.credentials,
 });
 
 export default connect(mapStateToProps, { editUserDetails })(

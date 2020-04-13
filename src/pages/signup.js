@@ -1,9 +1,7 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import AppIcon from "../images/icon.ico";
 import { Link } from "react-router-dom";
-import Navbar from "../components/layout/Navbar";
 
 // MUI imports
 import Grid from "@material-ui/core/Grid";
@@ -11,15 +9,82 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 
 // redux imports
 import { connect } from "react-redux";
 import { signupUser } from "../redux/actions/userActions";
 
-const styles = theme => ({
-  ...theme.spread
+//icons
+import PublicIcon from "@material-ui/icons/Public";
+import PeopleIcon from "@material-ui/icons/People";
+import ChatIcon from "@material-ui/icons/Chat";
+
+const styles = (theme) => ({
+  ...theme.spread,
+  coverContainer: {
+    position: "absolute",
+    margin: 0,
+    padding: 0,
+    height: "100%",
+  },
+  rightCover: {
+    backgroundColor: "#fff",
+    color: "#fff",
+    fontWeight: "bold",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonsCover: {
+    "& a": {
+      borderRadius: 20,
+      margin: "10px 10px 10px 0",
+      padding: "7px 25px",
+      fontWeight: "bold",
+      fontSize: 15,
+    },
+  },
+  wrapperLeft: {
+    width: 490,
+    height: "auto",
+    fontSize: "20pt",
+    textAlign: "left",
+    padding: 15,
+  },
+  wrapperRight: {
+    maxWidth: "425px",
+    height: "auto",
+    fontSize: "17pt",
+    textAlign: "left",
+    padding: 15,
+  },
+  item: {
+    margin: "20px 0",
+    letterSpacing: "1px",
+    fontSize: 25,
+    textShadow: "0 7px 15px rgba(0,0,0,0.5)",
+  },
+  bottomNav: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "#fff",
+    borderTop: "1px solid rgb(0,0,0,0.1)",
+    height: 40,
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 11,
+    color: "rgb(0,0,0,0.3)",
+    padding: "5px 0px",
+    fontWeight: "bold",
+    "& span": {
+      margin: "0 7px",
+    },
+  },
+  color: {
+    color: theme.palette.primary.dark,
+  },
 });
 
 class signup extends Component {
@@ -30,7 +95,7 @@ class signup extends Component {
       password: "",
       confirmPassword: "",
       handle: "",
-      errors: {}
+      errors: {},
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -38,42 +103,54 @@ class signup extends Component {
       this.setState({ errors: nextProps.UI.errors });
     }
   }
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({
-      loading: true
+      loading: true,
     });
     const newUserData = {
       email: this.state.email,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,
-      handle: this.state.handle
+      handle: this.state.handle,
     };
     this.props.signupUser(newUserData, this.props.history);
   };
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
   render() {
     const {
       classes,
-      UI: { loading }
+      UI: { loading },
     } = this.props;
     const { errors } = this.state;
 
     return (
-      <Fragment>
-        <Navbar />
-        <Grid container className={classes.formWrapper}>
-          <Grid item sm />
-          <Grid item sm>
-            <Card className={classes.card}>
-              <CardContent>
-                <img src={AppIcon} alt="icon" className={classes.image} />
-                <Typography variant="h3" className={classes.pageTitle}>
-                  SIGNUP
+      <Grid container spacing={0} className={classes.coverContainer}>
+        <Grid item sm={6} xs={12} className="gradientbg leftCover">
+          <div className={classes.wrapperLeft}>
+            <Typography className={classes.brand}>Chatsy</Typography>
+            <div className={classes.item}>
+              <PublicIcon /> <span>Stay connected to the world</span>
+            </div>
+            <div className={classes.item}>
+              <PeopleIcon /> <span>Meet others with similar interests</span>
+            </div>
+            <div className={classes.item}>
+              <ChatIcon /> <span>Start the conversation</span>
+            </div>
+          </div>
+        </Grid>
+        <Grid item sm={6} xs={12} className={classes.rightCover}>
+          <div className={classes.wrapperRight}>
+            <Grid container className={classes.formWrapper}>
+              <Grid item sm xs={12}>
+                <Typography className={classes.pageTitle}>NEW USER?</Typography>
+                <Typography className={classes.subTitle}>
+                  Start the conversation.
                 </Typography>
                 <br />
                 <form
@@ -159,20 +236,35 @@ class signup extends Component {
                       />
                     )}
                   </Button>
-                  <br />
-                  <div className={classes.or}>OR</div>
-                  <small>
-                    <Link to="/login" className={classes.link}>
-                      LOG IN HERE
-                    </Link>
-                  </small>
+
+                  <div className={classes.or}>Already have an account?</div>
+                  <Link to="/" className={classes.link}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="secondary"
+                      disabled={loading}
+                      className={classes.button}
+                    >
+                      LOG IN
+                    </Button>
+                  </Link>
                 </form>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item sm />
+              </Grid>
+            </Grid>
+          </div>
         </Grid>
-      </Fragment>
+        <div className={classes.bottomNav}>
+          <span>ABOUT</span>
+          <span>SUPPORT</span>
+          <span>PRIVACY POLICY</span>
+          <span>TERMS</span>
+          <span>DEVELOPMENT</span>
+          <span>API</span>
+          <span>JOBS</span>
+          <span>© SA 2019</span>
+        </div>
+      </Grid>
     );
   }
 }
@@ -181,12 +273,12 @@ signup.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
-  signupUser: PropTypes.func.isRequired
+  signupUser: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user,
-  UI: state.UI
+  UI: state.UI,
 });
 
 export default connect(mapStateToProps, { signupUser })(

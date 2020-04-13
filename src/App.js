@@ -18,9 +18,9 @@ import themeFile from "./util/theme";
 //Pages
 import cover from "./pages/cover";
 import home from "./pages/home";
-import login from "./pages/login";
 import signup from "./pages/signup";
 import user from "./pages/user";
+import notifications from "./pages/notifications";
 
 import axios from "axios";
 
@@ -50,7 +50,8 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path="/home" component={home} />
-              <AuthRoute exact path="/login" component={login} />
+
+              <Route exact path="/notifications" component={notifications} />
               <AuthRoute exact path="/signup" component={signup} />
               <Route exact path="/users/:handle" component={user} />
               <Route

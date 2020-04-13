@@ -19,13 +19,13 @@ const styles = {
   deleteButton: {
     position: "absolute",
     right: 5,
-    top: 5
-  }
+    top: 5,
+  },
 };
 
 class DeletePost extends Component {
   state = {
-    open: false
+    open: false,
   };
   handleOpen = () => {
     this.setState({ open: true });
@@ -72,7 +72,7 @@ class DeletePost extends Component {
 DeletePost.propTypes = {
   deletePost: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  postId: PropTypes.string.isRequired
+  postId: PropTypes.string.isRequired,
 };
 
 export default connect(null, { deletePost })(withStyles(styles)(DeletePost));

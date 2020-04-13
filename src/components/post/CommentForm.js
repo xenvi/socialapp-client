@@ -4,24 +4,37 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // mui importants
 import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
+import { InputBase } from "@material-ui/core";
 
 import { connect } from "react-redux";
 import { submitComment } from "../../redux/actions/dataActions";
 
-const styles = theme => ({
+const styles = (theme) => ({
   ...theme.spread,
-  centerAlign: {
-    textAlign: "center",
-    margin: "0 auto"
-  }
+  container: {
+    padding: "5px 10px",
+    background: "#fff",
+    textAlign: "right",
+    display: "flex",
+    justifyContent: "flex-start",
+    width: "100%",
+  },
+  userImage: {
+    objectFit: "cover",
+    borderRadius: "50%",
+    width: 60,
+    height: 60,
+  },
+  formContent: {
+    marginLeft: 15,
+    width: "100%",
+  },
 });
 
 class CommentForm extends Component {
   state = {
     body: "",
-    errors: {}
+    errors: {},
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -33,43 +46,53 @@ class CommentForm extends Component {
     }
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.submitComment(this.props.postId, { body: this.state.body });
+
+    this.setState({ body: "", errors: {} });
   };
 
   render() {
-    const { classes, authenticated } = this.props;
+    const {
+      classes,
+      authenticated,
+      user: {
+        credentials: { imageUrl },
+      },
+    } = this.props;
     const errors = this.state.errors;
 
     const commentFormMarkup = authenticated ? (
-      <Grid item sm={10} xs className={classes.centerAlign}>
-        <form onSubmit={this.handleSubmit}>
-          <TextField
+      <div className={classes.container}>
+        <img src={imageUrl} alt="profile" className={classes.userImage} />
+        <form onSubmit={this.handleSubmit} className={classes.formContent}>
+          <InputBase
             name="body"
             type="text"
-            label="Comment on post"
+            placeholder="Add a comment ..."
             error={errors.comment ? true : false}
             helperText={errors.comment}
             value={this.state.body}
             onChange={this.handleChange}
             fullWidth
             className={classes.textField}
+            multiline
+            minRow="2"
           />
           <Button
             type="submit"
             variant="contained"
             color="primary"
-            className={classes.button}
+            className={classes.submitButton}
           >
-            Submit
+            Post
           </Button>
         </form>
-        <br />
-      </Grid>
+      </div>
     ) : null;
     return commentFormMarkup;
   }
@@ -80,12 +103,14 @@ CommentForm.propTypes = {
   UI: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
-  authenticated: PropTypes.bool.isRequired
+  authenticated: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   UI: state.UI,
-  authenticated: state.user.authenticated
+  authenticated: state.user.authenticated,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, { submitComment })(

@@ -18,26 +18,22 @@ import { connect } from "react-redux";
 // icons
 import ChatIcon from "@material-ui/icons/CommentOutlined";
 
-const styles = theme => ({
+const styles = (theme) => ({
   ...theme.spread,
-  card: {
-    position: "relative",
-    display: "flex",
-    paddingBottom: 15,
-    background: "#fff",
-    boxShadow: "0 5px 5px rgba(0,0,0,0.2)",
-    marginTop: 1
-  },
   image: {
     borderRadius: "50%",
     width: 60,
     height: 60,
     margin: "15px 0 auto 15px",
-    objectFit: "cover"
+    objectFit: "cover",
   },
   content: {
-    padding: "15px 15px 0px 15px"
-  }
+    padding: "15px 15px 0px 15px",
+  },
+  handle: {
+    marginRight: 5,
+    fontSize: 18,
+  },
 });
 
 class Post extends Component {
@@ -52,12 +48,12 @@ class Post extends Component {
         body,
         postId,
         likeCount,
-        commentCount
+        commentCount,
       },
       user: {
         authenticated,
-        credentials: { handle }
-      }
+        credentials: { handle },
+      },
     } = this.props;
 
     // delete post button
@@ -67,7 +63,7 @@ class Post extends Component {
       ) : null;
 
     return (
-      <div className={classes.card}>
+      <div className="card">
         <Grid container>
           <Grid item>
             <img src={userImage} className={classes.image} alt="profile" />
@@ -84,15 +80,15 @@ class Post extends Component {
             >
               <Grid item xs>
                 <Typography
-                  variant="h5"
                   component={Link}
                   to={`/users/${userHandle}`}
                   color="primary"
+                  className={classes.handle}
                 >
                   {userHandle}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {dayjs(createdAt).fromNow()}
+                <Typography variant="caption" color="textSecondary">
+                  • {dayjs(createdAt).fromNow()}
                 </Typography>
                 <Typography variant="body1">{body}</Typography>
 
@@ -123,11 +119,11 @@ Post.propTypes = {
   user: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  openDialog: PropTypes.bool
+  openDialog: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(Post));

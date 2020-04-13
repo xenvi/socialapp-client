@@ -4,22 +4,33 @@ import axios from "axios";
 import Post from "../components/post/Post";
 import Grid from "@material-ui/core/Grid";
 import StaticProfile from "../components/profile/StaticProfile";
+import Navbar from "../components/layout/Navbar";
 import PostSkeleton from "../util/PostSkeleton";
 import ProfileSkeleton from "../util/ProfileSkeleton";
-import Navbar from "../components/layout/Navbar";
+import ProfileNavbar from "../components/layout/ProfileNavbar";
 import withStyles from "@material-ui/core/styles/withStyles";
+
+import Typography from "@material-ui/core/Typography";
 
 import { connect } from "react-redux";
 import { getUserData } from "../redux/actions/dataActions";
 
-const styles = theme => ({
-  ...theme.spread
+const styles = (theme) => ({
+  ...theme.spread,
+  container: {
+    marginTop: 70,
+  },
+  posts: {
+    background: "#fafafa",
+    minHeight: "60vh",
+  },
 });
 
 class user extends Component {
   state = {
     profile: null,
-    postIdParam: null
+    userHandle: null,
+    postIdParam: null,
   };
   componentDidMount() {
     // component loaded
@@ -31,15 +42,17 @@ class user extends Component {
     this.props.getUserData(handle);
     axios
       .get(`/user/${handle}`)
-      .then(res => {
+      .then((res) => {
         this.setState({
-          profile: res.data.user
+          profile: res.data.user,
+          userHandle: res.data.user.handle,
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
   render() {
     const { posts, loading } = this.props.data;
+    const { classes } = this.props;
     const { postIdParam } = this.state;
 
     const postsMarkup = loading ? (
@@ -47,9 +60,9 @@ class user extends Component {
     ) : posts === null ? (
       <p>No posts from this user.</p>
     ) : !postIdParam ? (
-      posts.map(post => <Post key={post.postId} post={post} />)
+      posts.map((post) => <Post key={post.postId} post={post} />)
     ) : (
-      posts.map(post => {
+      posts.map((post) => {
         if (post.postId !== postIdParam)
           return <Post key={post.postId} post={post} />;
         else return <Post key={post.postId} post={post} openDialog />;
@@ -58,17 +71,28 @@ class user extends Component {
 
     return (
       <Fragment>
-        <Navbar />
-        <Grid container spacing={0}>
-          <Grid item sm={4} xs={12}>
+        {this.state.profile === null ? (
+          <Navbar />
+        ) : (
+          <ProfileNavbar profile={this.state.profile} />
+        )}
+
+        <Grid container spacing={0} justify="center">
+          <Grid item md={12} xs={12} className={classes.container}>
             {this.state.profile === null ? (
               <ProfileSkeleton />
             ) : (
-              <StaticProfile profile={this.state.profile} />
+              <StaticProfile
+                profile={this.state.profile}
+                userHandle={this.state.userHandle}
+              />
             )}
+            <div className="label">
+              <Typography variant="button">Posts</Typography>
+            </div>
           </Grid>
-          <Grid item sm={8} xs={12}>
-            {postsMarkup}
+          <Grid item md={12} xs className={classes.posts}>
+            <div className="center">{postsMarkup}</div>
           </Grid>
         </Grid>
       </Fragment>
@@ -78,11 +102,11 @@ class user extends Component {
 
 user.propTypes = {
   getUserData: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  data: state.data
+const mapStateToProps = (state) => ({
+  data: state.data,
 });
 
 export default connect(mapStateToProps, { getUserData })(

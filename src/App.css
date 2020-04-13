@@ -1,18 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+
 html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #fff;
   padding: 0;
   margin: 0;
-  /*background: rgb(180, 66, 122);
-  background: linear-gradient(
-    120deg,
-    rgba(180, 66, 122, 1) 0%,
-    rgba(81, 132, 250, 1) 50%,
-    rgba(0, 212, 255, 1) 100%
-  );*/
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.fancytext {
+  font-family: "Fredoka One", cursive;
 }
 
 .container {
@@ -21,6 +20,9 @@ body {
 }
 .nav-container {
   margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
 .nav-container svg {
   color: #fff;
@@ -28,4 +30,133 @@ body {
 
 a {
   text-decoration: none;
+  color: #54caff;
+}
+
+.copyrightSide {
+  text-align: justify;
+  display: block;
+  font-size: 8pt;
+  color: rgba(0, 0, 0, 0.3);
+  width: 200px;
+  line-height: 150%;
+}
+.copyrightSmall {
+  text-align: center;
+  display: block;
+  font-size: 8pt;
+  padding: 20px 0;
+  color: rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  line-height: 150%;
+}
+.copyrightWrapper {
+  width: 100%;
+}
+
+.bottomPadding {
+  width: 100%;
+  padding: 35px 0;
+}
+
+.fixed {
+  position: fixed;
+  width: 100%;
+}
+
+.label {
+  background: #fff;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  padding: 5px 0;
+}
+
+.profileContainer {
+  margin: 0 auto;
+}
+
+.lightText {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.center {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* cover page */
+.leftCover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* home page */
+
+.stickybar {
+  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  height: 100%;
+  max-width: 300px;
+  top: 100px;
+  padding: 0 1em;
+}
+.feed {
+  padding: 0 1em;
+}
+.card {
+  position: relative;
+  display: flex;
+  padding-bottom: 15px;
+  width: 500px;
+  margin: 1em 0;
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+/* profile page */
+.profileNav {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* notifications */
+.notification {
+  color: #333;
+}
+
+.gradientbg {
+  background: linear-gradient(-45deg, #e73c7e, #23a6d5);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .stickybar {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .card,
+  .feed {
+    width: 100%;
+  }
 }

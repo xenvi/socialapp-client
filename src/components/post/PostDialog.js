@@ -24,43 +24,50 @@ import ChatIcon from "@material-ui/icons/CommentOutlined";
 import { connect } from "react-redux";
 import { getPost } from "../../redux/actions/dataActions";
 
-const styles = theme => ({
+const styles = (theme) => ({
   ...theme.spread,
   profileImage: {
-    width: 130,
-    height: 130,
+    width: 100,
+    height: 100,
     marginRight: 10,
     borderRadius: "50%",
-    objectFit: "cover"
+    objectFit: "cover",
   },
   dialogContent: {
-    padding: 20
+    padding: 15,
   },
   closeButton: {
     position: "absolute",
     right: 5,
-    top: 5
+    top: 5,
   },
   expandButton: {
     position: "absolute",
     right: 5,
-    bottom: 5
+    bottom: 5,
   },
   spinnerDiv: {
     textAlign: "center",
     marginTop: 50,
-    marginBottom: 50
+    marginBottom: 50,
   },
   centerItem: {
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
+  container: {
+    padding: "2em 0",
+    background: "red",
+  },
+  postDetails: {
+    paddingBottom: 15,
+  },
 });
 
 class PostDialog extends Component {
   state = {
     open: false,
     oldPath: "",
-    newPath: ""
+    newPath: "",
   };
   componentDidMount() {
     if (this.props.openDialog) this.handleOpen();
@@ -93,9 +100,10 @@ class PostDialog extends Component {
         commentCount,
         userHandle,
         userImage,
-        comments
+        comments,
       },
-      UI: { loading }
+
+      UI: { loading },
     } = this.props;
 
     const dialogMarkup = loading ? (
@@ -104,17 +112,17 @@ class PostDialog extends Component {
       </div>
     ) : (
       <Grid container spacing={0}>
-        <Grid item sm={4} className={classes.centerItem}>
+        <Grid item sm={3} className={classes.centerItem}>
           <img src={userImage} alt="Profile" className={classes.profileImage} />
         </Grid>
-        <Grid item sm={7} xs>
+        <Grid item sm={7} xs className={classes.postDetails}>
           <Typography
             component={Link}
             color="primary"
             variant="h5"
             to={`/users/${userHandle}`}
           >
-            @{userHandle}
+            {userHandle}
           </Typography>
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
@@ -128,9 +136,14 @@ class PostDialog extends Component {
             <span>{commentCount}</span>
           </div>
         </Grid>
+
         <hr className={classes.thickSeparator} />
-        <CommentForm postId={postId} />
+
         <Comments comments={comments} />
+
+        <hr className={classes.thickSeparator} />
+
+        <CommentForm postId={postId} />
       </Grid>
     );
     return (
@@ -169,12 +182,12 @@ PostDialog.propTypes = {
   postId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
   post: PropTypes.object.isRequired,
-  UI: PropTypes.object.isRequired
+  UI: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   post: state.data.post,
-  UI: state.UI
+  UI: state.UI,
 });
 
 export default connect(mapStateToProps, { getPost })(

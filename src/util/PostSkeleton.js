@@ -3,75 +3,78 @@ import NoImg from "../images/no-img.png";
 import PropTypes from "prop-types";
 
 // mUI imports
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-
 import withStyles from "@material-ui/core/styles/withStyles";
 
-const styles = theme => ({
-  card: {
-    display: "flex",
-    margin: 0,
-    maxWidth: 500
-  },
-  cardContent: {
+import Grid from "@material-ui/core/Grid";
+
+const styles = (theme) => ({
+  ...theme.spread,
+  content: {
     width: "75%",
     flexDirection: "column",
-    padding: "15px 15px 0px 15px"
+    padding: "15px 15px 0px 15px",
   },
-  cover: {
+  image: {
     borderRadius: "50%",
-    width: 80,
-    height: 80,
-    margin: "15px 0 auto 15px"
+    width: 60,
+    height: 60,
+    margin: "15px 0 auto 15px",
+    objectFit: "cover",
   },
   handle: {
     width: 60,
     height: 18,
     backgroundColor: theme.palette.primary.main,
-    marginBottom: 7
-  },
-  date: {
-    height: 14,
-    width: 100,
-    backgroundColor: "rgba(0,0,0,0.3)",
-    marginBottom: 10
+    marginBottom: 7,
   },
   fullLine: {
     height: 15,
     width: "90%",
     marginBottom: 10,
-    backgroundColor: "rgba(0,0,0,0.6)"
+    backgroundColor: "rgba(0,0,0,0.6)",
   },
   halfLine: {
     height: 15,
     width: "50%",
     marginBottom: 10,
-    backgroundColor: "rgba(0,0,0,0.6)"
-  }
+    backgroundColor: "rgba(0,0,0,0.6)",
+  },
 });
 
-const PostSkeleton = props => {
+const PostSkeleton = (props) => {
   const { classes } = props;
 
   const content = Array.from({ length: 5 }).map((item, index) => (
-    <Card className={classes.card} key={index}>
-      <CardMedia className={classes.cover} image={NoImg} />
-      <CardContent className={classes.cardContent}>
-        <div className={classes.handle} />
-        <div className={classes.date} />
-        <div className={classes.fullLine} />
-        <div className={classes.fullLine} />
-        <div className={classes.halfLine} />
-      </CardContent>
-    </Card>
+    <div className="card" key={index}>
+      <Grid container>
+        <Grid item>
+          <img src={NoImg} className={classes.image} alt="profile" />
+        </Grid>
+        <Grid item sm xs container>
+          <Grid
+            item
+            xs
+            container
+            direction="column"
+            spacing={1}
+            className={classes.content}
+          >
+            <Grid item xs>
+              <div className={classes.handle} />
+              <div className={classes.fullLine} />
+              <div className={classes.fullLine} />
+              <div className={classes.halfLine} />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </div>
   ));
   return <Fragment>{content}</Fragment>;
 };
 
 PostSkeleton.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(PostSkeleton);
