@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import NoImg from "../images/no-img.png";
+import NoImg from "../images/no-img.jpg";
 import PropTypes from "prop-types";
 
 // mUI imports

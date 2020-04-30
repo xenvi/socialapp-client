@@ -1,28 +1,23 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import "./script.js";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import jwtDecode from "jwt-decode";
-
+import axios from "axios";
 //Redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { SET_AUTHENTICATED } from "./redux/types";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
-
 //Components
 import AuthRoute from "./util/AuthRoute";
 import themeFile from "./util/theme";
-
 //Pages
 import cover from "./pages/cover";
 import home from "./pages/home";
-import signup from "./pages/signup";
 import user from "./pages/user";
-import notifications from "./pages/notifications";
-
-import axios from "axios";
 
 const theme = createMuiTheme(themeFile);
 
@@ -50,9 +45,6 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path="/home" component={home} />
-
-              <Route exact path="/notifications" component={notifications} />
-              <AuthRoute exact path="/signup" component={signup} />
               <Route exact path="/users/:handle" component={user} />
               <Route
                 exact

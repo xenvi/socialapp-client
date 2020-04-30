@@ -51,8 +51,10 @@ class user extends Component {
       .catch((err) => console.log(err));
   }
   render() {
-    const { posts, loading } = this.props.data;
-    const { classes } = this.props;
+    const {
+      classes,
+      data: { posts, loading },
+    } = this.props;
     const { postIdParam } = this.state;
 
     const postsMarkup = loading ? (

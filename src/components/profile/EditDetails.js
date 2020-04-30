@@ -15,8 +15,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 
-// icons
-
 const styles = (theme) => ({
   ...theme.spread,
   detailsTitle: {
@@ -37,6 +35,11 @@ class EditDetails extends Component {
     open: false,
   };
 
+  componentDidMount() {
+    const { credentials } = this.props;
+    this.mapUserDetailsToState(credentials);
+  }
+
   mapUserDetailsToState = (credentials) => {
     this.setState({
       bio: credentials.bio ? credentials.bio : "",
@@ -52,11 +55,6 @@ class EditDetails extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
-
-  componentDidMount() {
-    const { credentials } = this.props;
-    this.mapUserDetailsToState(credentials);
-  }
 
   handleChange = (event) => {
     this.setState({

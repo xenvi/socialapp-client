@@ -9,14 +9,12 @@ import Notifications from "./Notifications";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Typography } from "@material-ui/core";
-import Badge from "@material-ui/core/Badge";
 
 // redux imports
 import { connect } from "react-redux";
 
 // icons
 import HomeIcon from "@material-ui/icons/Home";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 
 const styles = (theme) => ({
   ...theme.spread,

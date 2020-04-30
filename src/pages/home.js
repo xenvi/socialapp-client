@@ -79,13 +79,13 @@ class home extends Component {
     return (
       <Fragment>
         <Navbar />
-        <Grid container spacing={false} className={classes.body}>
-          <Grid item className="feed">
+        <Grid container spacing={0} className={classes.body}>
+          <Grid item xs className="feed">
             <Typography className={classes.sectionTitle}>Home</Typography>
             <CreatePost />
             {recentPostsMarkup}
           </Grid>
-          <Grid item className="stickybar">
+          <Grid item xs className="stickybar">
             <div className={classes.profile}>
               <img
                 src={imageUrl}
@@ -100,14 +100,18 @@ class home extends Component {
                 {handle}
               </Typography>
             </div>
-            <div className={classes.copyright}>
-              <span>
-                ABOUT • SUPPORT • PRIVACY POLICY • TERMS • DEVELOPMENT • API •
-                JOBS • © SA 2019
-              </span>
-            </div>
           </Grid>
         </Grid>
+        <div className={classes.bottomNav}>
+          <span>ABOUT</span>
+          <span>SUPPORT</span>
+          <span>PRIVACY POLICY</span>
+          <span>TERMS</span>
+          <span>DEVELOPMENT</span>
+          <span>API</span>
+          <span>JOBS</span>
+          <span>© SA 2019</span>
+        </div>
       </Fragment>
     );
   }

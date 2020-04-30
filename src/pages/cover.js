@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
 
 // mui imports
 import Typography from "@material-ui/core/Typography";
@@ -10,31 +9,12 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-//icons
-import PublicIcon from "@material-ui/icons/Public";
-import PeopleIcon from "@material-ui/icons/People";
-import ChatIcon from "@material-ui/icons/Chat";
-
 // redux
 import { connect } from "react-redux";
-import { loginUser } from "../redux/actions/userActions";
+import { loginUser, signupUser } from "../redux/actions/userActions";
 
 const styles = (theme) => ({
   ...theme.spread,
-  coverContainer: {
-    position: "absolute",
-    margin: 0,
-    padding: 0,
-    height: "100%",
-  },
-  rightCover: {
-    backgroundColor: "#fff",
-    color: "#fff",
-    fontWeight: "bold",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   buttonsCover: {
     "& a": {
       borderRadius: 20,
@@ -44,46 +24,23 @@ const styles = (theme) => ({
       fontSize: 15,
     },
   },
-  wrapperLeft: {
-    width: 490,
-    height: "auto",
-    fontSize: "20pt",
-    textAlign: "left",
-    padding: 15,
-  },
-  wrapperRight: {
-    maxWidth: "425px",
-    height: "auto",
-    fontSize: "17pt",
-    textAlign: "left",
-    padding: 15,
-  },
   item: {
     margin: "20px 0",
     letterSpacing: "1px",
     fontSize: 23,
     textShadow: "0 7px 15px rgba(0,0,0,0.5)",
   },
-  bottomNav: {
-    position: "absolute",
-    bottom: 0,
-    backgroundColor: "#fff",
-    borderTop: "1px solid rgb(0,0,0,0.1)",
-    height: 40,
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: 11,
-    color: "rgb(0,0,0,0.3)",
-    padding: "5px 0px",
-    fontWeight: "bold",
-    "& span": {
-      margin: "0 7px",
-    },
-  },
+
   color: {
     color: theme.palette.primary.dark,
+  },
+  loginFormWrapper: {
+    marginTop: 30,
+  },
+  signupFormWrapper: {
+    maxWidth: 350,
+    textAlign: "center",
+    margin: "15% auto 0 auto",
   },
 });
 
@@ -93,6 +50,10 @@ class cover extends Component {
     this.state = {
       email: "",
       password: "",
+      handle: "",
+      newEmail: "",
+      newPassword: "",
+      confirmPassword: "",
       errors: {},
     };
   }
@@ -101,13 +62,31 @@ class cover extends Component {
       this.setState({ errors: nextProps.UI.errors });
     }
   }
-  handleSubmit = (event) => {
-    event.preventDefault();
+  checkFormId = (e, id) => {
+    e.preventDefault();
+    if (id === "loginForm") {
+      this.handleLoginSubmit();
+    }
+    if (id === "signupForm") {
+      this.handleSignupSubmit();
+    }
+  };
+  handleLoginSubmit = () => {
     const userData = {
       email: this.state.email,
       password: this.state.password,
     };
+
     this.props.loginUser(userData, this.props.history);
+  };
+  handleSignupSubmit = () => {
+    const newUserData = {
+      newEmail: this.state.newEmail,
+      newPassword: this.state.newPassword,
+      confirmPassword: this.state.confirmPassword,
+      handle: this.state.handle,
+    };
+    this.props.signupUser(newUserData, this.props.history);
   };
   handleChange = (event) => {
     this.setState({
@@ -121,103 +100,171 @@ class cover extends Component {
     } = this.props;
     const { errors } = this.state;
     return (
-      <Grid container spacing={0} className={classes.coverContainer}>
-        <Grid item sm={6} xs={12} className="gradientbg leftCover">
-          <div className={classes.wrapperLeft}>
-            <Typography className={classes.brand}>Chatsy</Typography>
-            <div className={classes.item}>
-              <PublicIcon /> <span>Stay connected to the world</span>
+      <Grid container spacing={0}>
+        <Grid item xs={12} className="gradientbg coverContainer">
+          {" "}
+          <Typography className={classes.brand} id="title">
+            Chatsy
+          </Typography>
+          <Typography className="smalltitle">
+            Connect. Share. Express.
+          </Typography>
+          <div className="formWrapper">
+            <div className="login-signup-title">
+              <span className="login-title">Log In</span>{" "}
+              <span className="signup-title translucent">Sign Up</span>
             </div>
-            <div className={classes.item}>
-              <PeopleIcon /> <span>Meet others with similar interests</span>
-            </div>
-            <div className={classes.item}>
-              <ChatIcon /> <span>Start the conversation</span>
-            </div>
-          </div>
-        </Grid>
-        <Grid item sm={6} xs={12} className={classes.rightCover}>
-          <div className={classes.wrapperRight}>
-            <Grid container className={classes.formWrapper}>
-              <Grid item sm xs={12}>
-                <Typography className={classes.pageTitle}>
-                  RETURNING USER?
-                </Typography>
-                <Typography className={classes.subTitle}>
-                  Join the conversation.
-                </Typography>
+            <div id="loginContainer">
+              <form
+                noValidate
+                onSubmit={this.handleLoginSubmit}
+                id="loginForm"
+                className="is-visible"
+              >
+                <span className={classes.labels}>Email</span>
+                <TextField
+                  id="email"
+                  type="email"
+                  name="email"
+                  className={classes.textField}
+                  helperText={errors.email}
+                  error={errors.email ? true : false}
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                  InputProps={{ disableUnderline: true }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
                 <br />
-                <form
-                  noValidate
-                  onSubmit={this.handleSubmit}
-                  className={classes.form}
-                >
-                  <TextField
-                    id="email"
-                    name="email"
-                    type="email"
-                    label="Email"
-                    variant="outlined"
-                    margin="dense"
-                    className={classes.textField}
-                    helperText={errors.email}
-                    error={errors.email ? true : false}
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                    fullWidth
-                  />
-                  <TextField
-                    id="password"
-                    name="password"
-                    type="password"
-                    label="Password"
-                    variant="outlined"
-                    margin="dense"
-                    className={classes.textField}
-                    helperText={errors.password}
-                    error={errors.password ? true : false}
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                    fullWidth
-                  />
-                  {errors.general && (
-                    <Typography variant="body2" className={classes.customError}>
-                      {errors.general}
-                    </Typography>
-                  )}
-                  <br />
-                  <br />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={loading}
-                    className={classes.button}
-                  >
-                    Log In
-                    {loading && (
-                      <CircularProgress
-                        size={30}
-                        className={classes.progress}
-                      />
-                    )}
-                  </Button>
+                <span className={classes.labels}>Password</span>
+                <TextField
+                  id="password"
+                  type="password"
+                  name="password"
+                  className={classes.textField}
+                  helperText={errors.password}
+                  error={errors.password ? true : false}
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  InputProps={{ disableUnderline: true }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
+                {errors.general && (
+                  <Typography variant="body2" className={classes.customError}>
+                    {errors.general}
+                  </Typography>
+                )}
 
-                  <div className={classes.or}>Don't have an account?</div>
-                  <Link to="/signup" className={classes.link}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="secondary"
-                      disabled={loading}
-                      className={classes.button}
-                    >
-                      SIGN UP
-                    </Button>
-                  </Link>
-                </form>
-              </Grid>
-            </Grid>
+                <Button
+                  type="button"
+                  variant="contained"
+                  disabled={loading}
+                  className={classes.button}
+                  onClick={(e) => this.checkFormId(e, "loginForm")}
+                >
+                  {" "}
+                  LOGIN
+                  {loading && (
+                    <CircularProgress size={30} className={classes.progress} />
+                  )}
+                </Button>
+              </form>
+
+              <form
+                noValidate
+                onSubmit={this.handleSignupSubmit}
+                id="signupForm"
+              >
+                <span className={classes.labels}>Handle</span>
+                <TextField
+                  id="handle"
+                  type="text"
+                  name="handle"
+                  className={classes.textField}
+                  helperText={errors.handle}
+                  error={errors.handle ? true : false}
+                  value={this.state.handle}
+                  onChange={this.handleChange}
+                  InputProps={{ disableUnderline: true }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
+                <br />
+                <span className={classes.labels}>Email</span>
+                <TextField
+                  id="newEmail"
+                  type="email"
+                  name="newEmail"
+                  className={classes.textField}
+                  helperText={errors.newEmail}
+                  error={errors.newEmail ? true : false}
+                  value={this.state.newEmail}
+                  onChange={this.handleChange}
+                  InputProps={{ disableUnderline: true }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
+                <br />
+
+                <span className={classes.labels}>Password</span>
+                <TextField
+                  id="newPassword"
+                  type="password"
+                  name="newPassword"
+                  className={classes.textField}
+                  helperText={errors.newPassword}
+                  error={errors.newPassword ? true : false}
+                  value={this.state.newPassword}
+                  onChange={this.handleChange}
+                  InputProps={{ disableUnderline: true }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
+                <br />
+
+                <span className={classes.labels}>Confirm Password</span>
+                <TextField
+                  id="confirmPassword"
+                  type="password"
+                  name="confirmPassword"
+                  className={classes.textField}
+                  helperText={errors.confirmPassword}
+                  error={errors.confirmPassword ? true : false}
+                  value={this.state.confirmPassword}
+                  onChange={this.handleChange}
+                  InputProps={{ disableUnderline: true }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
+                <br />
+                {errors.general && (
+                  <Typography variant="body2" className={classes.customError}>
+                    {errors.general}
+                  </Typography>
+                )}
+
+                <Button
+                  type="button"
+                  variant="contained"
+                  disabled={loading}
+                  className={classes.button}
+                  onClick={(e) => this.checkFormId(e, "signupForm")}
+                >
+                  {" "}
+                  SIGN UP
+                  {loading && (
+                    <CircularProgress size={30} className={classes.progress} />
+                  )}
+                </Button>
+              </form>
+            </div>
           </div>
         </Grid>
         <div className={classes.bottomNav}>
@@ -228,7 +275,7 @@ class cover extends Component {
           <span>DEVELOPMENT</span>
           <span>API</span>
           <span>JOBS</span>
-          <span>© SA 2019</span>
+          <span>© CHATSY 2019</span>
         </div>
       </Grid>
     );
@@ -238,6 +285,7 @@ class cover extends Component {
 cover.propTypes = {
   classes: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
+  signupUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
 };
@@ -249,6 +297,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   loginUser,
+  signupUser,
 };
 
 export default connect(

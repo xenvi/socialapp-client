@@ -5,7 +5,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // mui imports
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { InputBase } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
 // icon imports
 
@@ -77,12 +77,12 @@ class CreatePost extends Component {
             alt="User profile"
           />
           <form onSubmit={this.handleSubmit} className={classes.formContent}>
-            <InputBase
+            <TextField
               name="body"
               type="text"
               value={this.state.body}
               multiline
-              rowsMin="3"
+              row="3"
               placeholder="What's the latest?"
               error={errors.body ? true : false}
               helperText={errors.body}
