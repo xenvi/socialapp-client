@@ -93,12 +93,18 @@ class cover extends Component {
       [event.target.name]: event.target.value,
     });
   };
+
   render() {
     const {
       classes,
       UI: { loading },
     } = this.props;
     const { errors } = this.state;
+    var loadingText = loading ? (
+      <CircularProgress size={30} className={classes.progress} />
+    ) : (
+      "LOGIN"
+    );
     return (
       <Grid container spacing={0}>
         <Grid item xs={12} className="gradientbg coverContainer">
@@ -161,15 +167,10 @@ class cover extends Component {
                 <Button
                   type="button"
                   variant="contained"
-                  disabled={loading}
                   className={classes.button}
                   onClick={(e) => this.checkFormId(e, "loginForm")}
                 >
-                  {" "}
-                  LOGIN
-                  {loading && (
-                    <CircularProgress size={30} className={classes.progress} />
-                  )}
+                  {loadingText}
                 </Button>
               </form>
 
@@ -253,7 +254,6 @@ class cover extends Component {
                 <Button
                   type="button"
                   variant="contained"
-                  disabled={loading}
                   className={classes.button}
                   onClick={(e) => this.checkFormId(e, "signupForm")}
                 >

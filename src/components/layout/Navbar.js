@@ -25,9 +25,11 @@ const styles = (theme) => ({
     margin: "0 0 0 10px",
     objectFit: "cover",
   },
-  navBar: {
+  navbar: {
     boxShadow: "0 5px 5px rgba(0,0,0,0.2)",
-    position: "fixed",
+    width: "100%",
+    background: "#333",
+    padding: "0.7em 0",
   },
   icons: {
     fontSize: 30,
@@ -49,11 +51,13 @@ export class Navbar extends Component {
     } = this.props;
 
     return (
-      <AppBar color="primary" className={classes.navBar}>
-        <Toolbar className="nav-container gradientbg">
-          <Typography className={classes.smallBrand} edge="start">
-            Chatsy
-          </Typography>
+      <div className={classes.navbar}>
+        <div className="nav-container">
+          <Link to="/home">
+            <Typography className={classes.smallBrand} edge="start">
+              Chatsy
+            </Typography>
+          </Link>
           <div className={classes.rightNav}>
             {" "}
             <Link to="/home">
@@ -61,11 +65,12 @@ export class Navbar extends Component {
             </Link>
             <Notifications />
             <Link to={`/users/${handle}`}>
+              {handle}
               <img src={imageUrl} alt="profile" className={classes.image} />
             </Link>
           </div>
-        </Toolbar>
-      </AppBar>
+        </div>
+      </div>
     );
   }
 }

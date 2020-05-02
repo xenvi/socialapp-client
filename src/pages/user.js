@@ -5,9 +5,11 @@ import Post from "../components/post/Post";
 import Grid from "@material-ui/core/Grid";
 import StaticProfile from "../components/profile/StaticProfile";
 import Navbar from "../components/layout/Navbar";
+import Leftbar from "../components/layout/Leftbar";
+
+import Rightbar from "../components/layout/Rightbar";
 import PostSkeleton from "../util/PostSkeleton";
 import ProfileSkeleton from "../util/ProfileSkeleton";
-import ProfileNavbar from "../components/layout/ProfileNavbar";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import Typography from "@material-ui/core/Typography";
@@ -18,17 +20,32 @@ import { getUserData } from "../redux/actions/dataActions";
 const styles = (theme) => ({
   ...theme.spread,
   container: {
-    marginTop: 70,
+    width: "100%",
+    height: "100vh",
+    display: "flex",
+    background: "lightblue",
   },
   posts: {
     background: "#fafafa",
     minHeight: "60vh",
   },
+  main: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    height: "100vh",
+  },
+  mainContainer: {
+    overflow: "auto",
+    padding: "1em",
+  },
+  profile: {},
 });
 
 class user extends Component {
   state = {
     profile: null,
+    posts: null,
     userHandle: null,
     postIdParam: null,
   };
@@ -39,13 +56,13 @@ class user extends Component {
 
     if (postId) this.setState({ postIdParam: postId });
 
-    this.props.getUserData(handle);
     axios
       .get(`/user/${handle}`)
       .then((res) => {
         this.setState({
           profile: res.data.user,
           userHandle: res.data.user.handle,
+          posts: res.data.posts,
         });
       })
       .catch((err) => console.log(err));
@@ -53,9 +70,9 @@ class user extends Component {
   render() {
     const {
       classes,
-      data: { posts, loading },
+      data: { loading },
     } = this.props;
-    const { postIdParam } = this.state;
+    const { postIdParam, profile, posts, userHandle } = this.state;
 
     const postsMarkup = loading ? (
       <PostSkeleton />
@@ -72,32 +89,14 @@ class user extends Component {
     );
 
     return (
-      <Fragment>
-        {this.state.profile === null ? (
+      <div className={classes.container}>
+        <Leftbar />
+        <main className={classes.main}>
           <Navbar />
-        ) : (
-          <ProfileNavbar profile={this.state.profile} />
-        )}
-
-        <Grid container spacing={0} justify="center">
-          <Grid item md={12} xs={12} className={classes.container}>
-            {this.state.profile === null ? (
-              <ProfileSkeleton />
-            ) : (
-              <StaticProfile
-                profile={this.state.profile}
-                userHandle={this.state.userHandle}
-              />
-            )}
-            <div className="label">
-              <Typography variant="button">Posts</Typography>
-            </div>
-          </Grid>
-          <Grid item md={12} xs className={classes.posts}>
-            <div className="center">{postsMarkup}</div>
-          </Grid>
-        </Grid>
-      </Fragment>
+          <section className={classes.mainContainer}>text</section>
+        </main>
+        <Rightbar />
+      </div>
     );
   }
 }

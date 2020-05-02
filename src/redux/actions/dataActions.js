@@ -10,136 +10,136 @@ import {
   LOADING_UI,
   SET_POST,
   STOP_LOADING_UI,
-  SUBMIT_COMMENT
+  SUBMIT_COMMENT,
 } from "../types";
 import axios from "axios";
 
 // get all posts
-export const getPosts = () => dispatch => {
+export const getPosts = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
     .get("/posts")
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: SET_POSTS,
-        payload: res.data
+        payload: res.data,
       });
     })
     .catch(() => {
       dispatch({
         type: SET_POSTS,
-        payload: []
+        payload: [],
       });
     });
 };
 
-export const getPost = postId => dispatch => {
+export const getPost = (postId) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
     .get(`/posts/${postId}`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: SET_POST,
-        payload: res.data
+        payload: res.data,
       });
       dispatch({ type: STOP_LOADING_UI });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 // create a post
-export const createPost = newPost => dispatch => {
+export const createPost = (newPost) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
     .post("/post", newPost)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: CREATE_POST,
-        payload: res.data
+        payload: res.data,
       });
       dispatch(clearErrors());
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data,
       });
     });
 };
 
 // like a post
-export const likePost = postId => dispatch => {
+export const likePost = (postId) => (dispatch) => {
   axios
     .get(`/post/${postId}/like`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: LIKE_POST,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 // unlike a post
-export const unlikePost = postId => dispatch => {
+export const unlikePost = (postId) => (dispatch) => {
   axios
     .get(`/post/${postId}/unlike`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: UNLIKE_POST,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 // submit a comment
-export const submitComment = (postId, commentData) => dispatch => {
+export const submitComment = (postId, commentData) => (dispatch) => {
   axios
     .post(`/post/${postId}/comment`, commentData)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: SUBMIT_COMMENT,
-        payload: res.data
+        payload: res.data,
       });
       dispatch(clearErrors());
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data,
       });
     });
 };
 
 // delete a post
-export const deletePost = postId => dispatch => {
+export const deletePost = (postId) => (dispatch) => {
   axios
     .delete(`/post/${postId}`)
     .then(() => {
       dispatch({ type: DELETE_POST, payload: postId });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
-export const getUserData = userHandle => dispatch => {
+export const getUserData = (userHandle) => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
     .get(`/user/${userHandle}`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: SET_POSTS,
-        payload: res.data.posts
+        payload: res.data.posts,
       });
     })
     .catch(() => {
       dispatch({
         type: SET_POSTS,
-        payload: null
+        payload: null,
       });
     });
 };
 
-export const clearErrors = () => dispatch => {
+export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };

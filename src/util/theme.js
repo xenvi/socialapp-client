@@ -57,6 +57,13 @@ export default {
       marginBottom: "2.5em",
       width: "90%",
     },
+    posttextField: {
+      background: "#fff",
+      fontWeight: 400,
+      border: "none",
+      padding: "0.5em 1em",
+      width: "90%",
+    },
     labels: {
       fontWeight: 700,
       background: "#fff",
@@ -117,10 +124,11 @@ export default {
       letterSpacing: "3px",
     },
     smallBrand: {
+      color: "#fff",
       fontSize: 30,
-      letterSpacing: "1px",
+      fontWeight: 700,
+      letterSpacing: "3px",
       textShadow: "0 5px 5px rgba(0,0,0,0.3)",
-      fontFamily: "Fredoka One, cursive",
     },
     invisibleSeparator: {
       border: "none",
@@ -215,6 +223,23 @@ export default {
       "& span": {
         margin: "0 7px",
         textShadow: "0 5px 10px rgba(0,0,0,0.3)",
+        cursor: "pointer",
+        textAlign: "center",
+      },
+    },
+    pagebottomNav: {
+      height: "5vh",
+      width: "100%",
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: 12,
+      color: "#333",
+      padding: "5px 0px",
+      "& span": {
+        margin: "0 7px",
+        textShadow: "0 2px 2px rgba(0,0,0,0.3)",
         cursor: "pointer",
         textAlign: "center",
       },

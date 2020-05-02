@@ -57,6 +57,9 @@ const styles = (theme) => ({
     marginTop: "2em",
     lineHeight: "200%",
   },
+  bottomNav: {
+    color: "#333",
+  },
 });
 
 class home extends Component {
@@ -80,12 +83,13 @@ class home extends Component {
       <Fragment>
         <Navbar />
         <Grid container spacing={0} className={classes.body}>
-          <Grid item xs className="feed">
+          <Grid item className="stickybar"></Grid>{" "}
+          <Grid item className="feed">
             <Typography className={classes.sectionTitle}>Home</Typography>
             <CreatePost />
             {recentPostsMarkup}
           </Grid>
-          <Grid item xs className="stickybar">
+          <Grid item className="stickybar">
             <div className={classes.profile}>
               <img
                 src={imageUrl}
@@ -100,18 +104,18 @@ class home extends Component {
                 {handle}
               </Typography>
             </div>
-          </Grid>
+          </Grid>{" "}
+          <div className={classes.pagebottomNav}>
+            <span>ABOUT</span>
+            <span>SUPPORT</span>
+            <span>PRIVACY POLICY</span>
+            <span>TERMS</span>
+            <span>DEVELOPMENT</span>
+            <span>API</span>
+            <span>JOBS</span>
+            <span>© SA 2019</span>
+          </div>
         </Grid>
-        <div className={classes.bottomNav}>
-          <span>ABOUT</span>
-          <span>SUPPORT</span>
-          <span>PRIVACY POLICY</span>
-          <span>TERMS</span>
-          <span>DEVELOPMENT</span>
-          <span>API</span>
-          <span>JOBS</span>
-          <span>© SA 2019</span>
-        </div>
       </Fragment>
     );
   }

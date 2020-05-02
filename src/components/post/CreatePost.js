@@ -82,12 +82,13 @@ class CreatePost extends Component {
               type="text"
               value={this.state.body}
               multiline
-              row="3"
+              rows="2"
               placeholder="What's the latest?"
               error={errors.body ? true : false}
               helperText={errors.body}
-              className={classes.textField}
+              className={classes.posttextField}
               onChange={this.handleChange}
+              InputProps={{ disableUnderline: true }}
               fullWidth
             />
             <Button
