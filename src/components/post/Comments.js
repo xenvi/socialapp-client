@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
@@ -43,26 +43,24 @@ class Comments extends Component {
         {comments.map((comment, index) => {
           const { body, createdAt, userImage, userHandle } = comment;
           return (
-            <Fragment>
-              <div key={createdAt} className={classes.comment}>
-                <img
-                  src={userImage}
-                  alt="comment"
-                  className={classes.commentImage}
-                />
+            <div key={createdAt} className={classes.comment}>
+              <img
+                src={userImage}
+                alt="comment"
+                className={classes.commentImage}
+              />
 
-                <div className={classes.commentData}>
-                  <Link to={`/users/${userHandle}`} className={classes.handle}>
-                    {userHandle}
-                  </Link>
+              <div className={classes.commentData}>
+                <Link to={`/users/${userHandle}`} className={classes.handle}>
+                  {userHandle}
+                </Link>
 
-                  <div>{body}</div>
-                  <div className={classes.date}>
-                    {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
-                  </div>
+                <div>{body}</div>
+                <div className={classes.date}>
+                  {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
                 </div>
               </div>
-            </Fragment>
+            </div>
           );
         })}
       </div>

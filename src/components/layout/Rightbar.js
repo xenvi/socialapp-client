@@ -9,9 +9,6 @@ import { getNewUsers } from "../../redux/actions/dataActions";
 // redux imports
 import { connect } from "react-redux";
 
-// icons
-import HomeIcon from "@material-ui/icons/Home";
-
 const styles = (theme) => ({
   ...theme.spread,
   rightbar: {
@@ -143,14 +140,11 @@ export class Rightbar extends Component {
     return (
       <aside className={classes.rightbar}>
         <div className={classes.rightNav}>
-          <Link to="/home">
-            <HomeIcon className={classes.icon} />
-          </Link>
-          <Notifications />
           <Link to={`/users/${handle}`} className={classes.profileLink}>
             {handle}
             <img src={imageUrl} alt="profile" className={classes.image} />
           </Link>
+          <Notifications />
         </div>
         <div className={classes.menuContainer}>
           <div className={classes.submenu}>

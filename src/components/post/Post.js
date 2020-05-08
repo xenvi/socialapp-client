@@ -76,6 +76,11 @@ class Post extends Component {
           <ChatIcon className={classes.wrapIcon} />
           <span>{commentCount}</span>
         </div>
+        <PostDialog
+          postId={postId}
+          userHandle={userHandle}
+          openDialog={this.props.openDialog}
+        />
       </div>
     );
   }

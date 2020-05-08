@@ -209,6 +209,7 @@ export default {
       alignItems: "center",
       marginRight: "0.3em",
       cursor: "pointer",
+      zIndex: 5,
     },
     date: {
       fontSize: 12,

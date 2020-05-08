@@ -20,6 +20,7 @@ const styles = {
     position: "absolute",
     right: 5,
     top: 5,
+    zIndex: 5,
   },
 };
 

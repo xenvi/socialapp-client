@@ -8,15 +8,12 @@ import LikeButton from "./LikeButton";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 
-import Post from "./Post";
-
 //MUI imports
 import Dialog from "@material-ui/core/Dialog";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 //icons
 import CloseIcon from "@material-ui/icons/Close";
-import UnfoldMore from "@material-ui/icons/UnfoldMore";
 import ChatIcon from "@material-ui/icons/CommentOutlined";
 
 //redux
@@ -78,6 +75,13 @@ const styles = (theme) => ({
     display: "flex",
     flexDirection: "row",
     padding: "1em 2em",
+  },
+  openDialog: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
   },
 });
 
@@ -165,21 +169,29 @@ class PostDialog extends Component {
       </div>
     );
     return (
-      <Dialog
-        open={this.state.open}
-        onClose={this.handleClose}
-        fullWidth
-        maxWidth="sm"
-      >
-        <div className={classes.dialogContent}>{dialogMarkup}</div>
-        <MyButton
-          tip="Close"
-          onClick={this.handleClose}
-          tipClassName={classes.closeButton}
+      <Fragment>
+        <div className={classes.openDialog} onClick={this.handleOpen}></div>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          fullWidth
+          maxWidth="sm"
+          PaperProps={{
+            style: {
+              backgroundColor: "transparent",
+            },
+          }}
         >
-          <CloseIcon color="secondary" />
-        </MyButton>
-      </Dialog>
+          <div className={classes.dialogContent}>{dialogMarkup}</div>
+          <MyButton
+            tip="Close"
+            onClick={this.handleClose}
+            tipClassName={classes.closeButton}
+          >
+            <CloseIcon color="secondary" />
+          </MyButton>
+        </Dialog>
+      </Fragment>
     );
   }
 }
