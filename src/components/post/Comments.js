@@ -4,20 +4,17 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
-//mui
-import Typography from "@material-ui/core/Typography";
-
 const styles = (theme) => ({
   ...theme.spread,
   container: {
-    padding: "0 2em",
+    padding: "1em 2em 0 2em",
     width: "100%",
+    background: "#11121f",
   },
   comment: {
     display: "flex",
     justifyContent: "flex-start",
     width: "100%",
-    margin: "5px 0",
   },
   commentImage: {
     width: 50,
@@ -28,11 +25,12 @@ const styles = (theme) => ({
   },
   commentData: {
     marginLeft: 10,
-    paddingBottom: 10,
+    paddingBottom: "1em",
+    color: "#a8abbf",
   },
   handle: {
     fontSize: 17,
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.light,
     marginRight: 5,
   },
 });
@@ -54,18 +52,14 @@ class Comments extends Component {
                 />
 
                 <div className={classes.commentData}>
-                  <Typography
-                    component={Link}
-                    to={`/users/${userHandle}`}
-                    className={classes.handle}
-                  >
+                  <Link to={`/users/${userHandle}`} className={classes.handle}>
                     {userHandle}
-                  </Typography>
+                  </Link>
 
-                  <Typography variant="body1">{body}</Typography>
-                  <Typography variant="caption" color="textSecondary">
+                  <div>{body}</div>
+                  <div className={classes.date}>
                     {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
-                  </Typography>
+                  </div>
                 </div>
               </div>
             </Fragment>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Grid from "@material-ui/core/Grid";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
@@ -13,11 +14,12 @@ import CreatePost from "../components/post/CreatePost";
 
 import { connect } from "react-redux";
 import { getPosts } from "../redux/actions/dataActions";
+import { Typography } from "@material-ui/core";
 
 const styles = (theme) => ({
   ...theme.spread,
   container: {
-    width: "auto",
+    width: "100%",
     height: "100vh",
     display: "flex",
     justifyContent: "center",
@@ -91,14 +93,14 @@ class home extends Component {
     return (
       <div className={classes.container}>
         <Leftbar />
-        <main className="main">
+        <main className="main gradientbg">
           <Navbar />
           <section className={classes.mainContainer}>
-            <div className="feed">
-              <div className={classes.sectionTitle}>Home</div>
+            <Grid item className="feed">
+              <Typography className={classes.sectionTitle}>Explore</Typography>
               <CreatePost />
               {recentPostsMarkup}
-            </div>{" "}
+            </Grid>{" "}
           </section>
         </main>
         <Rightbar />

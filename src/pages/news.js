@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Grid from "@material-ui/core/Grid";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
@@ -7,17 +8,14 @@ import Navbar from "../components/layout/Navbar";
 import Leftbar from "../components/layout/Leftbar";
 import Rightbar from "../components/layout/Rightbar";
 
-import Post from "../components/post/Post";
-import PostSkeleton from "../util/PostSkeleton";
-import CreatePost from "../components/post/CreatePost";
-
 import { connect } from "react-redux";
 import { getPosts } from "../redux/actions/dataActions";
+import { Typography } from "@material-ui/core";
 
 const styles = (theme) => ({
   ...theme.spread,
   container: {
-    width: "auto",
+    width: "100%",
     height: "100vh",
     display: "flex",
     justifyContent: "center",
@@ -82,23 +80,17 @@ class home extends Component {
   }
   render() {
     const { classes } = this.props;
-    const { posts, loading } = this.props.data;
-    let recentPostsMarkup = !loading ? (
-      posts.map((post) => <Post key={post.postId} post={post} />)
-    ) : (
-      <PostSkeleton />
-    );
     return (
       <div className={classes.container}>
         <Leftbar />
-        <main className="main">
+        <main className="main gradientbg">
           <Navbar />
           <section className={classes.mainContainer}>
-            <div className="feed">
-              <div className={classes.sectionTitle}>Home</div>
-              <CreatePost />
-              {recentPostsMarkup}
-            </div>{" "}
+            <Grid item className="feed">
+              <Typography className={classes.sectionTitle}>
+                Latest News
+              </Typography>
+            </Grid>{" "}
           </section>
         </main>
         <Rightbar />

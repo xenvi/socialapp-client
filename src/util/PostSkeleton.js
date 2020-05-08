@@ -10,9 +10,9 @@ import Grid from "@material-ui/core/Grid";
 const styles = (theme) => ({
   ...theme.spread,
   content: {
-    width: "75%",
+    width: "100%",
     flexDirection: "column",
-    padding: "15px 15px 0px 15px",
+    padding: "1em",
   },
   image: {
     borderRadius: "50%",
@@ -25,7 +25,7 @@ const styles = (theme) => ({
     width: 60,
     height: 18,
     backgroundColor: theme.palette.primary.main,
-    marginBottom: 7,
+    marginBottom: 10,
   },
   fullLine: {
     height: 15,

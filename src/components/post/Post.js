@@ -8,10 +8,6 @@ import DeletePost from "./DeletePost";
 import PostDialog from "./PostDialog";
 import LikeButton from "./LikeButton";
 
-// Mui imports
-import Grid from "@material-ui/core/Grid";
-import { Typography } from "@material-ui/core";
-
 // redux imports
 import { connect } from "react-redux";
 
@@ -24,15 +20,14 @@ const styles = (theme) => ({
     borderRadius: "50%",
     width: 60,
     height: 60,
-    margin: "15px 0 auto 15px",
     objectFit: "cover",
   },
   content: {
-    padding: "15px 15px 0px 15px",
+    paddingLeft: "1em",
   },
   handle: {
-    marginRight: 5,
     fontSize: 18,
+    color: theme.palette.primary.light,
   },
 });
 
@@ -64,52 +59,23 @@ class Post extends Component {
 
     return (
       <div className="card">
-        <Grid container>
-          <Grid item>
-            <img src={userImage} className={classes.image} alt="profile" />
-          </Grid>
-
-          <Grid item sm xs container>
-            <Grid
-              item
-              xs
-              container
-              direction="column"
-              spacing={1}
-              className={classes.content}
-            >
-              <Grid item xs>
-                <Typography
-                  component={Link}
-                  to={`/users/${userHandle}`}
-                  color="primary"
-                  className={classes.handle}
-                >
-                  {userHandle}
-                </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  • {dayjs(createdAt).fromNow()}
-                </Typography>
-                <Typography variant="body1">{body}</Typography>
-
-                <div className={classes.wrap}>
-                  <LikeButton postId={postId} />
-                  <span className={classes.rightSpace}>{likeCount}</span>
-                  <ChatIcon color="primary" className={classes.icon} />
-                  <span>{commentCount}</span>
-                </div>
-              </Grid>
-            </Grid>
-            <Grid item>
-              {deleteButton}
-              <PostDialog
-                postId={postId}
-                userHandle={userHandle}
-                openDialog={this.props.openDialog}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
+        <div className={classes.cardWrapper}>
+          <img src={userImage} className={classes.image} alt="profile" />
+          <div className={classes.content}>
+            <Link to={`/users/${userHandle}`} className={classes.handle}>
+              {userHandle}
+            </Link>
+            <div className={classes.date}>{dayjs(createdAt).fromNow()}</div>
+            <div>{body}</div>
+          </div>
+          {deleteButton}
+        </div>
+        <div className={classes.wrap}>
+          <LikeButton postId={postId} />
+          <span className={classes.rightSpace}>{likeCount}</span>
+          <ChatIcon className={classes.wrapIcon} />
+          <span>{commentCount}</span>
+        </div>
       </div>
     );
   }

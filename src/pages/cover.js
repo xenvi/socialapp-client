@@ -100,10 +100,15 @@ class cover extends Component {
       UI: { loading },
     } = this.props;
     const { errors } = this.state;
-    var loadingText = loading ? (
+    var loadingTextLogin = loading ? (
       <CircularProgress size={30} className={classes.progress} />
     ) : (
       "LOGIN"
+    );
+    var loadingTextSignup = loading ? (
+      <CircularProgress size={30} className={classes.progress} />
+    ) : (
+      "SIGNUP"
     );
     return (
       <Grid container spacing={0}>
@@ -170,7 +175,7 @@ class cover extends Component {
                   className={classes.button}
                   onClick={(e) => this.checkFormId(e, "loginForm")}
                 >
-                  {loadingText}
+                  {loadingTextLogin}
                 </Button>
               </form>
 
@@ -257,11 +262,7 @@ class cover extends Component {
                   className={classes.button}
                   onClick={(e) => this.checkFormId(e, "signupForm")}
                 >
-                  {" "}
-                  SIGN UP
-                  {loading && (
-                    <CircularProgress size={30} className={classes.progress} />
-                  )}
+                  {loadingTextSignup}
                 </Button>
               </form>
             </div>

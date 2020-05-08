@@ -16,22 +16,23 @@ import { createPost, clearErrors } from "../../redux/actions/dataActions";
 const styles = (theme) => ({
   ...theme.spread,
   form: {
-    padding: 20,
-    background: "#fff",
+    padding: "1.5em",
+    background: "#161829",
     textAlign: "right",
     boxShadow: "0 0 2px rgba(0, 0, 0, 0.2)",
     display: "flex",
     justifyContent: "flex-start",
+    borderRadius: "0.2em",
   },
   profileImg: {
-    width: 60,
-    height: 60,
+    width: "5em",
+    height: "5em",
     borderRadius: "50%",
     objectFit: "cover",
   },
   formContent: {
-    marginLeft: 15,
-    width: "100%",
+    marginLeft: "1.5em",
+    width: "90%",
   },
 });
 
@@ -68,6 +69,12 @@ class CreatePost extends Component {
         credentials: { imageUrl },
       },
     } = this.props;
+
+    var loadingtextShare = loading ? (
+      <CircularProgress size={30} className={classes.progress} />
+    ) : (
+      "Share"
+    );
     return (
       <Fragment>
         <div className={classes.form}>
@@ -86,25 +93,22 @@ class CreatePost extends Component {
               placeholder="What's the latest?"
               error={errors.body ? true : false}
               helperText={errors.body}
-              className={classes.posttextField}
+              className={classes.postTextField}
               onChange={this.handleChange}
-              InputProps={{ disableUnderline: true }}
+              InputProps={{
+                disableUnderline: true,
+                style: {
+                  color: "#fff",
+                },
+              }}
               fullWidth
             />
             <Button
               type="submit"
               variant="contained"
-              color="primary"
-              className={classes.submitButton}
-              disabled={loading}
+              className={classes.glowButton}
             >
-              Post
-              {loading && (
-                <CircularProgress
-                  size={30}
-                  className={classes.progressSpinner}
-                />
-              )}
+              {loadingtextShare}
             </Button>
           </form>
         </div>

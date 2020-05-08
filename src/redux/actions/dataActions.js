@@ -11,6 +11,7 @@ import {
   SET_POST,
   STOP_LOADING_UI,
   SUBMIT_COMMENT,
+  GET_NEW_USERS,
 } from "../types";
 import axios from "axios";
 
@@ -135,7 +136,23 @@ export const getUserData = (userHandle) => (dispatch) => {
     .catch(() => {
       dispatch({
         type: SET_POSTS,
-        payload: null,
+        payload: [],
+      });
+    });
+};
+
+export const getNewUsers = () => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .get("/newusers")
+    .then((res) => {
+      dispatch({ type: GET_NEW_USERS, payload: res.data });
+      dispatch({ type: STOP_LOADING_UI });
+    })
+    .catch(() => {
+      dispatch({
+        type: GET_NEW_USERS,
+        payload: [],
       });
     });
 };

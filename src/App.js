@@ -18,6 +18,8 @@ import themeFile from "./util/theme";
 import cover from "./pages/cover";
 import home from "./pages/home";
 import user from "./pages/user";
+import explore from "./pages/explore";
+import news from "./pages/news";
 
 const theme = createMuiTheme(themeFile);
 
@@ -45,6 +47,8 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path="/home" component={home} />
+              <Route exact path="/explore" component={explore} />
+              <Route exact path="/news" component={news} />
               <Route exact path="/users/:handle" component={user} />
               <Route
                 exact

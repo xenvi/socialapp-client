@@ -7,13 +7,13 @@ import {
   DELETE_POST,
   CREATE_POST,
   SUBMIT_COMMENT,
+  GET_NEW_USERS,
 } from "../types";
 
 const initialState = {
   posts: [],
   post: {},
-  userdetails: {},
-  userposts: [],
+  newusers: [],
   loading: false,
 };
 
@@ -67,6 +67,11 @@ export default function (state = initialState, action) {
           ...state.post,
           comments: [action.payload, ...state.post.comments],
         },
+      };
+    case GET_NEW_USERS:
+      return {
+        ...state,
+        newusers: action.payload,
       };
     default:
       return state;

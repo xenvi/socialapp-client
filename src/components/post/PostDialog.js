@@ -8,12 +8,11 @@ import LikeButton from "./LikeButton";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 
+import Post from "./Post";
+
 //MUI imports
 import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 
 //icons
 import CloseIcon from "@material-ui/icons/Close";
@@ -34,7 +33,8 @@ const styles = (theme) => ({
     objectFit: "cover",
   },
   dialogContent: {
-    padding: 15,
+    position: "relative",
+    background: "#161829",
   },
   closeButton: {
     position: "absolute",
@@ -44,7 +44,6 @@ const styles = (theme) => ({
   expandButton: {
     position: "absolute",
     right: 5,
-    bottom: 5,
   },
   spinnerDiv: {
     textAlign: "center",
@@ -56,10 +55,29 @@ const styles = (theme) => ({
   },
   container: {
     padding: "2em 0",
-    background: "red",
   },
   postDetails: {
-    paddingBottom: 15,
+    color: "#a8abbf",
+    paddingLeft: "1em",
+  },
+  handle: {
+    fontSize: 18,
+    color: theme.palette.primary.light,
+  },
+  wrap: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    padding: "1em 0",
+    color: "#a8abbf",
+  },
+  cardWrapperIndent: {
+    position: "relative",
+    display: "flex",
+    flexDirection: "row",
+    padding: "1em 2em",
   },
 });
 
@@ -111,76 +129,63 @@ class PostDialog extends Component {
         <CircularProgress size={200} thickness={2} />
       </div>
     ) : (
-      <Grid container spacing={0}>
-        <Grid item sm={3} className={classes.centerItem}>
-          <img src={userImage} alt="Profile" className={classes.profileImage} />
-        </Grid>
-        <Grid item sm={7} xs className={classes.postDetails}>
-          <Typography
-            component={Link}
-            color="primary"
-            variant="h5"
-            to={`/users/${userHandle}`}
-          >
-            {userHandle}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
-          </Typography>
-          <hr className={classes.invisibleSeparator} />
-          <Typography variant="body1">{body}</Typography>
-          <div className={classes.wrap}>
-            <LikeButton postId={postId} />
-            <span className={classes.rightSpace}>{likeCount}</span>
-            <ChatIcon color="primary" className={classes.icon} />
-            <span>{commentCount}</span>
+      <div className={classes.wrapper}>
+        <div className={classes.cardWrapperIndent}>
+          <div className={classes.centerItem}>
+            <img
+              src={userImage}
+              alt="Profile"
+              className={classes.profileImage}
+            />
           </div>
-        </Grid>
-
+          <div className={classes.postDetails}>
+            <Link to={`/users/${userHandle}`} className={classes.handle}>
+              {userHandle}
+            </Link>
+            <div className={classes.date}>
+              {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
+            </div>
+            <hr className={classes.invisibleSeparator} />
+            <div>{body}</div>
+          </div>
+        </div>
+        <hr className={classes.thickSeparator} />
+        <div className={classes.wrap}>
+          <LikeButton postId={postId} />
+          <span className={classes.rightSpace}>{likeCount}</span>
+          <ChatIcon className={classes.wrapIcon} />
+          <span>{commentCount}</span>
+        </div>
         <hr className={classes.thickSeparator} />
 
         <Comments comments={comments} />
 
         <hr className={classes.thickSeparator} />
-
         <CommentForm postId={postId} />
-      </Grid>
+      </div>
     );
     return (
-      <Fragment>
+      <Dialog
+        open={this.state.open}
+        onClose={this.handleClose}
+        fullWidth
+        maxWidth="sm"
+      >
+        <div className={classes.dialogContent}>{dialogMarkup}</div>
         <MyButton
-          onClick={this.handleOpen}
-          tip="Expand post"
-          tipClassName={classes.expandButton}
+          tip="Close"
+          onClick={this.handleClose}
+          tipClassName={classes.closeButton}
         >
-          <UnfoldMore color="primary" />
+          <CloseIcon color="secondary" />
         </MyButton>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          fullWidth
-          maxWidth="sm"
-        >
-          <DialogContent className={classes.dialogContent}>
-            {dialogMarkup}
-          </DialogContent>
-          <MyButton
-            tip="Close"
-            onClick={this.handleClose}
-            tipClassName={classes.closeButton}
-          >
-            <CloseIcon />
-          </MyButton>
-        </Dialog>
-      </Fragment>
+      </Dialog>
     );
   }
 }
 
 PostDialog.propTypes = {
   getPost: PropTypes.func.isRequired,
-  postId: PropTypes.string.isRequired,
-  userHandle: PropTypes.string.isRequired,
   post: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
 };

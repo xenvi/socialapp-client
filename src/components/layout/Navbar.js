@@ -1,76 +1,67 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import Notifications from "./Notifications";
-
 // MaterialUI imports
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import { Typography } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import SearchIcon from "@material-ui/icons/Search";
 
 // redux imports
 import { connect } from "react-redux";
 
-// icons
-import HomeIcon from "@material-ui/icons/Home";
-
 const styles = (theme) => ({
   ...theme.spread,
-  image: {
-    width: 28,
-    height: 28,
-    borderRadius: "50%",
-    margin: "0 0 0 10px",
-    objectFit: "cover",
-  },
   navbar: {
-    boxShadow: "0 5px 5px rgba(0,0,0,0.2)",
-    width: "100%",
-    background: "#333",
-    padding: "0.7em 0",
-  },
-  icons: {
-    fontSize: 30,
-    margin: "0 10px",
-  },
-  rightNav: {
     display: "flex",
     alignItems: "center",
+    boxShadow: "0 5px 5px rgba(0,0,0,0.2)",
+    width: "100%",
+    background: "#161829",
+    padding: "0.7em",
+    height: "4em",
+  },
+  searchTextField: {
+    background: "none",
+    fontWeight: 400,
+    border: "2px solid #23a65",
+    borderWidth: " 2px",
+    borderStyle: "solid",
+    borderImage: " linear-gradient(45deg, #e73c7e, #23a6d5) 20% stretch",
+    width: "50%",
+    height: "100%",
+    padding: "0.2em 1em",
+  },
+  paddedIcon: {
+    fontSize: 25,
+    color: "#fff",
+    margin: "0 0.75em 0 0.5em",
   },
 });
 
 export class Navbar extends Component {
   render() {
-    const {
-      classes,
-      user: {
-        credentials: { handle, imageUrl },
-      },
-    } = this.props;
+    const { classes } = this.props;
 
     return (
-      <div className={classes.navbar}>
-        <div className="nav-container">
-          <Link to="/home">
-            <Typography className={classes.smallBrand} edge="start">
-              Chatsy
-            </Typography>
-          </Link>
-          <div className={classes.rightNav}>
-            {" "}
-            <Link to="/home">
-              <HomeIcon color="primary" className={classes.icons} />
-            </Link>
-            <Notifications />
-            <Link to={`/users/${handle}`}>
-              {handle}
-              <img src={imageUrl} alt="profile" className={classes.image} />
-            </Link>
-          </div>
-        </div>
-      </div>
+      <nav className={classes.navbar}>
+        <SearchIcon className={classes.paddedIcon} />
+        <TextField
+          id="search"
+          type="text"
+          name="search"
+          placeholder="Search ..."
+          className={classes.searchTextField}
+          InputProps={{
+            disableUnderline: true,
+            style: {
+              color: "#fff",
+            },
+          }}
+          FormHelperTextProps={{
+            classes: { root: classes.helperText },
+          }}
+        />
+      </nav>
     );
   }
 }
@@ -80,7 +71,6 @@ const mapStateToProps = (state) => ({
 });
 
 Navbar.propTypes = {
-  user: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
 

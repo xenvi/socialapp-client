@@ -4,7 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // mui importants
 import Button from "@material-ui/core/Button";
-import { InputBase } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
 import { connect } from "react-redux";
 import { submitComment } from "../../redux/actions/dataActions";
@@ -12,22 +12,25 @@ import { submitComment } from "../../redux/actions/dataActions";
 const styles = (theme) => ({
   ...theme.spread,
   container: {
-    padding: "5px 10px",
-    background: "#fff",
-    textAlign: "right",
+    padding: "1em 2em",
     display: "flex",
     justifyContent: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
     width: "100%",
   },
   userImage: {
     objectFit: "cover",
     borderRadius: "50%",
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
   },
   formContent: {
-    marginLeft: 15,
+    marginLeft: "1em",
     width: "100%",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
   },
 });
 
@@ -70,7 +73,7 @@ class CommentForm extends Component {
       <div className={classes.container}>
         <img src={imageUrl} alt="profile" className={classes.userImage} />
         <form onSubmit={this.handleSubmit} className={classes.formContent}>
-          <InputBase
+          <TextField
             name="body"
             type="text"
             placeholder="Add a comment ..."
@@ -78,16 +81,21 @@ class CommentForm extends Component {
             helperText={errors.comment}
             value={this.state.body}
             onChange={this.handleChange}
-            fullWidth
-            className={classes.textField}
+            className={classes.postTextField}
             multiline
-            minRow="2"
+            fullWidth
+            InputProps={{
+              disableUnderline: true,
+              style: {
+                color: "#fff",
+              },
+            }}
           />
           <Button
             type="submit"
             variant="contained"
             color="primary"
-            className={classes.submitButton}
+            className={classes.glowButton}
           >
             Post
           </Button>
