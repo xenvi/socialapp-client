@@ -11,12 +11,19 @@ CLIENT-SIDE TECHNOLOGIES USED:
 - jwtDecode
 
 TO DO:
-- Redesign overall UI/UX to be more modern and sleek
+- ~~Redesign overall UI/UX to be more modern and sleek~~
 - Add user follow system
-- Add explore page
-- Redesign user profile page
-- Redesign home page
+- ~~Add explore page~~
+- ~~Redesign user profile page~~
+- ~~Redesign home page~~
 - Allow users to post on other user profile pages
+- Mobile responsiveness
+- Cross browser compatibility (Edge)
+- Fix inconsistent API calls - slow load times
+- Add User About page
+- Add User Likes page
+- Clean up code, reduce unnecessary calls
+
 
 Functions (back-end) Repo:
 https://github.com/xenvi/socialapp-functions
