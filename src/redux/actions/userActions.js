@@ -6,6 +6,9 @@ import {
   SET_UNAUTHENTICATED,
   LOADING_USER,
   MARK_NOTIFICATIONS_READ,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
+  SET_PROFILE,
 } from "../types";
 import axios from "axios";
 
@@ -64,6 +67,19 @@ export const getUserData = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const getAnyUserData = (userHandle) => (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .get(`/user/${userHandle}`)
+    .then((res) => {
+      dispatch({
+        type: SET_PROFILE,
+        payload: res.data.user,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 export const uploadImage = (formData) => (dispatch) => {
   dispatch({ type: LOADING_USER });
   axios
@@ -93,6 +109,24 @@ export const markNotificationsRead = (notificationIds) => (dispatch) => {
       });
     })
     .catch((err) => console.log(err));
+};
+
+export const followUser = (userId) => (dispatch) => {
+  axios.get(`/user/${userId}/follow`).then((res) => {
+    dispatch({
+      type: FOLLOW_USER,
+      payload: res.data,
+    });
+  });
+};
+
+export const unfollowUser = (userId) => (dispatch) => {
+  axios.get(`/user/${userId}/unfollow`).then((res) => {
+    dispatch({
+      type: UNFOLLOW_USER,
+      payload: res.data,
+    });
+  });
 };
 
 const setAuthorizationHeader = (token) => {

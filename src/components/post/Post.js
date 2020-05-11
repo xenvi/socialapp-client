@@ -26,8 +26,10 @@ const styles = (theme) => ({
     paddingLeft: "1em",
   },
   handle: {
+    position: "relative",
     fontSize: 18,
     color: theme.palette.primary.light,
+    zIndex: 5,
   },
 });
 
@@ -60,11 +62,14 @@ class Post extends Component {
     return (
       <div className="card">
         <div className={classes.cardWrapper}>
-          <img src={userImage} className={classes.image} alt="profile" />
+          <Link to={`/users/${userHandle}`} className={classes.handle}>
+            <img src={userImage} className={classes.image} alt="profile" />
+          </Link>
           <div className={classes.content}>
             <Link to={`/users/${userHandle}`} className={classes.handle}>
               {userHandle}
             </Link>
+
             <div className={classes.date}>{dayjs(createdAt).fromNow()}</div>
             <div>{body}</div>
           </div>

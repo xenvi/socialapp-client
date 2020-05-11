@@ -12,7 +12,7 @@ import store from "./redux/store";
 import { SET_AUTHENTICATED } from "./redux/types";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
 //Components
-import AuthRoute from "./util/AuthRoute";
+// import AuthRoute from "./util/AuthRoute";
 import themeFile from "./util/theme";
 //Pages
 import cover from "./pages/cover";

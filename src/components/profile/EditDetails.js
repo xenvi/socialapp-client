@@ -12,7 +12,6 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 
 const styles = (theme) => ({
@@ -20,6 +19,20 @@ const styles = (theme) => ({
   detailsTitle: {
     textAlign: "center",
     fontWeight: "bold",
+    letterSpacing: "1px",
+    padding: "0.75em",
+    fontSize: 21,
+  },
+  detailsContainer: {
+    background: "#161829",
+    color: "#fff",
+  },
+  formContainer: {
+    textAlign: "center",
+    marginTop: "1.5em",
+  },
+  whiteText: {
+    color: "#a8abbf",
   },
 });
 
@@ -75,74 +88,92 @@ class EditDetails extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        <Button
-          variant="outlined"
-          color="primary"
-          className={classes.subtleButton}
-          onClick={this.handleOpen}
-        >
+        <button className={classes.followEditbtn} onClick={this.handleOpen}>
           Edit Profile
-        </Button>
+        </button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           TransitionComponent={Transition}
           fullWidth
           maxWidth="sm"
+          PaperProps={{
+            style: {
+              backgroundColor: "transparent",
+            },
+          }}
         >
-          <DialogTitle className={classes.detailsTitle}>
-            Edit Profile
-          </DialogTitle>
-          <DialogContent>
-            <form>
-              <TextField
-                name="bio"
-                type="text"
-                label="Bio"
-                multiline
-                rows="3"
-                placeholder="..."
-                className={classes.textField}
-                value={this.state.bio}
-                onChange={this.handleChange}
-                variant="outlined"
-                margin="dense"
-                fullWidth
-              />
-              <TextField
-                name="website"
-                type="text"
-                label="Website"
-                placeholder="..."
-                className={classes.textField}
-                value={this.state.website}
-                onChange={this.handleChange}
-                variant="outlined"
-                margin="dense"
-                fullWidth
-              />
-              <TextField
-                name="location"
-                type="text"
-                label="Location"
-                placeholder="..."
-                className={classes.textField}
-                value={this.state.location}
-                onChange={this.handleChange}
-                variant="outlined"
-                margin="dense"
-                fullWidth
-              />
-            </form>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleSubmit} color="primary">
-              Save
-            </Button>
-          </DialogActions>
+          <div className={classes.detailsContainer}>
+            <div className={classes.detailsTitle}>Edit Profile</div>
+
+            <hr className={classes.thickSeparator} />
+            <DialogContent className={classes.formContainer}>
+              <form>
+                {" "}
+                <span className={classes.labelsDark}>Bio</span>
+                <TextField
+                  id="bio"
+                  type="text"
+                  name="bio"
+                  multiline
+                  rows="3"
+                  className={classes.textField}
+                  value={this.state.bio}
+                  onChange={this.handleChange}
+                  InputProps={{
+                    disableUnderline: true,
+                    className: classes.whiteText,
+                  }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
+                <br />
+                <span className={classes.labelsDark}>Website</span>
+                <TextField
+                  id="website"
+                  type="text"
+                  name="website"
+                  className={classes.textField}
+                  value={this.state.website}
+                  onChange={this.handleChange}
+                  InputProps={{
+                    disableUnderline: true,
+                    className: classes.whiteText,
+                  }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
+                <br />
+                <span className={classes.labelsDark}>Location</span>
+                <TextField
+                  id="location"
+                  type="text"
+                  name="location"
+                  className={classes.textField}
+                  value={this.state.location}
+                  onChange={this.handleChange}
+                  InputProps={{
+                    disableUnderline: true,
+                    className: classes.whiteText,
+                  }}
+                  FormHelperTextProps={{
+                    classes: { root: classes.helperText },
+                  }}
+                />
+              </form>
+            </DialogContent>
+            <hr className={classes.thickSeparator} />
+            <DialogActions>
+              <Button onClick={this.handleClose} color="secondary">
+                Cancel
+              </Button>
+              <Button onClick={this.handleSubmit} color="primary">
+                Save
+              </Button>
+            </DialogActions>
+          </div>
         </Dialog>
       </Fragment>
     );

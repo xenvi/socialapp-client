@@ -12,14 +12,16 @@ import { connect } from "react-redux";
 const styles = (theme) => ({
   ...theme.spread,
   rightbar: {
+    position: "relative",
     display: "flex",
     justifyContent: "flex-start",
     flexDirection: "column",
     background: "#161829",
-    width: "18em",
+    width: "17em",
     height: "100%",
     borderLeft: "0.1em solid #222540",
     overflow: "auto",
+    transform: "translateX(0)",
   },
   rightNav: {
     display: "flex",
@@ -138,7 +140,7 @@ export class Rightbar extends Component {
         ));
 
     return (
-      <aside className={classes.rightbar}>
+      <aside className={classes.rightbar} id="rightbar">
         <div className={classes.rightNav}>
           <Link to={`/users/${handle}`} className={classes.profileLink}>
             {handle}

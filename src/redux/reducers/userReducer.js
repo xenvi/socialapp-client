@@ -6,6 +6,9 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   MARK_NOTIFICATIONS_READ,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
+  SET_PROFILE,
 } from "../types";
 
 const initialState = {
@@ -14,6 +17,7 @@ const initialState = {
   credentials: {},
   likes: [],
   notifications: [],
+  profile: {},
 };
 
 export default function (state = initialState, action) {
@@ -58,6 +62,24 @@ export default function (state = initialState, action) {
       state.notifications.forEach((notif) => (notif.read = true));
       return {
         ...state,
+      };
+    case FOLLOW_USER:
+    case UNFOLLOW_USER:
+      let index = state.credentials.findIndex(
+        (user) => user.userId === action.payload.userData.userId
+      );
+      state.posts[index] = action.payload;
+      if (state.post.postId === action.payload.postId) {
+        state.post = action.payload;
+      }
+      return {
+        ...state,
+      };
+    case SET_PROFILE:
+      return {
+        ...state,
+        loading: false,
+        profile: action.payload,
       };
     default:
       return state;

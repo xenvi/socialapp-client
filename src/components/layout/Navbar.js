@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+
+import Notifications from "./Notifications";
 
 // MaterialUI imports
 import TextField from "@material-ui/core/TextField";
@@ -36,11 +39,34 @@ const styles = (theme) => ({
     color: "#fff",
     margin: "0 0.75em 0 0.5em",
   },
+  hiddenNav: {
+    display: "none",
+    alignItems: "center",
+    marginLeft: "auto",
+    padding: "1em",
+  },
+  image: {
+    width: 30,
+    height: 30,
+    borderRadius: "50%",
+    margin: "0 0 0 10px",
+    objectFit: "cover",
+  },
+  profileLink: {
+    display: "flex",
+    alignItems: "center",
+    color: "#a8abbf",
+  },
 });
 
 export class Navbar extends Component {
   render() {
-    const { classes } = this.props;
+    const {
+      classes,
+      user: {
+        credentials: { handle, imageUrl },
+      },
+    } = this.props;
 
     return (
       <nav className={classes.navbar}>
@@ -61,6 +87,14 @@ export class Navbar extends Component {
             classes: { root: classes.helperText },
           }}
         />
+
+        <div className={classes.hiddenNav} id="hiddenNav">
+          <Link to={`/users/${handle}`} className={classes.profileLink}>
+            {handle}
+            <img src={imageUrl} alt="profile" className={classes.image} />
+          </Link>
+          <Notifications />
+        </div>
       </nav>
     );
   }
