@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import Notifications from "./Notifications";
 import { getNewUsers } from "../../redux/actions/dataActions";
+import Settings from "./Settings";
 
 // redux imports
 import { connect } from "react-redux";
@@ -19,7 +20,6 @@ const styles = (theme) => ({
     background: "#161829",
     width: "17em",
     height: "100%",
-    borderLeft: "0.1em solid #222540",
     overflow: "auto",
     transform: "translateX(0)",
   },
@@ -147,6 +147,7 @@ export class Rightbar extends Component {
             <img src={imageUrl} alt="profile" className={classes.image} />
           </Link>
           <Notifications />
+          <Settings />
         </div>
         <div className={classes.menuContainer}>
           <div className={classes.submenu}>

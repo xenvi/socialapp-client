@@ -7,6 +7,7 @@ export const MARK_NOTIFICATIONS_READ = "MARK_NOTIFICATIONS_READ";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
 export const SET_PROFILE = "SET_PROFILE";
+export const UNSET_PROFILE = "UNSET_PROFILE";
 
 // ui reducer types
 export const SET_ERRORS = "SET_ERRORS";

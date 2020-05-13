@@ -14,6 +14,7 @@ import HomeIcon from "@material-ui/icons/HomeOutlined";
 import ExploreIcon from "@material-ui/icons/ExploreOutlined";
 import PeopleIcon from "@material-ui/icons/PersonOutline";
 import NewsIcon from "@material-ui/icons/MapOutlined";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const styles = (theme) => ({
   ...theme.spread,
@@ -214,6 +215,11 @@ export class Leftbar extends Component {
               <li>
                 <Link to={`/users/${handle}`}>
                   <PeopleIcon className={classes.hiddenIcon} />
+                </Link>
+              </li>
+              <li>
+                <Link to={`/home`}>
+                  <MoreHorizIcon className={classes.hiddenIcon} />
                 </Link>
               </li>
             </ul>

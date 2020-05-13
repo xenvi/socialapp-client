@@ -27,8 +27,6 @@ const styles = (theme) => ({
     minHeight: "60vh",
   },
   mainContainer: {
-    overflow: "auto",
-    padding: "1.5em",
     textAlign: "center",
   },
   body: {
@@ -56,11 +54,12 @@ const styles = (theme) => ({
   },
   sectionTitle: {
     color: "#fff",
-    margin: "0 0 1em 0",
     fontWeight: "bold",
     fontSize: 30,
     letterSpacing: 2,
     textAlign: "left",
+    padding: "0.2em 0.2em 0.2em 0.5em",
+    borderBottom: "0.1em solid #222540",
   },
   copyright: {
     background: "#fff",
@@ -93,7 +92,7 @@ class home extends Component {
         <Leftbar />
         <main className="main">
           <Navbar />
-          <section className={classes.mainContainer}>
+          <section className={classes.mainContainer} id="mainContainer">
             <div className="feed">
               <div className={classes.sectionTitle}>Home</div>
               <CreatePost />

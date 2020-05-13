@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import withStyles from "@material-ui/core/styles/withStyles";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
@@ -9,14 +8,16 @@ import Navbar from "../components/layout/Navbar";
 import Leftbar from "../components/layout/Leftbar";
 import Rightbar from "../components/layout/Rightbar";
 import Post from "../components/post/Post";
-import CreatePost from "../components/post/CreatePost";
-import PostSkeleton from "../util/PostSkeleton";
+import CreateProfilePost from "../components/post/CreateProfilePost";
 import EditDetails from "../components/profile/EditDetails";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { connect } from "react-redux";
-import { getUserData } from "../redux/actions/dataActions";
-import { getAnyUserData, followUser } from "../redux/actions/userActions";
+import { getProfilePosts } from "../redux/actions/dataActions";
+import {
+  getAnyUserData,
+  unsetProfile,
+  followUser,
+} from "../redux/actions/userActions";
 //icons
 import LinkIcon from "@material-ui/icons/LanguageOutlined";
 import LocationIcon from "@material-ui/icons/LocationOnOutlined";
@@ -36,7 +37,6 @@ const styles = (theme) => ({
   },
   mainContainer: {
     overflow: "auto",
-    padding: "1.5em",
   },
   profile: {
     position: "relative",
@@ -54,6 +54,14 @@ const styles = (theme) => ({
     position: "absolute",
     bottom: 20,
     left: 30,
+  },
+  imageFiller: {
+    width: 175,
+    height: 175,
+    borderRadius: "50%",
+    border: "0.5em solid #161829",
+    background: "#161829",
+    zIndex: 1,
   },
   profileImage: {
     width: 175,
@@ -80,11 +88,17 @@ const styles = (theme) => ({
     width: "100%",
     height: 70,
     background: "#161829",
+    borderBottom: "0.1em solid #222540",
   },
   profileCover: {
     background: "#000",
     width: "100%",
     height: "100%",
+  },
+  headerImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   title: {
     color: "#5a5d75",
@@ -95,20 +109,19 @@ const styles = (theme) => ({
   timeline: {
     display: "flex",
     position: "relative",
-    marginTop: "2em",
     width: "100%",
   },
   timelineLeft: {
-    width: "22em",
-    marginRight: "1em",
+    width: "18.5em",
   },
   timelineRight: {
     flexGrow: 1,
+    minHeight: "58vh",
+    borderLeft: "0.1em solid #222540",
   },
   infoBox: {
-    background: "#161829",
     borderRadius: "0.2em",
-    padding: "1.5em",
+    padding: "1em",
     color: "#a8abbf",
   },
   infoText: {
@@ -120,8 +133,7 @@ const styles = (theme) => ({
     marginRight: "0.5em",
   },
   profileFollows: {
-    marginLeft: 40,
-    marginBottom: 26,
+    marginTop: 15,
   },
   profileFollowLink: {
     color: "#fff",
@@ -172,6 +184,7 @@ const styles = (theme) => ({
     width: "100%",
     height: 60,
     background: "#161829",
+    borderBottom: "0.1em solid #222540",
   },
   profileHiddenCover: {
     background: "#000",
@@ -213,16 +226,20 @@ class user extends Component {
     if (postId) this.setState({ postIdParam: postId });
 
     this.props.getAnyUserData(handle);
-    this.props.getUserData(handle);
+    this.props.getProfilePosts(handle);
   }
   componentDidUpdate(prevProps) {
     // if handle params changes, update profile
     if (this.props.match.params.handle !== prevProps.match.params.handle) {
+      this.props.unsetProfile();
       const handle = this.props.match.params.handle;
 
       this.props.getAnyUserData(handle);
-      this.props.getUserData(handle);
+      this.props.getProfilePosts(handle);
     }
+  }
+  componentWillUnmount() {
+    this.props.unsetProfile();
   }
   render() {
     const {
@@ -237,7 +254,9 @@ class user extends Component {
 
     const postsMarkup = loading ? (
       <div className={classes.loadingCircle}>Loading posts ...</div>
-    ) : posts === null ? null : !postIdParam ? (
+    ) : posts.length === 0 ? (
+      <div className={classes.loadingCircle}>This user has no posts.</div>
+    ) : !postIdParam ? (
       posts.map((post) => <Post key={post.postId} post={post} />)
     ) : (
       posts.map((post) => {
@@ -262,34 +281,33 @@ class user extends Component {
     return (
       <div className={classes.container}>
         <Leftbar />
-        <main className="main gradientbg">
+        <main className="main">
           <Navbar />
-          <section className={classes.mainContainer}>
+          <section className={classes.mainContainer} id="mainContainer">
             <div className={classes.profile} id="profile">
-              <div className={classes.profileCover}></div>
+              <div className={classes.profileCover}>
+                {profile && profile.headerUrl !== "" ? (
+                  <img
+                    src={profile.headerUrl}
+                    alt="Header image"
+                    className={classes.headerImage}
+                  ></img>
+                ) : null}
+              </div>
               <div className={classes.profileAvatar}>
-                {profile && (
+                {profile ? (
                   <img
                     src={profile.imageUrl}
                     alt="Profile image"
                     className={classes.profileImage}
                   ></img>
+                ) : (
+                  <div className={classes.imageFiller}></div>
                 )}
 
                 <div className={classes.profileName}>
                   {profile && profile.handle}
                 </div>
-
-                {profile && (
-                  <div className={classes.profileFollows}>
-                    <Link to="" className={classes.profileFollowLink}>
-                      {profile.followingCount} Following
-                    </Link>
-                    <Link to="" className={classes.profileFollowLink}>
-                      {profile.followersCount} Followers
-                    </Link>
-                  </div>
-                )}
               </div>
               <div className={classes.profileNav}>
                 <a className="profileLink active">Timeline</a>
@@ -299,7 +317,16 @@ class user extends Component {
               </div>
             </div>
             <div className={classes.profileHidden} id="profileHidden">
-              <div className={classes.profileHiddenCover}></div>
+              <div className={classes.profileHiddenCover}>
+                {" "}
+                {profile && profile.headerUrl !== "" ? (
+                  <img
+                    src={profile.headerUrl}
+                    alt="Header image"
+                    className={classes.headerImage}
+                  ></img>
+                ) : null}
+              </div>
               <div className={classes.profileHiddenAvatar}>
                 {profile && (
                   <img
@@ -405,6 +432,16 @@ class user extends Component {
                             Joined {dayjs(profile.createdAt).format("MMM YYYY")}
                           </span>
                         </div>
+                        {profile && (
+                          <div className={classes.profileFollows}>
+                            <Link to="" className={classes.profileFollowLink}>
+                              {profile.followingCount} Following
+                            </Link>
+                            <Link to="" className={classes.profileFollowLink}>
+                              {profile.followersCount} Followers
+                            </Link>
+                          </div>
+                        )}
                       </Fragment>
                     )}
                   </div>
@@ -412,7 +449,9 @@ class user extends Component {
               </div>
               <div className={classes.timelineRight}>
                 <div className={classes.createPost}>
-                  <CreatePost />
+                  <CreateProfilePost
+                    profileHandle={this.props.match.params.handle}
+                  />
                 </div>
                 <div className={classes.listPosts}>{postsMarkup}</div>
               </div>
@@ -426,7 +465,7 @@ class user extends Component {
 }
 
 user.propTypes = {
-  getUserData: PropTypes.func.isRequired,
+  getProfilePosts: PropTypes.func.isRequired,
   getAnyUserData: PropTypes.func.isRequired,
   followUser: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
@@ -438,9 +477,10 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 const mapActionsToProps = {
-  getUserData,
+  getProfilePosts,
   getAnyUserData,
   followUser,
+  unsetProfile,
 };
 
 export default connect(

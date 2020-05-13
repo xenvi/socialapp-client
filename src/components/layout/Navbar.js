@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import Notifications from "./Notifications";
+import Settings from "./Settings";
 
 // MaterialUI imports
 import TextField from "@material-ui/core/TextField";
@@ -22,6 +23,7 @@ const styles = (theme) => ({
     background: "#161829",
     padding: "0.7em",
     height: "4em",
+    borderBottom: "0.1em solid #222540",
   },
   searchTextField: {
     background: "none",
@@ -90,10 +92,10 @@ export class Navbar extends Component {
 
         <div className={classes.hiddenNav} id="hiddenNav">
           <Link to={`/users/${handle}`} className={classes.profileLink}>
-            {handle}
             <img src={imageUrl} alt="profile" className={classes.image} />
           </Link>
           <Notifications />
+          <Settings />
         </div>
       </nav>
     );

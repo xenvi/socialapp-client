@@ -57,7 +57,10 @@ class CreatePost extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.createPost({ body: this.state.body, location: "explore" });
+    this.props.createPost({
+      body: this.state.body,
+      location: this.props.profileHandle,
+    });
     this.props.clearErrors();
     this.setState({ body: "", errors: {} });
   };
@@ -91,7 +94,7 @@ class CreatePost extends Component {
               value={this.state.body}
               multiline
               rows="2"
-              placeholder="What's the latest?"
+              placeholder="Send a message ..."
               error={errors.body ? true : false}
               helperText={errors.body}
               className={classes.postTextField}

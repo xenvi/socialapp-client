@@ -1,3 +1,5 @@
+import { ThemeProvider } from "@material-ui/core/styles";
+
 export default {
   palette: {
     primary: {
@@ -232,8 +234,7 @@ export default {
       display: "flex",
       alignItems: "center",
       width: "100%",
-      padding: "1em 0 1em 5.6em",
-      borderTop: "0.1em solid #222540",
+      padding: "0 0 1em 5.6em",
     },
     wrapIcon: {
       fontSize: 20,
@@ -242,6 +243,7 @@ export default {
       marginRight: "0.3em",
       cursor: "pointer",
       zIndex: 5,
+      transition: "0.3s",
     },
     date: {
       fontSize: 12,

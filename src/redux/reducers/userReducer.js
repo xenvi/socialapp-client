@@ -9,6 +9,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   SET_PROFILE,
+  UNSET_PROFILE,
 } from "../types";
 
 const initialState = {
@@ -80,6 +81,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         profile: action.payload,
+      };
+    case UNSET_PROFILE:
+      return {
+        ...state,
+        profile: {},
       };
     default:
       return state;

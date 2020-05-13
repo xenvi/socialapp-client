@@ -15,7 +15,7 @@ import {
 } from "../types";
 import axios from "axios";
 
-// get all posts
+// get all explore posts
 export const getPosts = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
@@ -33,7 +33,28 @@ export const getPosts = () => (dispatch) => {
       });
     });
 };
+// get profile-specific posts
+export const getProfilePosts = (handle) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get(`/profilePosts/${handle}`)
+    .then((res) => {
+      dispatch({
+        type: SET_POSTS,
+        payload: res.data,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: SET_POSTS,
+        payload: [],
+      });
+    });
+};
 
+// get home page following posts
+
+// get single post
 export const getPost = (postId) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
@@ -142,12 +163,10 @@ export const getUserData = (userHandle) => (dispatch) => {
 };
 
 export const getNewUsers = () => (dispatch) => {
-  dispatch({ type: LOADING_UI });
   axios
     .get("/newusers")
     .then((res) => {
       dispatch({ type: GET_NEW_USERS, payload: res.data });
-      dispatch({ type: STOP_LOADING_UI });
     })
     .catch(() => {
       dispatch({

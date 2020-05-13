@@ -9,6 +9,7 @@ import {
   FOLLOW_USER,
   UNFOLLOW_USER,
   SET_PROFILE,
+  UNSET_PROFILE,
 } from "../types";
 import axios from "axios";
 
@@ -48,10 +49,11 @@ export const signupUser = (newUserData, history) => (dispatch) => {
     });
 };
 
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (history) => (dispatch) => {
   localStorage.removeItem("FBIdToken");
   delete axios.defaults.headers.common["Authorization"];
   dispatch({ type: SET_UNAUTHENTICATED });
+  history.push("/");
 };
 
 export const getUserData = () => (dispatch) => {
@@ -80,10 +82,24 @@ export const getAnyUserData = (userHandle) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const unsetProfile = () => (dispatch) => {
+  dispatch({ type: UNSET_PROFILE });
+};
+
 export const uploadImage = (formData) => (dispatch) => {
   dispatch({ type: LOADING_USER });
   axios
     .post("/user/image", formData)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch((err) => console.log(err));
+};
+
+export const uploadHeaderImage = (formData) => (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .post("/user/header", formData)
     .then(() => {
       dispatch(getUserData());
     })

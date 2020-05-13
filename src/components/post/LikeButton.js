@@ -36,16 +36,24 @@ class LikeButton extends Component {
     const likeButton = !authenticated ? (
       // if not authenticated, link to cover page
       <Link to="/">
-        <FavoriteBorder className={classes.wrapIcon} />
+        <FavoriteBorder className={classes.wrapIcon} id="likeBtn" />
       </Link>
     ) : // if authenticated and...
     this.likedPost() ? (
       // post is already liked: unlike
-      <FavoriteIcon onClick={this.unlikePost} className={classes.wrapIcon} />
+      <FavoriteIcon
+        onClick={this.unlikePost}
+        className={classes.wrapIcon}
+        id="likeBtn"
+      />
     ) : (
       // post isn't already liked: like
 
-      <FavoriteBorder onClick={this.likePost} className={classes.wrapIcon} />
+      <FavoriteBorder
+        onClick={this.likePost}
+        className={classes.wrapIcon}
+        id="likeBtn"
+      />
     );
     return likeButton;
   }

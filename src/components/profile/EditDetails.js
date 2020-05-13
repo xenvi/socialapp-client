@@ -4,7 +4,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // redux imports
 import { connect } from "react-redux";
-import { editUserDetails } from "../../redux/actions/userActions";
+import {
+  editUserDetails,
+  uploadImage,
+  uploadHeaderImage,
+} from "../../redux/actions/userActions";
 
 // mui imports
 import Button from "@material-ui/core/Button";
@@ -13,6 +17,9 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Slide from "@material-ui/core/Slide";
+
+//icons
+import CameraIcon from "@material-ui/icons/CameraAltOutlined";
 
 const styles = (theme) => ({
   ...theme.spread,
@@ -29,10 +36,51 @@ const styles = (theme) => ({
   },
   formContainer: {
     textAlign: "center",
-    marginTop: "1.5em",
   },
   whiteText: {
     color: "#a8abbf",
+  },
+  editImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+  editImageIcon: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    background: "rgba(0,0,0,0.2)",
+    color: "#fff",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "0.3s",
+    "&:hover": {
+      background: "rgba(0,0,0,0.35)",
+      transition: "0.3s",
+    },
+  },
+  imageContainer: {
+    zIndex: 1,
+    width: 150,
+    height: 150,
+    position: "relative",
+    border: "0.5em solid #161829",
+    cursor: "pointer",
+    margin: "-6em 0 1.5em 1.5em",
+    borderRadius: "50%",
+    overflow: "hidden",
+  },
+  headerContainer: {
+    width: "100%",
+    height: 200,
+    position: "relative",
+    cursor: "pointer",
+  },
+  headerFiller: {
+    width: "100%",
+    height: "100%",
+    background: "#000",
   },
 });
 
@@ -45,6 +93,8 @@ class EditDetails extends Component {
     bio: "",
     website: "",
     location: "",
+    imageUrl: "",
+    headerUrl: "",
     open: false,
   };
 
@@ -58,6 +108,8 @@ class EditDetails extends Component {
       bio: credentials.bio ? credentials.bio : "",
       website: credentials.website ? credentials.website : "",
       location: credentials.location ? credentials.location : "",
+      imageUrl: credentials.imageUrl ? credentials.imageUrl : "",
+      headerUrl: credentials.headerUrl ? credentials.headerUrl : "",
     });
   };
 
@@ -79,9 +131,31 @@ class EditDetails extends Component {
       bio: this.state.bio,
       website: this.state.website,
       location: this.state.location,
+      imageUrl: this.state.imageUrl,
+      headerUrl: this.state.headerUrl,
     };
     this.props.editUserDetails(userDetails);
     this.handleClose();
+  };
+  handleImageChange = (event) => {
+    const image = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    this.props.uploadImage(formData);
+  };
+  handleEditPicture = () => {
+    const fileInput = document.getElementById("imageInput");
+    fileInput.click();
+  };
+  handleHeaderChange = (event) => {
+    const header = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", header, header.name);
+    this.props.uploadHeaderImage(formData);
+  };
+  handleEditHeader = () => {
+    const fileInput = document.getElementById("headerInput");
+    fileInput.click();
   };
 
   render() {
@@ -105,9 +179,47 @@ class EditDetails extends Component {
         >
           <div className={classes.detailsContainer}>
             <div className={classes.detailsTitle}>Edit Profile</div>
-
             <hr className={classes.thickSeparator} />
-            <DialogContent className={classes.formContainer}>
+            <div className={classes.formContainer}>
+              <input
+                type="file"
+                id="headerInput"
+                hidden="hidden"
+                onChange={this.handleHeaderChange}
+              />
+              <div
+                onClick={this.handleEditHeader}
+                className={classes.headerContainer}
+              >
+                <div className={classes.editImageIcon}>
+                  <CameraIcon />
+                </div>
+                {this.state.headerUrl ? (
+                  <img
+                    src={this.state.headerUrl}
+                    className={classes.editImage}
+                  />
+                ) : (
+                  <div className={classes.headerFiller} />
+                )}
+              </div>
+
+              <input
+                type="file"
+                id="imageInput"
+                hidden="hidden"
+                onChange={this.handleImageChange}
+              />
+              <div
+                onClick={this.handleEditPicture}
+                className={classes.imageContainer}
+              >
+                <div className={classes.editImageIcon}>
+                  <CameraIcon />
+                </div>
+                <img src={this.state.imageUrl} className={classes.editImage} />
+              </div>
+
               <form>
                 {" "}
                 <span className={classes.labelsDark}>Bio</span>
@@ -163,7 +275,7 @@ class EditDetails extends Component {
                   }}
                 />
               </form>
-            </DialogContent>
+            </div>
             <hr className={classes.thickSeparator} />
             <DialogActions>
               <Button onClick={this.handleClose} color="secondary">
@@ -189,6 +301,8 @@ const mapStateToProps = (state) => ({
   credentials: state.user.credentials,
 });
 
-export default connect(mapStateToProps, { editUserDetails })(
-  withStyles(styles)(EditDetails)
-);
+export default connect(mapStateToProps, {
+  editUserDetails,
+  uploadImage,
+  uploadHeaderImage,
+})(withStyles(styles)(EditDetails));

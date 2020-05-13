@@ -226,16 +226,23 @@ a {
   border-radius: 0.2em;
   width: 100%;
   color: #a8abbf;
-  margin: 1em 0;
   background: #161829;
   text-align: left;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  border-top: 0.1em solid #222540;
+  border-bottom: 0.1em solid #222540;
   transition: 0.3s all ease-in-out;
+  margin-top: -0.1em;
 }
 .card:hover {
   background: #1e2138;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
+}
+
+#likeBtn:hover {
+  color: #e73c7e;
+  transition: 0.3s;
 }
 
 /* profile page */
@@ -280,7 +287,17 @@ a {
   max-width: 50em;
   width: 100%;
   height: 100vh;
-  background: #0c0e18;
+  border-right: 0.1em solid #222540;
+}
+/* hide scrollbar */
+#mainContainer {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#mainContainer::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 @keyframes gradient {

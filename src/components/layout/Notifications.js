@@ -32,6 +32,12 @@ const styles = (theme) => ({
   },
 });
 
+const Button = withStyles((theme) => ({
+  root: {
+    padding: 12,
+  },
+}))(IconButton);
+
 class Notifications extends Component {
   state = {
     anchorEl: null,
@@ -106,13 +112,13 @@ class Notifications extends Component {
       );
     return (
       <Fragment>
-        <IconButton
+        <Button
           aria-owns={anchorEl ? "simple-menu" : undefined}
           aria-haspopup="true"
           onClick={this.handleOpen}
         >
           {notificationsIcon}
-        </IconButton>
+        </Button>
         <Popover
           anchorEl={anchorEl}
           anchorOrigin={{
