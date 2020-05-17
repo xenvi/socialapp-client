@@ -4,8 +4,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 
 import Navbar from "../components/layout/Navbar";
-import Leftbar from "../components/layout/Leftbar";
-import Rightbar from "../components/layout/Rightbar";
 
 import Post from "../components/post/Post";
 import PostSkeleton from "../util/PostSkeleton";
@@ -88,20 +86,16 @@ class home extends Component {
       <PostSkeleton />
     );
     return (
-      <div className={classes.container}>
-        <Leftbar />
-        <main className="main">
-          <Navbar />
-          <section className={classes.mainContainer} id="mainContainer">
-            <div className="feed">
-              <div className={classes.sectionTitle}>Home</div>
-              <CreatePost />
-              {recentPostsMarkup}
-            </div>{" "}
-          </section>
-        </main>
-        <Rightbar />
-      </div>
+      <main className="main">
+        <Navbar />
+        <section className={classes.mainContainer} id="mainContainer">
+          <div className="feed">
+            <div className={classes.sectionTitle}>Home</div>
+            <CreatePost />
+            {recentPostsMarkup}
+          </div>{" "}
+        </section>
+      </main>
     );
   }
 }

@@ -25,9 +25,11 @@ const styles = (theme) => ({
     flexDirection: "column",
     background: "#161829",
     minWidth: "14em",
+    minHeight: "100vh",
     height: "100%",
     borderRight: "0.1em solid #222540",
     transition: "0.3s",
+    float: "left",
   },
   brand: {
     display: "flex",

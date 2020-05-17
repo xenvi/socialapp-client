@@ -18,7 +18,8 @@ const styles = (theme) => ({
     justifyContent: "flex-start",
     flexDirection: "column",
     background: "#161829",
-    width: "17em",
+    width: "18.5em",
+    minHeight: "100vh",
     height: "100%",
     overflow: "auto",
     transform: "translateX(0)",
@@ -61,7 +62,7 @@ const styles = (theme) => ({
       "& li": {
         display: "flex",
         alignItems: "center",
-        color: "#999",
+        color: "#a8abbf",
         cursor: "pointer",
         padding: "0.5em 0",
         transition: "0.3s all ease-in-out",
@@ -101,12 +102,61 @@ const styles = (theme) => ({
     marginRight: "1em",
     background: "#5a5d75",
   },
+  news: {
+    width: "100%",
+    height: "auto",
+    background: "#1d2038",
+    borderRadius: "0.5em",
+    marginTop: "0.5em",
+    overflow: "hidden",
+  },
+  newsContainer: {
+    borderTop: "1px solid #2b3052",
+    borderBottom: "1px solid #2b3052",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "0.5em 1em",
+  },
+  newstitle: {
+    color: "#a8abbf",
+    fontSize: "0.85em",
+    transition: "0.3s",
+    "&:hover": {
+      color: "#fff",
+      transition: "0.3s",
+    },
+  },
+  newsImage: {
+    width: 50,
+    height: 50,
+    borderRadius: "0.5em",
+    background: "#a8abbf",
+    alignItems: "right",
+    flexShrink: 0,
+  },
 });
 
 export class Rightbar extends Component {
+  state = {
+    news: [],
+  };
   componentDidMount() {
     this.props.getNewUsers();
+    // this.fetchNews();
   }
+  fetchNews = () => {
+    fetch(
+      "https://gnews.io/api/v3/topics/world?&max=5&token=4545dea9215118abdfbdecfa8ba759a0"
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({ news: data.articles });
+      })
+      .catch((err) => console.log(err));
+  };
   render() {
     const {
       classes,
@@ -116,6 +166,7 @@ export class Rightbar extends Component {
       data: { newusers },
       UI: { loading },
     } = this.props;
+    const { news } = this.state;
 
     const users = !loading
       ? newusers.map((user, index) => (
@@ -139,6 +190,23 @@ export class Rightbar extends Component {
           </div>
         ));
 
+    const newsMarkup =
+      news &&
+      news.map((news, index) => (
+        <div className={classes.newsContainer} key={index}>
+          <a href={news.url} target="_blank" rel="noopener noreferrer">
+            <div className={classes.newstitle}>{news.title}</div>
+          </a>
+          {news.image ? (
+            <img
+              src={news.image}
+              className={classes.newsImage}
+              alt="news"
+            ></img>
+          ) : null}
+        </div>
+      ));
+
     return (
       <aside className={classes.rightbar} id="rightbar">
         <div className={classes.rightNav}>
@@ -156,7 +224,7 @@ export class Rightbar extends Component {
           </div>
           <div className={classes.submenu}>
             <div className={classes.menuTitle}>TRENDING NEWS</div>
-            <div className={classes.menuList}></div>
+            <div className={classes.news}>{newsMarkup}</div>
           </div>
         </div>
       </aside>

@@ -65,16 +65,26 @@ export default function (state = initialState, action) {
         ...state,
       };
     case FOLLOW_USER:
-    case UNFOLLOW_USER:
-      let index = state.credentials.findIndex(
-        (user) => user.userId === action.payload.userData.userId
-      );
-      state.posts[index] = action.payload;
-      if (state.post.postId === action.payload.postId) {
-        state.post = action.payload;
-      }
       return {
         ...state,
+        credentials: action.payload.currentUserData,
+        profile: action.payload.userData,
+        following: [
+          ...state.following,
+          {
+            recipient: action.payload.userData.handle,
+            sender: state.credentials.handle,
+          },
+        ],
+      };
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        credentials: action.payload.currentUserData,
+        profile: action.payload.userData,
+        following: state.following.filter(
+          (following) => following.recipient !== action.payload.userData.handle
+        ),
       };
     case SET_PROFILE:
       return {

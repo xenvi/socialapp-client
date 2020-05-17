@@ -5,8 +5,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 
 import Navbar from "../components/layout/Navbar";
-import Leftbar from "../components/layout/Leftbar";
-import Rightbar from "../components/layout/Rightbar";
 
 import Post from "../components/post/Post";
 import PostSkeleton from "../util/PostSkeleton";
@@ -18,12 +16,6 @@ import { Typography } from "@material-ui/core";
 
 const styles = (theme) => ({
   ...theme.spread,
-  container: {
-    width: "100%",
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-  },
   posts: {
     background: "#fafafa",
     minHeight: "60vh",
@@ -91,20 +83,16 @@ class home extends Component {
       <PostSkeleton />
     );
     return (
-      <div className={classes.container}>
-        <Leftbar />
-        <main className="main">
-          <Navbar />
-          <section className={classes.mainContainer} id="mainContainer">
-            <Grid item className="feed">
-              <Typography className={classes.sectionTitle}>Explore</Typography>
-              <CreatePost />
-              {recentPostsMarkup}
-            </Grid>{" "}
-          </section>
-        </main>
-        <Rightbar />
-      </div>
+      <main className="main">
+        <Navbar />
+        <section className={classes.mainContainer} id="mainContainer">
+          <Grid item className="feed">
+            <Typography className={classes.sectionTitle}>Explore</Typography>
+            <CreatePost />
+            {recentPostsMarkup}
+          </Grid>{" "}
+        </section>
+      </main>
     );
   }
 }

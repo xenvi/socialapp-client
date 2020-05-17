@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import withStyles from "@material-ui/core/styles/withStyles";
 import "./App.css";
 import "./script.js";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
@@ -12,6 +13,9 @@ import store from "./redux/store";
 import { SET_AUTHENTICATED } from "./redux/types";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
 //Components
+import Leftbar from "./components/layout/Leftbar";
+
+import Rightbar from "./components/layout/Rightbar";
 // import AuthRoute from "./util/AuthRoute";
 import themeFile from "./util/theme";
 //Pages
@@ -39,24 +43,40 @@ if (token) {
   }
 }
 
+const styles = () => ({
+  container: {
+    width: "100%",
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+  },
+});
+
 class App extends Component {
   render() {
+    const { classes } = this.props;
     return (
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
           <Router>
             <Switch>
-              <Route exact path="/home" component={home} />
-              <Route exact path="/explore" component={explore} />
-              <Route exact path="/news" component={news} />
-              <Route exact path="/users/:handle" component={user} />
-              <Route
-                exact
-                path="/users/:handle/post/:postId"
-                component={user}
-              />
+              <Route exact path="/" component={cover} />
+              <Fragment>
+                <div className={classes.container}>
+                  <Leftbar />
+                  <Route exact path="/home" component={home} />
+                  <Route exact path="/explore" component={explore} />
+                  <Route exact path="/news" component={news} />
+                  <Route exact path="/users/:handle" component={user} />
+                  <Route
+                    exact
+                    path="/users/:handle/post/:postId"
+                    component={user}
+                  />{" "}
+                  <Rightbar />
+                </div>
+              </Fragment>
             </Switch>
-            <Route exact path="/" component={cover} />
           </Router>
         </Provider>
       </MuiThemeProvider>
@@ -64,4 +84,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withStyles(styles)(App);

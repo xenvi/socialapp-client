@@ -93,7 +93,7 @@ export const uploadImage = (formData) => (dispatch) => {
     .then(() => {
       dispatch(getUserData());
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.response.data));
 };
 
 export const uploadHeaderImage = (formData) => (dispatch) => {
@@ -103,7 +103,7 @@ export const uploadHeaderImage = (formData) => (dispatch) => {
     .then(() => {
       dispatch(getUserData());
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err.response.data));
 };
 
 export const editUserDetails = (userDetails) => (dispatch) => {
@@ -128,21 +128,27 @@ export const markNotificationsRead = (notificationIds) => (dispatch) => {
 };
 
 export const followUser = (userId) => (dispatch) => {
-  axios.get(`/user/${userId}/follow`).then((res) => {
-    dispatch({
-      type: FOLLOW_USER,
-      payload: res.data,
-    });
-  });
+  axios
+    .get(`/user/${userId}/follow`)
+    .then((res) => {
+      dispatch({
+        type: FOLLOW_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 export const unfollowUser = (userId) => (dispatch) => {
-  axios.get(`/user/${userId}/unfollow`).then((res) => {
-    dispatch({
-      type: UNFOLLOW_USER,
-      payload: res.data,
-    });
-  });
+  axios
+    .get(`/user/${userId}/unfollow`)
+    .then((res) => {
+      dispatch({
+        type: UNFOLLOW_USER,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 const setAuthorizationHeader = (token) => {

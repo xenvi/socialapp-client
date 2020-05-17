@@ -5,19 +5,15 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 
 import Navbar from "../components/layout/Navbar";
-import Leftbar from "../components/layout/Leftbar";
-import Rightbar from "../components/layout/Rightbar";
 import Post from "../components/post/Post";
 import CreateProfilePost from "../components/post/CreateProfilePost";
 import EditDetails from "../components/profile/EditDetails";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import FollowButton from "../components/profile/FollowButton";
 
 import { connect } from "react-redux";
 import { getProfilePosts } from "../redux/actions/dataActions";
-import {
-  getAnyUserData,
-  unsetProfile,
-  followUser,
-} from "../redux/actions/userActions";
+import { getAnyUserData, unsetProfile } from "../redux/actions/userActions";
 //icons
 import LinkIcon from "@material-ui/icons/LanguageOutlined";
 import LocationIcon from "@material-ui/icons/LocationOnOutlined";
@@ -25,12 +21,6 @@ import CalendarIcon from "@material-ui/icons/CalendarTodayOutlined";
 
 const styles = (theme) => ({
   ...theme.spread,
-  container: {
-    width: "100%",
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-  },
   posts: {
     background: "#fafafa",
     minHeight: "60vh",
@@ -62,6 +52,9 @@ const styles = (theme) => ({
     border: "0.5em solid #161829",
     background: "#161829",
     zIndex: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   profileImage: {
     width: 175,
@@ -75,7 +68,7 @@ const styles = (theme) => ({
     marginLeft: 40,
     marginBottom: 30,
     color: "#fff",
-    textShadow: "0 0 5px #000",
+    textShadow: "0 0 10px #000",
     fontWeight: 700,
     fontSize: 24,
   },
@@ -99,6 +92,7 @@ const styles = (theme) => ({
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    opacity: "0.8",
   },
   title: {
     color: "#5a5d75",
@@ -237,6 +231,17 @@ class user extends Component {
       this.props.getAnyUserData(handle);
       this.props.getProfilePosts(handle);
     }
+
+    // if authenticated user details update, update profile
+    if (
+      this.props.user.credentials !== prevProps.user.credentials &&
+      this.props.user.credentials.followersCount ===
+        prevProps.user.credentials.followersCount &&
+      this.props.user.credentials.followingCount ===
+        prevProps.user.credentials.followingCount
+    ) {
+      this.props.getAnyUserData(this.props.user.credentials.handle);
+    }
   }
   componentWillUnmount() {
     this.props.unsetProfile();
@@ -270,80 +275,130 @@ class user extends Component {
       this.props.match.params.handle === handle ? (
         <EditDetails />
       ) : (
-        <button
-          className={classes.followEditbtn}
-          onClick={() => this.props.followUser(profile.handle)}
-        >
-          Follow
-        </button>
+        <FollowButton profileHandle={this.props.match.params.handle} />
       );
 
     return (
-      <div className={classes.container}>
-        <Leftbar />
-        <main className="main">
-          <Navbar />
-          <section className={classes.mainContainer} id="mainContainer">
-            <div className={classes.profile} id="profile">
-              <div className={classes.profileCover}>
-                {profile && profile.headerUrl !== "" ? (
-                  <img
-                    src={profile.headerUrl}
-                    alt="Header image"
-                    className={classes.headerImage}
-                  ></img>
-                ) : null}
-              </div>
-              <div className={classes.profileAvatar}>
-                {profile ? (
-                  <img
-                    src={profile.imageUrl}
-                    alt="Profile image"
-                    className={classes.profileImage}
-                  ></img>
-                ) : (
-                  <div className={classes.imageFiller}></div>
-                )}
-
-                <div className={classes.profileName}>
-                  {profile && profile.handle}
+      <main className="main">
+        <Navbar />
+        <section className={classes.mainContainer} id="mainContainer">
+          <div className={classes.profile} id="profile">
+            <div className={classes.profileCover}>
+              {profile && profile.headerUrl !== "" ? (
+                <img
+                  src={profile.headerUrl}
+                  alt="Header"
+                  className={classes.headerImage}
+                ></img>
+              ) : null}
+            </div>
+            <div className={classes.profileAvatar}>
+              {profile ? (
+                <img
+                  src={profile.imageUrl}
+                  alt="Profile"
+                  className={classes.profileImage}
+                ></img>
+              ) : (
+                <div className={classes.imageFiller}>
+                  <CircularProgress />
                 </div>
-              </div>
-              <div className={classes.profileNav}>
-                <a className="profileLink active">Timeline</a>
-                <a className="profileLink">About</a>
-                <a className="profileLink">Likes</a>
-                {followEditBtn}
+              )}
+
+              <div className={classes.profileName}>
+                {profile && profile.handle}
               </div>
             </div>
-            <div className={classes.profileHidden} id="profileHidden">
-              <div className={classes.profileHiddenCover}>
-                {" "}
-                {profile && profile.headerUrl !== "" ? (
-                  <img
-                    src={profile.headerUrl}
-                    alt="Header image"
-                    className={classes.headerImage}
-                  ></img>
-                ) : null}
+            <div className={classes.profileNav}>
+              <a className="profileLink active">Timeline</a>
+              <a className="profileLink">About</a>
+              <a className="profileLink">Likes</a>
+              {followEditBtn}
+            </div>
+          </div>
+          <div className={classes.profileHidden} id="profileHidden">
+            <div className={classes.profileHiddenCover}>
+              {" "}
+              {profile && profile.headerUrl !== "" ? (
+                <img
+                  src={profile.headerUrl}
+                  alt="Header"
+                  className={classes.headerImage}
+                ></img>
+              ) : null}
+            </div>
+            <div className={classes.profileHiddenAvatar}>
+              {profile && (
+                <img
+                  src={profile.imageUrl}
+                  alt="Profile"
+                  className={classes.profileHiddenImage}
+                ></img>
+              )}
+            </div>
+            <div className={classes.profileHiddenInfo}>
+              <div className={classes.profileHiddenButton}>{followEditBtn}</div>
+              <div className={classes.profileHiddenName}>
+                {profile && profile.handle}
               </div>
-              <div className={classes.profileHiddenAvatar}>
+              <div className={classes.hiddenInfo}>
                 {profile && (
-                  <img
-                    src={profile.imageUrl}
-                    alt="Profile image"
-                    className={classes.profileHiddenImage}
-                  ></img>
+                  <Fragment>
+                    {profile.bio && (
+                      <div className={classes.infoText}>{profile.bio}</div>
+                    )}
+                    {profile.location && (
+                      <div className={classes.infoText}>
+                        <LocationIcon className={classes.marginIcon} />{" "}
+                        <div>{profile.location}</div>
+                      </div>
+                    )}
+                    {profile.website && (
+                      <div className={classes.infoText}>
+                        <LinkIcon className={classes.marginIcon} />
+                        <a
+                          href={profile.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {" "}
+                          {profile.website}
+                        </a>
+                      </div>
+                    )}
+                    <div className={classes.infoText}>
+                      {" "}
+                      <CalendarIcon className={classes.marginIcon} />{" "}
+                      <span>
+                        Joined {dayjs(profile.createdAt).format("MMM YYYY")}
+                      </span>
+                    </div>
+                  </Fragment>
                 )}
               </div>
-              <div className={classes.profileHiddenInfo}>
-                <div className={classes.profileHiddenButton}>
-                  {followEditBtn}
+              {profile && (
+                <div className={classes.profileHiddenFollows}>
+                  <Link to="" className={classes.profileFollowLink}>
+                    {profile.followingCount} Following
+                  </Link>
+                  <Link to="" className={classes.profileFollowLink}>
+                    {profile.followersCount} Followers
+                  </Link>
                 </div>
-                <div className={classes.profileHiddenName}>
-                  {profile && profile.handle}
-                </div>
-                <div className={classes.hiddenInfo}>
+              )}
+            </div>
+            <hr className={classes.thickSeparator} />
+            <div className={classes.profileHiddenNav}>
+              <a className="profileLink active">Timeline</a>
+              <a className="profileLink">About</a>
+              <a className="profileLink">Likes</a>
+            </div>
+          </div>
+          <section className={classes.timeline}>
+            <div className={classes.timelineLeft} id="timelineLeft">
+              <div className={classes.infoBox}>
+                <div className={classes.title}>ABOUT</div>
+                <div className={classes.info}>
                   {profile && (
                     <Fragment>
                       {profile.bio && (
@@ -375,91 +430,32 @@ class user extends Component {
                           Joined {dayjs(profile.createdAt).format("MMM YYYY")}
                         </span>
                       </div>
+                      {profile && (
+                        <div className={classes.profileFollows}>
+                          <Link to="" className={classes.profileFollowLink}>
+                            {profile.followingCount} Following
+                          </Link>
+                          <Link to="" className={classes.profileFollowLink}>
+                            {profile.followersCount} Followers
+                          </Link>
+                        </div>
+                      )}
                     </Fragment>
                   )}
                 </div>
-                {profile && (
-                  <div className={classes.profileHiddenFollows}>
-                    <Link to="" className={classes.profileFollowLink}>
-                      {profile.followingCount} Following
-                    </Link>
-                    <Link to="" className={classes.profileFollowLink}>
-                      {profile.followersCount} Followers
-                    </Link>
-                  </div>
-                )}
-              </div>
-              <hr className={classes.thickSeparator} />
-              <div className={classes.profileHiddenNav}>
-                <a className="profileLink active">Timeline</a>
-                <a className="profileLink">About</a>
-                <a className="profileLink">Likes</a>
               </div>
             </div>
-            <section className={classes.timeline}>
-              <div className={classes.timelineLeft} id="timelineLeft">
-                <div className={classes.infoBox}>
-                  <div className={classes.title}>ABOUT</div>
-                  <div className={classes.info}>
-                    {profile && (
-                      <Fragment>
-                        {profile.bio && (
-                          <div className={classes.infoText}>{profile.bio}</div>
-                        )}
-                        {profile.location && (
-                          <div className={classes.infoText}>
-                            <LocationIcon className={classes.marginIcon} />{" "}
-                            <div>{profile.location}</div>
-                          </div>
-                        )}
-                        {profile.website && (
-                          <div className={classes.infoText}>
-                            <LinkIcon className={classes.marginIcon} />
-                            <a
-                              href={profile.website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {" "}
-                              {profile.website}
-                            </a>
-                          </div>
-                        )}
-                        <div className={classes.infoText}>
-                          {" "}
-                          <CalendarIcon className={classes.marginIcon} />{" "}
-                          <span>
-                            Joined {dayjs(profile.createdAt).format("MMM YYYY")}
-                          </span>
-                        </div>
-                        {profile && (
-                          <div className={classes.profileFollows}>
-                            <Link to="" className={classes.profileFollowLink}>
-                              {profile.followingCount} Following
-                            </Link>
-                            <Link to="" className={classes.profileFollowLink}>
-                              {profile.followersCount} Followers
-                            </Link>
-                          </div>
-                        )}
-                      </Fragment>
-                    )}
-                  </div>
-                </div>
+            <div className={classes.timelineRight}>
+              <div className={classes.createPost}>
+                <CreateProfilePost
+                  profileHandle={this.props.match.params.handle}
+                />
               </div>
-              <div className={classes.timelineRight}>
-                <div className={classes.createPost}>
-                  <CreateProfilePost
-                    profileHandle={this.props.match.params.handle}
-                  />
-                </div>
-                <div className={classes.listPosts}>{postsMarkup}</div>
-              </div>
-            </section>
+              <div className={classes.listPosts}>{postsMarkup}</div>
+            </div>
           </section>
-        </main>
-        <Rightbar />
-      </div>
+        </section>
+      </main>
     );
   }
 }
@@ -467,7 +463,6 @@ class user extends Component {
 user.propTypes = {
   getProfilePosts: PropTypes.func.isRequired,
   getAnyUserData: PropTypes.func.isRequired,
-  followUser: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 };
@@ -479,7 +474,6 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
   getProfilePosts,
   getAnyUserData,
-  followUser,
   unsetProfile,
 };
 

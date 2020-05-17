@@ -21,12 +21,12 @@ const styles = (theme) => ({
     marginTop: 10,
   },
   settingsContainer: {
-    padding: "0.5em",
+    padding: "0 0.5em",
   },
   listItem: {
     letterSpacing: "1px",
     fontWeight: 700,
-    fontSize: 16,
+    fontSize: 15,
     cursor: "pointer",
   },
 });

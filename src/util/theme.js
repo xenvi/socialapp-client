@@ -1,5 +1,3 @@
-import { ThemeProvider } from "@material-ui/core/styles";
-
 export default {
   palette: {
     primary: {
@@ -142,26 +140,6 @@ export default {
       "&:hover": {
         background: "#00ccff",
         boxShadow: "0 0 1.3em #00ccff",
-        transition: "0.3 all ease-in-out",
-      },
-    },
-    followEditbtn: {
-      margin: "0 1em 0 auto",
-      fontSize: 15,
-      textShadow: "0 3px 5px rgba(0,0,0,0.5)",
-      border: "2px solid #0099ff",
-      background: "none",
-      color: "#0099ff",
-      height: 40,
-      borderRadius: "5px",
-      fontWeight: "bold",
-      width: "8em",
-      cursor: "pointer",
-      textTransform: "none",
-      transition: "0.3s all ease-in-out",
-      "&:hover": {
-        color: "#00ccff",
-        border: "2px solid #00ccff",
         transition: "0.3 all ease-in-out",
       },
     },

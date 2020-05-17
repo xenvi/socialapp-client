@@ -15,7 +15,6 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
 import Slide from "@material-ui/core/Slide";
 
 //icons
@@ -82,6 +81,29 @@ const styles = (theme) => ({
     height: "100%",
     background: "#000",
   },
+  editbtn: {
+    margin: "0 1em 0 auto",
+    fontSize: 15,
+    textShadow: "0 3px 5px rgba(0,0,0,0.5)",
+    border: "2px solid #0099ff",
+    background: "none",
+    color: "#0099ff",
+    height: 40,
+    borderRadius: "5px",
+    fontWeight: "bold",
+    width: "8em",
+    cursor: "pointer",
+    textTransform: "none",
+    transition: "0.3s all ease-in-out",
+    "&:hover": {
+      color: "#00ccff",
+      border: "2px solid #00ccff",
+      transition: "0.3 all ease-in-out",
+    },
+    "&:active, &:focus": {
+      outline: "none",
+    },
+  },
 });
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -101,6 +123,13 @@ class EditDetails extends Component {
   componentDidMount() {
     const { credentials } = this.props;
     this.mapUserDetailsToState(credentials);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.credentials !== prevProps.credentials) {
+      const { credentials } = this.props;
+      this.mapUserDetailsToState(credentials);
+    }
   }
 
   mapUserDetailsToState = (credentials) => {
@@ -131,10 +160,9 @@ class EditDetails extends Component {
       bio: this.state.bio,
       website: this.state.website,
       location: this.state.location,
-      imageUrl: this.state.imageUrl,
-      headerUrl: this.state.headerUrl,
     };
     this.props.editUserDetails(userDetails);
+
     this.handleClose();
   };
   handleImageChange = (event) => {
@@ -162,7 +190,7 @@ class EditDetails extends Component {
     const { classes } = this.props;
     return (
       <Fragment>
-        <button className={classes.followEditbtn} onClick={this.handleOpen}>
+        <button className={classes.editbtn} onClick={this.handleOpen}>
           Edit Profile
         </button>
         <Dialog
@@ -198,6 +226,7 @@ class EditDetails extends Component {
                   <img
                     src={this.state.headerUrl}
                     className={classes.editImage}
+                    alt="Header"
                   />
                 ) : (
                   <div className={classes.headerFiller} />
@@ -217,7 +246,11 @@ class EditDetails extends Component {
                 <div className={classes.editImageIcon}>
                   <CameraIcon />
                 </div>
-                <img src={this.state.imageUrl} className={classes.editImage} />
+                <img
+                  src={this.state.imageUrl}
+                  className={classes.editImage}
+                  alt="Profile"
+                />
               </div>
 
               <form>
@@ -294,6 +327,8 @@ class EditDetails extends Component {
 
 EditDetails.propTypes = {
   editUserDetails: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired,
+  uploadHeaderImage: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
