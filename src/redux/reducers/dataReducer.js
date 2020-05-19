@@ -36,16 +36,23 @@ export default function (state = initialState, action) {
         post: action.payload,
       };
     case LIKE_POST:
-    case UNLIKE_POST:
       let index = state.posts.findIndex(
         (post) => post.postId === action.payload.postId
       );
       state.posts[index] = action.payload;
-      if (state.post.postId === action.payload.postId) {
-        state.post = action.payload;
-      }
       return {
         ...state,
+        post: { ...state.post, likeCount: state.post.likeCount + 1 },
+      };
+
+    case UNLIKE_POST:
+      let index4 = state.posts.findIndex(
+        (post) => post.postId === action.payload.postId
+      );
+      state.posts[index4] = action.payload;
+      return {
+        ...state,
+        post: { ...state.post, likeCount: state.post.likeCount - 1 },
       };
     case DELETE_POST:
       let index2 = state.posts.findIndex(
@@ -65,7 +72,8 @@ export default function (state = initialState, action) {
         ...state,
         post: {
           ...state.post,
-          comments: [action.payload, ...state.post.comments],
+          commentCount: state.post.commentCount + 1,
+          comments: [...state.post.comments, action.payload],
         },
       };
     case GET_NEW_USERS:

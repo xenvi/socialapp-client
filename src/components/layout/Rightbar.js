@@ -143,7 +143,7 @@ export class Rightbar extends Component {
   };
   componentDidMount() {
     this.props.getNewUsers();
-    // this.fetchNews();
+    this.fetchNews();
   }
   fetchNews = () => {
     fetch(

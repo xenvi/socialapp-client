@@ -257,14 +257,21 @@ class user extends Component {
     } = this.props;
     const { postIdParam } = this.state;
 
+    // filter posts by createdAt
+    const orderedPosts = posts.sort(function (a, b) {
+      var c = new Date(a.createdAt);
+      var d = new Date(b.createdAt);
+      return d - c;
+    });
+
     const postsMarkup = loading ? (
       <div className={classes.loadingCircle}>Loading posts ...</div>
     ) : posts.length === 0 ? (
       <div className={classes.loadingCircle}>This user has no posts.</div>
     ) : !postIdParam ? (
-      posts.map((post) => <Post key={post.postId} post={post} />)
+      orderedPosts.map((post) => <Post key={post.postId} post={post} />)
     ) : (
-      posts.map((post) => {
+      orderedPosts.map((post) => {
         if (post.postId !== postIdParam)
           return <Post key={post.postId} post={post} />;
         else return <Post key={post.postId} post={post} openDialog />;

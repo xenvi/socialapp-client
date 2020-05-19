@@ -199,6 +199,8 @@ class PostDialog extends Component {
 PostDialog.propTypes = {
   getPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  postId: PropTypes.string.isRequired,
+  userHandle: PropTypes.string.isRequired,
   UI: PropTypes.object.isRequired,
 };
 

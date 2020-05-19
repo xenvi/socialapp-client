@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -42,7 +41,7 @@ class Settings extends Component {
     anchorEl: null,
   };
   handleLogout = () => {
-    this.props.logoutUser(this.props.history);
+    this.props.logoutUser();
   };
   handleOpen = (event) => {
     this.setState({ anchorEl: event.target });
@@ -98,6 +97,4 @@ Settings.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(
-  connect(null, { logoutUser })(withStyles(styles)(Settings))
-);
+export default connect(null, { logoutUser })(withStyles(styles)(Settings));
