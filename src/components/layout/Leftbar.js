@@ -37,7 +37,6 @@ const styles = (theme) => ({
     padding: "1em 2em",
   },
   menuContainer: {
-    width: "100%",
     overflow: "auto",
     padding: "1em 2em",
   },
@@ -54,10 +53,10 @@ const styles = (theme) => ({
     "& ul": {
       listStyle: "none",
       paddingInlineStart: 0,
+      padding: 0,
       "& li a": {
         color: "#a8abbf",
         display: "flex",
-        alignItems: "center",
         padding: "0.5em 0",
         cursor: "pointer",
         transition: "0.3s all ease-in-out",
@@ -74,6 +73,7 @@ const styles = (theme) => ({
   copyright: {
     position: "absolute",
     bottom: 0,
+    background: "#161829",
     padding: "2em",
     color: "#a8abbf",
     width: "100%",
@@ -86,9 +86,6 @@ const styles = (theme) => ({
   leftbarHidden: {
     position: "relative",
     display: "none",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexDirection: "column",
     background: "#161829",
     minWidth: "2em",
     height: "100%",
@@ -125,7 +122,7 @@ export class Leftbar extends Component {
               </Typography>
             </Link>
           </div>
-          <div className={classes.menuContainer}>
+          <div className={classes.menuContainer} id="mainContainer">
             <div className={classes.submenu}>
               <div className={classes.menuTitle}>MENU</div>
               <div className={classes.menuList}>

@@ -10,7 +10,7 @@ body {
   padding: 0;
   margin: 0;
   width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .fancytext {
@@ -92,6 +92,7 @@ a {
 /* cover page */
 .coverContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #fff;
@@ -103,38 +104,32 @@ a {
 
 /* login signup forms */
 #title {
-  position: absolute;
-  padding-bottom: 0.15em;
   text-shadow: -5px 10px 20px rgba(0, 0, 0, 0.3);
   animation: bounce 2s ease 1;
-  margin-top: -270px;
 }
 .smalltitle {
-  position: absolute;
-  padding-bottom: 0.15em;
   text-shadow: -5px 10px 20px rgba(0, 0, 0, 0.3);
-  margin-top: -230px !important;
+  margin: -0.5em 0 1em 0 !important;
   font-weight: 700 !important;
   letter-spacing: 2px !important;
 }
 @keyframes bounce {
   0% {
-    margin-top: -285px;
+    margin-top: 15px;
   }
   25% {
-    margin-top: -255px;
+    margin-top: -15px;
   }
   50% {
-    margin-top: -285px;
+    margin-top: 15px;
   }
   100% {
-    margin-top: -270px;
+    margin-top: 0;
   }
 }
 
 /* login container */
 #loginContainer {
-  position: absolute;
   width: 30em;
   min-height: 19.5em;
   background: #fff;
@@ -156,7 +151,6 @@ a {
 }
 /* login + signup contents */
 .login-signup-title {
-  margin-top: -12em;
   margin-right: 0;
   width: 30em;
   height: 60px;
@@ -334,6 +328,9 @@ a {
   }
   #leftbarHidden {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
   }
   #timelineLeft,
   #profile {

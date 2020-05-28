@@ -10,6 +10,7 @@ import Settings from "./Settings";
 // redux imports
 import { connect } from "react-redux";
 
+
 const styles = (theme) => ({
   ...theme.spread,
   rightbar: {
@@ -117,15 +118,21 @@ const styles = (theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: "0.5em 1em",
+    transition: "0.3s",
+    "&:hover": {
+      background: '#292d49',
+      cursor: 'pointer',
+      transition: "0.3s",
+      '& $newstitle': {
+        color: "#fff",
+        transition: "0.3s",
+      }
+    }
   },
   newstitle: {
     color: "#a8abbf",
     fontSize: "0.85em",
-    transition: "0.3s",
-    "&:hover": {
-      color: "#fff",
-      transition: "0.3s",
-    },
+    transition: "0.3s"
   },
   newsImage: {
     width: 50,
@@ -148,11 +155,13 @@ export class Rightbar extends Component {
     this.fetchNews();
   }
   fetchNews = () => {
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = 'https://newsapi.org/v2/top-headlines?country=us&pageSize=5&apiKey=3d6ce58e27a549978161aaee19734fce'
     fetch(
-      "https://newsapi.org/v2/top-headlines?country=us&pageSize=5&apiKey=3d6ce58e27a549978161aaee19734fce"
+      proxyUrl + targetUrl
     )
       .then((res) => {
-        return res.json();
+        return res.json()
       })
       .then((data) => {
         this.setState({ news: data.articles });
@@ -195,10 +204,9 @@ export class Rightbar extends Component {
     const newsMarkup =
       news &&
       news.map((news, index) => (
-        <div className={classes.newsContainer} key={index}>
-          <a href={news.url} target="_blank" rel="noopener noreferrer">
+        <a href={news.url} target="_blank" rel="noopener noreferrer" className={classes.newsContainer} key={index}>
             <div className={classes.newstitle}>{news.title}</div>
-          </a>
+         
           {news.urlToImage ? (
             <img
               src={news.urlToImage}
@@ -206,7 +214,7 @@ export class Rightbar extends Component {
               alt="news"
             ></img>
           ) : null}
-        </div>
+        </a>
       ));
 
     return (
@@ -219,7 +227,7 @@ export class Rightbar extends Component {
           <Notifications />
           <Settings />
         </div>
-        <div className={classes.menuContainer}>
+        <div className={classes.menuContainer} id="mainContainer">
           <div className={classes.submenu}>
             <div className={classes.menuTitle}>MEET NEW PEOPLE</div>
             <div className={classes.menuList}>{users}</div>

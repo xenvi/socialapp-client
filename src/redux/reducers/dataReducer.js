@@ -68,12 +68,16 @@ export default function (state = initialState, action) {
         posts: [action.payload, ...state.posts],
       };
     case SUBMIT_COMMENT:
+      let index3= state.posts.findIndex(
+        (post) => post.postId === action.payload.comment.postId
+      );
+      state.posts[index3] = action.payload.post;
       return {
         ...state,
         post: {
           ...state.post,
           commentCount: state.post.commentCount + 1,
-          comments: [...state.post.comments, action.payload],
+          comments: [...state.post.comments, action.payload.comment],
         },
       };
     case GET_NEW_USERS:

@@ -70,22 +70,33 @@ const styles = (theme) => ({
     display: "flex",
     justifyContent: "space-between",
     padding: "1em",
-    textAlign: 'left'
+    textAlign: 'left',
+    transition: "0.3s",
+    "&:hover": {
+      background: '#1e2138',
+      cursor: 'pointer',
+      transition: "0.3s",
+      '& $newstitle': {
+        color: "#fff",
+        transition: "0.3s",
+      },
+      '& $newsDesc': {
+        color: "#a8abbf",
+        transition: "0.3s",
+      },
+    }
   },
   newstitle: {
     color: "#a8abbf",
-    fontSize: "0.85em",
+    fontSize: "0.9em",
     fontWeight: 'bold',
-    transition: "0.3s",
-    "&:hover": {
-      color: "#fff",
-      transition: "0.3s",
-    },
+    transition: "0.3s"
   },
   newsDesc: {
     color: "#5a5d75",
-    fontSize: "0.8em",
-    float: 'left'
+    fontSize: "0.85em",
+    float: 'left',
+    transition: "0.3s",
   },
   newsImage: {
     width: 75,
@@ -107,15 +118,15 @@ class news extends Component {
     this.fetchNews();
   }
   fetchNews = () => {
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=3d6ce58e27a549978161aaee19734fce'
     fetch(
-      "https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=3d6ce58e27a549978161aaee19734fce"
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        this.setState({ news: data.articles });
-      })
+      proxyUrl + targetUrl
+    ).then((res) => {
+      return res.json();
+    }).then((data) => {
+      this.setState({ news: data.articles });
+    })
       .catch((err) => console.log(err));
   };
   render() {
@@ -125,19 +136,19 @@ class news extends Component {
     const newsMarkup =
       news &&
       news.map((news, index) => (
-        <div className={classes.newsContainer} key={index}>
-          <div><a href={news.url} target="_blank" rel="noopener noreferrer">
+        <a href={news.url} target="_blank" rel="noopener noreferrer" key={index} className={classes.newsContainer}>
+          <div>
             <div className={classes.newstitle}>{news.title}</div>
-          </a>
-          <div className={classes.newsDesc}>{news.description}</div></div>
-          {news.urlToImage ? (
-            <img
-              src={news.urlToImage}
-              className={classes.newsImage}
-              alt="news"
-            ></img>
-          ) : null}
-        </div>
+            <div className={classes.newsDesc}>{news.description}</div>
+          </div>
+            {news.urlToImage ? (
+              <img
+                src={news.urlToImage}
+                className={classes.newsImage}
+                alt="news"
+              ></img>
+            ) : null}
+        </a>
       ));
 
     return (
