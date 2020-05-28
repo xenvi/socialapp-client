@@ -52,7 +52,24 @@ export const getProfilePosts = (handle) => (dispatch) => {
     });
 };
 
-// get home page following posts
+// get home page following & authenticated user posts
+export const getHomePosts = (handle) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get(`/homePosts/${handle}`)
+    .then((res) => {
+      dispatch({
+        type: SET_POSTS,
+        payload: res.data,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: SET_POSTS,
+        payload: [],
+      });
+    });
+};
 
 // get single post
 export const getPost = (postId) => (dispatch) => {

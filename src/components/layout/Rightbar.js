@@ -18,7 +18,7 @@ const styles = (theme) => ({
     justifyContent: "flex-start",
     flexDirection: "column",
     background: "#161829",
-    width: "18.5em",
+    width: "19.5em",
     minHeight: "100vh",
     height: "100%",
     overflow: "auto",
@@ -134,6 +134,8 @@ const styles = (theme) => ({
     background: "#a8abbf",
     alignItems: "right",
     flexShrink: 0,
+    objectFit: 'cover',
+    marginLeft: '1em'
   },
 });
 
@@ -147,7 +149,7 @@ export class Rightbar extends Component {
   }
   fetchNews = () => {
     fetch(
-      "https://gnews.io/api/v3/topics/world?&max=5&token=4545dea9215118abdfbdecfa8ba759a0"
+      "https://newsapi.org/v2/top-headlines?country=us&pageSize=5&apiKey=3d6ce58e27a549978161aaee19734fce"
     )
       .then((res) => {
         return res.json();
@@ -197,9 +199,9 @@ export class Rightbar extends Component {
           <a href={news.url} target="_blank" rel="noopener noreferrer">
             <div className={classes.newstitle}>{news.title}</div>
           </a>
-          {news.image ? (
+          {news.urlToImage ? (
             <img
-              src={news.image}
+              src={news.urlToImage}
               className={classes.newsImage}
               alt="news"
             ></img>

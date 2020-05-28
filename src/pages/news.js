@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 import Navbar from "../components/layout/Navbar";
 
 import { connect } from "react-redux";
-import { getPosts } from "../redux/actions/dataActions";
 import { Typography } from "@material-ui/core";
 
 const styles = (theme) => ({
@@ -64,14 +63,83 @@ const styles = (theme) => ({
   bottomNav: {
     color: "#333",
   },
+  newsContainer: {
+    width: '100%',
+    borderTop: "1px solid #2b3052",
+    borderBottom: "1px solid #2b3052",
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "1em",
+    textAlign: 'left'
+  },
+  newstitle: {
+    color: "#a8abbf",
+    fontSize: "0.85em",
+    fontWeight: 'bold',
+    transition: "0.3s",
+    "&:hover": {
+      color: "#fff",
+      transition: "0.3s",
+    },
+  },
+  newsDesc: {
+    color: "#5a5d75",
+    fontSize: "0.8em",
+    float: 'left'
+  },
+  newsImage: {
+    width: 75,
+    height: 75,
+    borderRadius: "0.5em",
+    background: "#a8abbf",
+    alignItems: "right",
+    flexShrink: 0,
+    objectFit: 'cover',
+    marginLeft: '1em'
+  },
 });
 
-class home extends Component {
+class news extends Component {
+  state = {
+  news: [],
+};
   componentDidMount() {
-    this.props.getPosts();
+    this.fetchNews();
   }
+  fetchNews = () => {
+    fetch(
+      "https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=3d6ce58e27a549978161aaee19734fce"
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        this.setState({ news: data.articles });
+      })
+      .catch((err) => console.log(err));
+  };
   render() {
     const { classes } = this.props;
+    const { news } = this.state;
+
+    const newsMarkup =
+      news &&
+      news.map((news, index) => (
+        <div className={classes.newsContainer} key={index}>
+          <div><a href={news.url} target="_blank" rel="noopener noreferrer">
+            <div className={classes.newstitle}>{news.title}</div>
+          </a>
+          <div className={classes.newsDesc}>{news.description}</div></div>
+          {news.urlToImage ? (
+            <img
+              src={news.urlToImage}
+              className={classes.newsImage}
+              alt="news"
+            ></img>
+          ) : null}
+        </div>
+      ));
+
     return (
       <main className="main">
         <Navbar />
@@ -80,6 +148,7 @@ class home extends Component {
             <Typography className={classes.sectionTitle}>
               Latest News
             </Typography>
+            {newsMarkup}
           </Grid>{" "}
         </section>
       </main>
@@ -87,8 +156,7 @@ class home extends Component {
   }
 }
 
-home.propTypes = {
-  getPosts: PropTypes.func.isRequired,
+news.propTypes = {
   user: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
 };
@@ -98,4 +166,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getPosts })(withStyles(styles)(home));
+export default connect(mapStateToProps, null)(withStyles(styles)(news));

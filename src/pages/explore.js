@@ -70,7 +70,7 @@ const styles = (theme) => ({
   },
 });
 
-class home extends Component {
+class explore extends Component {
   componentDidMount() {
     this.props.getPosts();
   }
@@ -97,7 +97,7 @@ class home extends Component {
   }
 }
 
-home.propTypes = {
+explore.propTypes = {
   getPosts: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
@@ -108,4 +108,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getPosts })(withStyles(styles)(home));
+export default connect(mapStateToProps, { getPosts })(withStyles(styles)(explore));

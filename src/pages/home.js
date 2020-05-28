@@ -10,7 +10,7 @@ import PostSkeleton from "../util/PostSkeleton";
 import CreatePost from "../components/post/CreatePost";
 
 import { connect } from "react-redux";
-import { getPosts } from "../redux/actions/dataActions";
+import { getHomePosts } from "../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme.spread,
@@ -71,19 +71,36 @@ const styles = (theme) => ({
   bottomNav: {
     color: "#333",
   },
+  loadingCircle: {
+    textAlign: "center",
+    padding: "2em 0",
+    color: "#a8abbf",
+  },
 });
 
 class home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+ }
   componentDidMount() {
-    this.props.getPosts();
+    const handle = this.props.user.credentials.handle;
+    this.props.getHomePosts(handle);
   }
   render() {
     const { classes } = this.props;
     const { posts, loading } = this.props.data;
-    let recentPostsMarkup = !loading ? (
-      posts.map((post) => <Post key={post.postId} post={post} />)
-    ) : (
-      <PostSkeleton />
+
+    // filter posts by createdAt
+    const orderedPosts = posts.sort(function (a, b) {
+      var c = new Date(a.createdAt);
+      var d = new Date(b.createdAt);
+      return d - c;
+    });
+
+    let recentPostsMarkup = loading ? <PostSkeleton /> : posts.length === 0 ? (
+      <div className={classes.loadingCircle}>No posts to display. Follow users or make a post!</div>
+    ) : (orderedPosts.map((post) => <Post key={post.postId} post={post} />)
     );
     return (
       <main className="main">
@@ -101,7 +118,7 @@ class home extends Component {
 }
 
 home.propTypes = {
-  getPosts: PropTypes.func.isRequired,
+  getHomePosts: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
 };
@@ -111,4 +128,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getPosts })(withStyles(styles)(home));
+export default connect(mapStateToProps, { getHomePosts })(withStyles(styles)(home));
