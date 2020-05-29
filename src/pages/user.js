@@ -385,10 +385,10 @@ class user extends Component {
               </div>
               {profile && (
                 <div className={classes.profileHiddenFollows}>
-                  <Link to="" className={classes.profileFollowLink}>
+                  <Link to={`/users/${profile.handle}/following`} className={classes.profileFollowLink}>
                     {profile.followingCount} Following
                   </Link>
-                  <Link to="" className={classes.profileFollowLink}>
+                  <Link to={`/users/${profile.handle}/followers`} className={classes.profileFollowLink}>
                     {profile.followersCount} Followers
                   </Link>
                 </div>
@@ -439,10 +439,10 @@ class user extends Component {
                       </div>
                       {profile && (
                         <div className={classes.profileFollows}>
-                          <Link to="" className={classes.profileFollowLink}>
+                          <Link to={`/users/${profile.handle}/following`} className={classes.profileFollowLink}>
                             {profile.followingCount} Following
                           </Link>
-                          <Link to="" className={classes.profileFollowLink}>
+                          <Link to={`/users/${profile.handle}/followers`} className={classes.profileFollowLink}>
                             {profile.followersCount} Followers
                           </Link>
                         </div>

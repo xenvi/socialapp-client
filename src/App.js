@@ -24,6 +24,8 @@ import home from "./pages/home";
 import user from "./pages/user";
 import explore from "./pages/explore";
 import news from "./pages/news";
+import followers from "./pages/followers";
+import following from "./pages/following";
 
 const theme = createMuiTheme(themeFile);
 
@@ -68,6 +70,8 @@ class App extends Component {
                   <Route exact path="/explore" component={explore} />
                   <Route exact path="/news" component={news} />
                   <Route exact path="/users/:handle" component={user} />
+                  <Route exact path="/users/:handle/followers" component={followers} />
+                  <Route exact path="/users/:handle/following" component={following} />
                   <Route
                     exact
                     path="/users/:handle/post/:postId"
