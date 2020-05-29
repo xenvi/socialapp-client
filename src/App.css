@@ -10,7 +10,6 @@ body {
   padding: 0;
   margin: 0;
   width: 100%;
-  overflow: hidden;
 }
 
 .fancytext {
@@ -97,7 +96,8 @@ a {
   align-items: center;
   color: #fff;
   font-weight: bold;
-  height: 100vh;
+  min-height: 90vh;
+  height: 100%;
   width: 100%;
   text-align: center;
 }
@@ -105,26 +105,21 @@ a {
 /* login signup forms */
 #title {
   text-shadow: -5px 10px 20px rgba(0, 0, 0, 0.3);
-  animation: bounce 2s ease 1;
+  animation: fadeIn 1s ease;
 }
 .smalltitle {
   text-shadow: -5px 10px 20px rgba(0, 0, 0, 0.3);
   margin: -0.5em 0 1em 0 !important;
   font-weight: 700 !important;
   letter-spacing: 2px !important;
+  animation: fadeIn 2s ease;
 }
-@keyframes bounce {
+@keyframes fadeIn {
   0% {
-    margin-top: 15px;
-  }
-  25% {
-    margin-top: -15px;
-  }
-  50% {
-    margin-top: 15px;
+    opacity: 0;
   }
   100% {
-    margin-top: 0;
+    opacity: 1;
   }
 }
 
@@ -195,6 +190,13 @@ a {
 }
 .is-visible {
   display: block !important;
+}
+
+/* input autofill css */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 /* home page */
@@ -352,12 +354,47 @@ a {
   }
 }
 @media screen and (max-width: 500px) {
-  .formWrapper,
-  #loginContainer {
+  /* padding adjustments for better mobile coverage */
+  html,
+  body{
+    font-size: 0.95em;
+  }
+  .formWrapper {
     width: 95%;
+  }
+  
+  #loginContainer {
+    width: 100%
   }
   .login-signup-title {
     width: 100%;
+  }
+  #postDetails {
+    padding-left: 0.5em !important;
+  }
+
+  #commentsContainer {
+    padding: 1em 1em 0 1em !important;
+  }
+  #commentData {
+    margin-left: 5px !important;
+  }
+  #commentformContainer, #cardWrapperIndent {
+    padding: 1em !important;
+  }
+
+  #createpostContainer {
+    padding: 1em !important;
+  }
+  #createpostForm {
+    margin-left: 1em !important;
+  }
+
+  #profilePostContainer {
+    padding: 1em !important;
+  }
+  #profilePostForm {
+    margin-left: 1em !important;
   }
 }
 

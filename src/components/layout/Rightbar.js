@@ -152,7 +152,7 @@ export class Rightbar extends Component {
   };
   componentDidMount() {
     this.props.getNewUsers();
-    //this.fetchNews();
+    this.fetchNews();
   }
   fetchNews = () => {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',

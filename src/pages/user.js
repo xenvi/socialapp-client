@@ -154,7 +154,7 @@ const styles = (theme) => ({
     alignItems: "center",
     position: "absolute",
     top: 120,
-    left: 30,
+    left: 20,
   },
   profileHiddenImage: {
     width: 125,
@@ -169,7 +169,7 @@ const styles = (theme) => ({
     width: "100%",
     height: "auto",
     background: "#161829",
-    padding: "4em 1em 1em 1em",
+    padding: "5em 1em 1em 1em",
   },
   profileHiddenNav: {
     display: "flex",
@@ -241,6 +241,12 @@ class user extends Component {
         prevProps.user.credentials.followingCount
     ) {
       this.props.getAnyUserData(this.props.user.credentials.handle);
+    }
+
+    // if post params change, update popup
+    if (this.props.match.params.postId !== prevProps.match.params.postId) {
+      const postId = this.props.match.params.postId;
+      if (postId) this.setState({ postIdParam: postId });
     }
   }
   componentWillUnmount() {

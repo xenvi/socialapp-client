@@ -111,8 +111,8 @@ class cover extends Component {
       "SIGNUP"
     );
     return (
-      <Grid container spacing={0}>
-        <Grid item xs={12} className="gradientbg coverContainer">
+      <Grid container spacing={0} className="gradientbg">
+        <Grid item xs={12} className="coverContainer">
           {" "}
           <Typography className={classes.brand} id="title">
             Chatsy

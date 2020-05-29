@@ -271,8 +271,6 @@ export default {
       flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "center",
-      position: "absolute",
-      bottom: 0,
       fontSize: 12,
       color: "#fff",
       padding: "5px 0px",

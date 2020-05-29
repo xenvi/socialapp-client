@@ -70,7 +70,7 @@ class CommentForm extends Component {
     const errors = this.state.errors;
 
     const commentFormMarkup = authenticated ? (
-      <div className={classes.container}>
+      <div className={classes.container} id="commentformContainer">
         <img src={imageUrl} alt="profile" className={classes.userImage} />
         <form onSubmit={this.handleSubmit} className={classes.formContent}>
           <TextField

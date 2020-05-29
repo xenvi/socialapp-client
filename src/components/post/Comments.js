@@ -39,7 +39,7 @@ class Comments extends Component {
   render() {
     const { comments, classes } = this.props;
     return (
-      <div className={classes.container}>
+      <div className={classes.container} id="commentsContainer">
         {comments.map((comment, index) => {
           const { body, createdAt, userImage, userHandle } = comment;
           return (
@@ -50,7 +50,7 @@ class Comments extends Component {
                 className={classes.commentImage}
               />
 
-              <div className={classes.commentData}>
+              <div className={classes.commentData} id="commentData">
                 <Link to={`/users/${userHandle}`} className={classes.handle}>
                   {userHandle}
                 </Link>

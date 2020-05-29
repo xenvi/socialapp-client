@@ -134,7 +134,7 @@ class PostDialog extends Component {
       </div>
     ) : (
       <div className={classes.wrapper}>
-        <div className={classes.cardWrapperIndent}>
+        <div className={classes.cardWrapperIndent} id="cardWrapperIndent">
           <div className={classes.centerItem}>
             <img
               src={userImage}
@@ -142,7 +142,7 @@ class PostDialog extends Component {
               className={classes.profileImage}
             />
           </div>
-          <div className={classes.postDetails}>
+          <div className={classes.postDetails} id="postDetails">
             <Link to={`/users/${userHandle}`} className={classes.handle}>
               {userHandle}
             </Link>

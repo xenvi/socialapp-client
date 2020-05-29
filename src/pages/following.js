@@ -77,7 +77,6 @@ class following extends Component {
   render() {
     const { classes } = this.props;
     const { following } = this.state;
-    const handle = this.props.match.params.handle;
 
     const followingMarkup =
       following &&

@@ -81,13 +81,13 @@ class CreatePost extends Component {
     );
     return (
       <Fragment>
-        <div className={classes.form}>
+        <div className={classes.form} id="profilePostContainer">
           <img
             src={imageUrl}
             className={classes.profileImg}
             alt="User profile"
           />
-          <form onSubmit={this.handleSubmit} className={classes.formContent}>
+          <form onSubmit={this.handleSubmit} className={classes.formContent} id="profilePostForm">
             <TextField
               name="body"
               type="text"
