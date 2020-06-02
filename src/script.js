@@ -1,6 +1,18 @@
 document.addEventListener(
   "DOMContentLoaded",
   function () {
+
+    // login signup form, disable space
+    const inputs = document.getElementsByClassName("cover-textField-8");
+
+    Array.from(inputs).forEach(function(input) {
+      input.addEventListener("keydown", function (e) {
+        return e.which !== 32;
+    });
+    });
+
+    // login signup form transitions
+
     const loginTitle = document.getElementsByClassName("login-title")[0];
     const signupTitle = document.getElementsByClassName("signup-title")[0];
     const loginForm = document.getElementById("loginForm");

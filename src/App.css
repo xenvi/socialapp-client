@@ -246,7 +246,7 @@ input:-webkit-autofill:focus {
   display: flex;
   justify-content: space-around;
 }
-.profileLink {
+.profileLink, .hiddenProfileLink {
   display: flex;
   align-items: center;
   padding: 0 2em;
@@ -259,7 +259,7 @@ input:-webkit-autofill:focus {
   transition: 0.3s all ease-in-out;
 }
 .profileLink.active,
-.profileLink:hover {
+.profileLink:hover, .hiddenProfileLink.active, .hiddenProfileLink:hover {
   color: #fff;
   border-bottom: 0.3em solid #00ccff;
   transition: 0.3s all ease-in-out;

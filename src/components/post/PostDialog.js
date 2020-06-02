@@ -18,7 +18,7 @@ import ChatIcon from "@material-ui/icons/CommentOutlined";
 
 //redux
 import { connect } from "react-redux";
-import { getPost } from "../../redux/actions/dataActions";
+import { getPost, clearErrors } from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme.spread,
@@ -106,10 +106,15 @@ class PostDialog extends Component {
 
     this.setState({ open: true, oldPath, newPath });
     this.props.getPost(this.props.postId);
+    console.log(oldPath)
+    console.log(newPath)
   };
   handleClose = () => {
     window.history.pushState(null, null, this.state.oldPath);
     this.setState({ open: false });
+    this.props.clearErrors();
+    console.log(this.state.oldPath)
+    console.log(this.state.newPath)
   };
   render() {
     const {
@@ -198,6 +203,7 @@ class PostDialog extends Component {
 
 PostDialog.propTypes = {
   getPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
   userHandle: PropTypes.string.isRequired,
@@ -209,6 +215,6 @@ const mapStateToProps = (state) => ({
   UI: state.UI,
 });
 
-export default connect(mapStateToProps, { getPost })(
+export default connect(mapStateToProps, { getPost, clearErrors })(
   withStyles(styles)(PostDialog)
 );

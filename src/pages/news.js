@@ -119,13 +119,13 @@ class news extends Component {
   }
   fetchNews = () => {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=3d6ce58e27a549978161aaee19734fce'
+        targetUrl = 'https://api.nytimes.com/svc/topstories/v2/us.json?api-key=i1mVIcp3YIRecvpMX8GnhOsiFQw69tKZ'
     fetch(
       proxyUrl + targetUrl
     ).then((res) => {
       return res.json();
     }).then((data) => {
-      this.setState({ news: data.articles });
+      this.setState({ news: data.results });
     })
       .catch((err) => console.log(err));
   };
@@ -135,15 +135,15 @@ class news extends Component {
 
     const newsMarkup =
       news &&
-      news.map((news, index) => (
+      news.slice(0, 20).map((news, index) => (
         <a href={news.url} target="_blank" rel="noopener noreferrer" key={index} className={classes.newsContainer}>
           <div>
             <div className={classes.newstitle}>{news.title}</div>
-            <div className={classes.newsDesc}>{news.description}</div>
+            <div className={classes.newsDesc}>{news.abstract}</div>
           </div>
-            {news.urlToImage ? (
+            {news.multimedia[0].url ? (
               <img
-                src={news.urlToImage}
+                src={news.multimedia[0].url}
                 className={classes.newsImage}
                 alt="news"
               ></img>

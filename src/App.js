@@ -76,7 +76,7 @@ class App extends Component {
                     exact
                     path="/users/:handle/post/:postId"
                     component={user}
-                  />{" "}
+                  />
                   <Rightbar />
                 </div>
               </Fragment>

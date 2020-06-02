@@ -71,6 +71,25 @@ export const getHomePosts = (handle) => (dispatch) => {
     });
 };
 
+// get profile liked posts
+export const getLikedPosts = (handle) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get(`/likedPosts/${handle}`)
+    .then((res) => {
+      dispatch({
+        type: SET_POSTS,
+        payload: res.data,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: SET_POSTS,
+        payload: [],
+      });
+    });
+};
+
 // get single post
 export const getPost = (postId) => (dispatch) => {
   dispatch({ type: LOADING_UI });
@@ -192,6 +211,8 @@ export const getNewUsers = () => (dispatch) => {
       });
     });
 };
+
+
 
 export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });

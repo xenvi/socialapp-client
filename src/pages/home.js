@@ -84,11 +84,14 @@ class home extends Component {
     this.state = {}
  }
   componentDidMount() {
-    const handle = this.props.user.credentials.handle;
-    this.props.getHomePosts(handle);
+    if(this.props.user.credentials.handle)
+    {
+      const handle = this.props.user.credentials.handle;
+      this.props.getHomePosts(handle);
+    }
   }
   componentDidUpdate(prevProps) {
-    // When user credentials are set, load posts
+    // user credentials set, get posts
     if(this.props.user.credentials.handle !== prevProps.user.credentials.handle)
     {
       const handle = this.props.user.credentials.handle;

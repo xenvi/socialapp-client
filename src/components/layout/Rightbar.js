@@ -10,7 +10,6 @@ import Settings from "./Settings";
 // redux imports
 import { connect } from "react-redux";
 
-
 const styles = (theme) => ({
   ...theme.spread,
   rightbar: {
@@ -156,16 +155,14 @@ export class Rightbar extends Component {
   }
   fetchNews = () => {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = 'https://newsapi.org/v2/top-headlines?country=us&pageSize=5&apiKey=3d6ce58e27a549978161aaee19734fce'
+        targetUrl = 'https://api.nytimes.com/svc/topstories/v2/us.json?api-key=i1mVIcp3YIRecvpMX8GnhOsiFQw69tKZ'
     fetch(
       proxyUrl + targetUrl
-    )
-      .then((res) => {
-        return res.json()
-      })
-      .then((data) => {
-        this.setState({ news: data.articles });
-      })
+    ).then((res) => {
+      return res.json();
+    }).then((data) => {
+      this.setState({ news: data.results });
+    })
       .catch((err) => console.log(err));
   };
   render() {
@@ -203,13 +200,13 @@ export class Rightbar extends Component {
 
     const newsMarkup =
       news &&
-      news.map((news, index) => (
+      news.slice(0, 5).map((news, index) => (
         <a href={news.url} target="_blank" rel="noopener noreferrer" className={classes.newsContainer} key={index}>
             <div className={classes.newstitle}>{news.title}</div>
          
-          {news.urlToImage ? (
+          {news.multimedia[0].url ? (
             <img
-              src={news.urlToImage}
+              src={news.multimedia[0].url}
               className={classes.newsImage}
               alt="news"
             ></img>

@@ -90,10 +90,27 @@ class cover extends Component {
   };
   handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value,
-    });
+      [event.target.name]: event.target.value
+  })
   };
-
+  keyDown = (e) => { 
+     if (e.which === 32) {
+      e.preventDefault();
+     } 
+  }
+  onInputEnter = (e, id) => {
+    if (e.keyCode === 13) {
+    // Trigger the button element with a click
+    if (id === "loginForm") {
+      this.handleLoginSubmit();
+    }
+    if (id === "signupForm") {
+      this.handleSignupSubmit();
+    }
+  }
+    
+  }
+  
   render() {
     const {
       classes,
@@ -146,6 +163,8 @@ class cover extends Component {
                   FormHelperTextProps={{
                     classes: { root: classes.helperText },
                   }}
+                  onKeyDown={event => this.keyDown(event)}
+                  onKeyUp={event => this.onInputEnter(event, "loginForm")}
                 />
                 <br />
                 <span className={classes.labels}>Password</span>
@@ -162,6 +181,8 @@ class cover extends Component {
                   FormHelperTextProps={{
                     classes: { root: classes.helperText },
                   }}
+                  onKeyDown={event => this.keyDown(event)}
+                  onKeyUp={event => this.onInputEnter(event, "loginForm")}
                 />
                 {errors.general && (
                   <Typography variant="body2" className={classes.customError}>
@@ -198,6 +219,8 @@ class cover extends Component {
                   FormHelperTextProps={{
                     classes: { root: classes.helperText },
                   }}
+                  onKeyDown={event => this.keyDown(event)}
+                  onKeyUp={event => this.onInputEnter(event, "signupForm")}
                 />
                 <br />
                 <span className={classes.labels}>Email</span>
@@ -214,6 +237,8 @@ class cover extends Component {
                   FormHelperTextProps={{
                     classes: { root: classes.helperText },
                   }}
+                  onKeyDown={event => this.keyDown(event)}
+                  onKeyUp={event => this.onInputEnter(event, "signupForm")}
                 />
                 <br />
 
@@ -231,6 +256,8 @@ class cover extends Component {
                   FormHelperTextProps={{
                     classes: { root: classes.helperText },
                   }}
+                  onKeyDown={event => this.keyDown(event)}
+                  onKeyUp={event => this.onInputEnter(event, "signupForm")}
                 />
                 <br />
 
@@ -248,6 +275,8 @@ class cover extends Component {
                   FormHelperTextProps={{
                     classes: { root: classes.helperText },
                   }}
+                  onKeyDown={event => this.keyDown(event)}
+                  onKeyUp={event => this.onInputEnter(event, "signupForm")}
                 />
                 <br />
                 {errors.general && (
