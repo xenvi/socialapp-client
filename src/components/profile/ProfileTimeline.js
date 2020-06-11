@@ -97,7 +97,7 @@ export class ProfileTimeline extends Component {
         })
       );
         return(
-        <section className={classes.timeline}>
+        <section className={classes.timeline} key={postIdParam}>
             <div className={classes.timelineLeft} id="timelineLeft">
               <div className={classes.infoBox}>
                 <div className={classes.title}>ABOUT</div>

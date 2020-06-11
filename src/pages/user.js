@@ -224,10 +224,10 @@ class user extends Component {
       this.props.getAnyUserData(this.props.user.credentials.handle);
     }
 
-    // if post params change, update popup
+    // if post params change, update state
     if (this.props.match.params.postId !== prevProps.match.params.postId) {
       const postId = this.props.match.params.postId;
-      if (postId) this.setState({ postIdParam: postId });
+      this.setState({ postIdParam: postId });
     }
   }
   componentWillUnmount() {
@@ -258,8 +258,6 @@ class user extends Component {
       },
     } = this.props;
     const { postIdParam, openLikes, openTimeline } = this.state;
-
-  
 
     const followEditBtn =
       this.props.match.params.handle === handle ? (

@@ -16,7 +16,8 @@ import Popover from "@material-ui/core/Popover";
 // Icons
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ChatIcon from "@material-ui/icons/Chat";
+import CommentIcon from "@material-ui/icons/Comment";
+import PostIcon from '@material-ui/icons/Create';
 
 // Redux
 import { connect } from "react-redux";
@@ -81,14 +82,16 @@ class Notifications extends Component {
     let notificationsMarkup =
       notifications && notifications.length > 0 ? (
         notifications.map((not) => {
-          const verb = not.type === "like" ? "liked" : "commented on";
+          const verb = not.type === "like" ? "liked your post" : not.type === "comment" ? "commented on your post" : "posted on your profile";
           const time = dayjs(not.createdAt).fromNow();
           const iconColor = not.read ? "primary" : "secondary";
           const icon =
             not.type === "like" ? (
               <FavoriteIcon color={iconColor} style={{ marginRight: 10 }} />
+            ) : not.type === "comment" ? (
+              <CommentIcon color={iconColor} style={{ marginRight: 10 }} />
             ) : (
-              <ChatIcon color={iconColor} style={{ marginRight: 10 }} />
+              <PostIcon color={iconColor} style={{ marginRight: 10 }} />
             );
 
           return (
@@ -100,7 +103,7 @@ class Notifications extends Component {
                 to={`/users/${not.recipient}/post/${not.postId}`}
                 className="notification"
               >
-                {not.sender} {verb} your post {time}
+                {not.sender} {verb} {time}
               </Typography>
             </MenuItem>
           );

@@ -92,8 +92,14 @@ export const uploadImage = (formData) => (dispatch) => {
     .post("/user/image", formData)
     .then(() => {
       dispatch(getUserData());
+      dispatch({ type: CLEAR_ERRORS });
     })
-    .catch((err) => console.log(err.response.data));
+    .catch((err) =>
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      })
+    );
 };
 
 export const uploadHeaderImage = (formData) => (dispatch) => {
@@ -102,8 +108,14 @@ export const uploadHeaderImage = (formData) => (dispatch) => {
     .post("/user/header", formData)
     .then(() => {
       dispatch(getUserData());
+      dispatch({ type: CLEAR_ERRORS });
     })
-    .catch((err) => console.log(err.response.data));
+    .catch((err) => 
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      })
+    );
 };
 
 export const editUserDetails = (userDetails) => (dispatch) => {

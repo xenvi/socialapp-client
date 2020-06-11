@@ -106,15 +106,11 @@ class PostDialog extends Component {
 
     this.setState({ open: true, oldPath, newPath });
     this.props.getPost(this.props.postId);
-    console.log(oldPath)
-    console.log(newPath)
   };
   handleClose = () => {
     window.history.pushState(null, null, this.state.oldPath);
     this.setState({ open: false });
     this.props.clearErrors();
-    console.log(this.state.oldPath)
-    console.log(this.state.newPath)
   };
   render() {
     const {

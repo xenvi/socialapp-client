@@ -187,7 +187,7 @@ class EditDetails extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, UI: { errors } } = this.props;
     return (
       <Fragment>
         <button className={classes.editbtn} onClick={this.handleOpen}>
@@ -255,6 +255,12 @@ class EditDetails extends Component {
 
               <form>
                 {" "}
+                {errors && (
+                  <div className={classes.customError}>
+                    {errors.error}
+                  </div>
+                )}
+
                 <span className={classes.labelsDark}>Bio</span>
                 <TextField
                   id="bio"
@@ -330,10 +336,12 @@ EditDetails.propTypes = {
   uploadImage: PropTypes.func.isRequired,
   uploadHeaderImage: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   credentials: state.user.credentials,
+  UI: state.UI,
 });
 
 export default connect(mapStateToProps, {
