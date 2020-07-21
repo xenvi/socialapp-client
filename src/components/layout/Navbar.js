@@ -22,7 +22,7 @@ const styles = (theme) => ({
     width: "100%",
     background: "#161829",
     padding: "0.7em",
-    height: "4em",
+    minHeight: "4em",
     borderBottom: "0.1em solid #222540",
   },
   searchTextField: {
@@ -33,7 +33,6 @@ const styles = (theme) => ({
     borderStyle: "solid",
     borderImage: " linear-gradient(45deg, #e73c7e, #23a6d5) 20% stretch",
     width: "50%",
-    height: "100%",
     padding: "0.2em 1em",
   },
   paddedIcon: {
