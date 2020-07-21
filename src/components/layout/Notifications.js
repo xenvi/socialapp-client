@@ -95,17 +95,16 @@ class Notifications extends Component {
             );
 
           return (
-            <MenuItem key={not.createdAt} onClick={this.handleClose}>
+            <Link key={not.createdAt} to={`/users/${not.recipient}/post/${not.postId}`}>
+              <MenuItem onClick={this.handleClose}>
               {icon}
-              <Typography
-                component={Link}
-                variant="body1"
-                to={`/users/${not.recipient}/post/${not.postId}`}
+              <div
                 className="notification"
               >
                 {not.sender} {verb} {time}
-              </Typography>
+              </div>
             </MenuItem>
+            </Link>
           );
         })
       ) : (

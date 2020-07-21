@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import Post from "../post/Post";
 import CreateProfilePost from "../post/CreateProfilePost";
@@ -59,6 +60,21 @@ const styles = (theme) => ({
 })
 
 export class ProfileTimeline extends Component {
+  state = {
+    key: null
+  };
+  componentDidMount() {
+    const key = `${this.props.location.pathname}${this.props.location.search}`
+    if (key) this.setState({ key: key });
+    console.log("Mount: " + key);
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.location.href !== prevProps.location.href) {
+      const key = `${this.props.location.pathname}${this.props.location.search}`
+      this.setState({ key: key });
+      console.log("Update: " + key);
+    }
+  }
     render() {
         const {
             classes,
@@ -93,11 +109,11 @@ export class ProfileTimeline extends Component {
         orderedPosts.map((post) => {
           if (post.postId !== postIdParam)
             return <Post key={post.postId} post={post} />;
-          else return <Post key={post.postId} post={post} openDialog />;
+          else return <Post key={post.postId} post={post} profileHandle={handle} openDialog />;
         })
       );
         return(
-        <section className={classes.timeline} key={postIdParam}>
+        <section className={classes.timeline} key={this.state.key}>
             <div className={classes.timelineLeft} id="timelineLeft">
               <div className={classes.infoBox}>
                 <div className={classes.title}>ABOUT</div>
@@ -154,5 +170,5 @@ export class ProfileTimeline extends Component {
     }
 }
 
-export default withStyles(styles)(ProfileTimeline)
-  
+export default withRouter(withStyles(styles)(ProfileTimeline)
+)

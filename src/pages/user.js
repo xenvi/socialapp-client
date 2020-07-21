@@ -164,6 +164,25 @@ const styles = (theme) => ({
     color: "#fff",
     marginRight: 20,
   },
+  infoText: {
+    display: "flex",
+    alignItems: "center",
+    margin: "0.5em 0",
+  },
+  marginIcon: {
+    marginRight: "0.25em",
+  },
+  imageHiddenFiller: {
+    width: 125,
+    height: 125,
+    borderRadius: "50%",
+    border: "0.5em solid #161829",
+    background: "#161829",
+    zIndex: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }
 });
 
 class user extends Component {
@@ -229,6 +248,8 @@ class user extends Component {
       const postId = this.props.match.params.postId;
       this.setState({ postIdParam: postId });
     }
+    
+
   }
   componentWillUnmount() {
     this.props.unsetProfile();
@@ -315,12 +336,16 @@ class user extends Component {
               ) : null}
             </div>
             <div className={classes.profileHiddenAvatar}>
-              {profile && (
+              {profile ? (
                 <img
                   src={profile.imageUrl}
                   alt="Profile"
                   className={classes.profileHiddenImage}
                 ></img>
+              ) : (
+                <div className={classes.imageHiddenFiller}>
+                  <CircularProgress />
+                </div>
               )}
             </div>
             <div className={classes.profileHiddenInfo}>

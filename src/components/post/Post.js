@@ -51,6 +51,7 @@ class Post extends Component {
         authenticated,
         credentials: { handle },
       },
+      profileHandle
     } = this.props;
 
     // delete post button
@@ -84,6 +85,7 @@ class Post extends Component {
         <PostDialog
           postId={postId}
           userHandle={userHandle}
+          profileHandle={profileHandle}
           openDialog={this.props.openDialog}
         />
       </div>
