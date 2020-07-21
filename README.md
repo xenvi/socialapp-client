@@ -18,16 +18,16 @@ TO DO:
 - ~~Redesign home page~~
 - ~~Allow users to post on other user profile pages~~
 - ~~Mobile responsiveness~~
-- Cross browser compatibility (Edge)
-- Fix inconsistent API calls - slow load times
-- Add User About page
-- Add User Likes page
+- ~~Cross browser compatibility (Edge)~~
+- ~~Fix inconsistent API calls - slow load times~~
+- ~~Add User About page
+- ~~Add User Likes page~~
 - Clean up code, reduce unnecessary calls
 - ~~Reroute components for faster rendering~~
 - ~~Add News API~~
-- Debug like button returning 400 page on post dialog
-- Create home page displaying posts of following users
-- On user page, fix functions to display both page posts and user posts
+- ~~Debug like button returning 400 page on post dialog~~
+- ~~Create home page displaying posts of following users~~
+- ~~On user page, fix functions to display both page posts and user posts
 
 
 Functions (back-end) Repo:
