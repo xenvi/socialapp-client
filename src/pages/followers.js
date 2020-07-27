@@ -58,7 +58,7 @@ const styles = (theme) => ({
   },
 });
 
-class followers extends Component {
+class Followers extends Component {
     state = {
         followers: []
     }
@@ -72,7 +72,6 @@ class followers extends Component {
         })
     })
     .catch((err) => console.log(err));
-    console.log(this.state.followers)
   }
   render() {
     const { classes } = this.props;
@@ -111,7 +110,7 @@ class followers extends Component {
   }
 }
 
-followers.propTypes = {
+Followers.propTypes = {
   user: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
 };
@@ -121,4 +120,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, null)(withStyles(styles)(followers));
+export default connect(mapStateToProps, null)(withStyles(styles)(Followers));

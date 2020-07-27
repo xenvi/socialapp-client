@@ -5,9 +5,64 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 
 import Navbar from "../components/layout/Navbar";
-
-import { connect } from "react-redux";
 import { Typography } from "@material-ui/core";
+
+class News extends Component {
+  state = {
+  news: [],
+};
+  componentDidMount() {
+    this.fetchNews();
+  }
+  fetchNews = async () => {
+    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+        targetUrl = 'https://api.nytimes.com/svc/topstories/v2/us.json?api-key=i1mVIcp3YIRecvpMX8GnhOsiFQw69tKZ'
+    await fetch(
+      proxyUrl + targetUrl
+    ).then((res) => {
+      return res.json();
+    }).then((data) => {
+      this.setState({ news: data.results });
+    })
+    .catch((err) => console.log(err));
+  };
+  render() {
+    const { classes } = this.props;
+    const { news } = this.state;
+
+    const newsMarkup =
+      news &&
+      news.slice(0, 20).map((news, index) => (
+        <a href={news.url} target="_blank" rel="noopener noreferrer" key={index} className={classes.newsContainer}>
+          <div>
+            <div className={classes.newstitle}>{news.title}</div>
+            <div className={classes.newsDesc}>{news.abstract}</div>
+          </div>
+            {news.multimedia[0].url ? (
+              <img
+                src={news.multimedia[0].url}
+                className={classes.newsImage}
+                alt="news"
+              ></img>
+            ) : null}
+        </a>
+      ));
+
+    return (
+      <main className="main">
+        <Navbar />
+        <section className={classes.mainContainer} id="mainContainer">
+          <Grid item className="feed">
+            <Typography className={classes.sectionTitle}>
+              Latest News
+            </Typography>
+            {newsMarkup}
+          </Grid>{" "}
+        </section>
+      </main>
+    );
+  }
+}
 
 const styles = (theme) => ({
   ...theme.spread,
@@ -110,71 +165,4 @@ const styles = (theme) => ({
   },
 });
 
-class news extends Component {
-  state = {
-  news: [],
-};
-  componentDidMount() {
-    this.fetchNews();
-  }
-  fetchNews = () => {
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-        targetUrl = 'https://api.nytimes.com/svc/topstories/v2/us.json?api-key=i1mVIcp3YIRecvpMX8GnhOsiFQw69tKZ'
-    fetch(
-      proxyUrl + targetUrl
-    ).then((res) => {
-      return res.json();
-    }).then((data) => {
-      this.setState({ news: data.results });
-    })
-      .catch((err) => console.log(err));
-  };
-  render() {
-    const { classes } = this.props;
-    const { news } = this.state;
-
-    const newsMarkup =
-      news &&
-      news.slice(0, 20).map((news, index) => (
-        <a href={news.url} target="_blank" rel="noopener noreferrer" key={index} className={classes.newsContainer}>
-          <div>
-            <div className={classes.newstitle}>{news.title}</div>
-            <div className={classes.newsDesc}>{news.abstract}</div>
-          </div>
-            {news.multimedia[0].url ? (
-              <img
-                src={news.multimedia[0].url}
-                className={classes.newsImage}
-                alt="news"
-              ></img>
-            ) : null}
-        </a>
-      ));
-
-    return (
-      <main className="main">
-        <Navbar />
-        <section className={classes.mainContainer} id="mainContainer">
-          <Grid item className="feed">
-            <Typography className={classes.sectionTitle}>
-              Latest News
-            </Typography>
-            {newsMarkup}
-          </Grid>{" "}
-        </section>
-      </main>
-    );
-  }
-}
-
-news.propTypes = {
-  user: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  data: state.data,
-  user: state.user,
-});
-
-export default connect(mapStateToProps, null)(withStyles(styles)(news));
+export default withStyles(styles)(News);

@@ -185,7 +185,7 @@ const styles = (theme) => ({
   }
 });
 
-class user extends Component {
+class User extends Component {
   state = {
     postIdParam: null,
     openTimeline: true,
@@ -413,7 +413,7 @@ class user extends Component {
   }
 }
 
-user.propTypes = {
+User.propTypes = {
   getAnyUserData: PropTypes.func.isRequired,
   getProfilePosts: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
@@ -433,4 +433,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(withStyles(styles)(user));
+)(withStyles(styles)(User));

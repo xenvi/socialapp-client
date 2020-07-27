@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.5.1",
     "axios": "^0.18.1",
     "dayjs": "^1.8.17",
+    "fetch-mock": "^9.10.5",
     "firebase": "^7.14.5",
     "jwt-decode": "^2.2.0",
     "react": "^16.13.1",
@@ -20,7 +21,7 @@
   "scripts": {
     "start": "set PORT=3000&& react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --verbose false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -38,5 +39,12 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://us-central1-socialapp-79173.cloudfunctions.net/api"
+  "proxy": "https://us-central1-socialapp-79173.cloudfunctions.net/api",
+  "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.5.0",
+    "react-test-renderer": "^16.13.1",
+    "redux-mock-store": "^1.5.4"
+  }
 }

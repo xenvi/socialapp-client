@@ -44,7 +44,7 @@ const styles = (theme) => ({
   },
 });
 
-class cover extends Component {
+class Cover extends Component {
   constructor() {
     super();
     this.state = {
@@ -312,7 +312,7 @@ class cover extends Component {
   }
 }
 
-cover.propTypes = {
+Cover.propTypes = {
   classes: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
   signupUser: PropTypes.func.isRequired,
@@ -333,4 +333,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(withStyles(styles)(cover));
+)(withStyles(styles)(Cover));

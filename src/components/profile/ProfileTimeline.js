@@ -66,13 +66,11 @@ export class ProfileTimeline extends Component {
   componentDidMount() {
     const key = `${this.props.location.pathname}${this.props.location.search}`
     if (key) this.setState({ key: key });
-    console.log("Mount: " + key);
   }
   componentDidUpdate(prevProps) {
     if (this.props.location.href !== prevProps.location.href) {
       const key = `${this.props.location.pathname}${this.props.location.search}`
       this.setState({ key: key });
-      console.log("Update: " + key);
     }
   }
     render() {
