@@ -18,7 +18,7 @@ import axios from "axios";
 // get all explore posts
 export const getPosts = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
-  axios
+  return axios
     .get("/posts")
     .then((res) => {
       dispatch({

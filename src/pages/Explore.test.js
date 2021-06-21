@@ -18,7 +18,7 @@ describe('Explore component', () => {
     });
     
     it('renders with minimum props', () => {
-      console.log(wrapper.props());
+      // console.log(wrapper.props());
       expect(wrapper).toHaveLength(1);
     })
 });
